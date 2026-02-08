@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server'
 
 const publicRoutes = ['/login', '/forgot-password', '/reset-password']
 const authRoutes = ['/login', '/forgot-password', '/reset-password']
-const protectedRoutes = ['/dashboard', '/tickets', '/chat', '/simulador']
+const protectedRoutes = ['/dashboard', '/tickets', '/chat', '/simulator']
 
 export function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl
