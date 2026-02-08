@@ -8,8 +8,10 @@ import type {
 } from '@/types';
 
 export const ticketsService = {
-    async list(): Promise<ListTicketsResponse> {
-        const response = await api.get<ListTicketsResponse>(TICKET_ENDPOINTS.LIST);
+    async list(params?: { page?: number; limit?: number }): Promise<ListTicketsResponse> {
+        const response = await api.get<ListTicketsResponse>(TICKET_ENDPOINTS.LIST, {
+            params
+        });
         return response.data;
     },
 

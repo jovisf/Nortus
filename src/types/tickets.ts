@@ -1,5 +1,5 @@
 export type TicketPriority = 'Urgente' | 'Alta' | 'Média' | 'Baixa';
-export type TicketStatus = 'Aberto' | 'Em_Andamento' | 'Concluido' | 'Cancelado';
+export type TicketStatus = 'Aberto' | 'Em andamento' | 'Fechado';
 
 export interface Ticket {
     id: string; // UUID
