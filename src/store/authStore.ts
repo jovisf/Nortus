@@ -1,57 +1,42 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import Cookies from 'js-cookie';
-import type { User } from '@/types';
+import { create } from 'zustand'
+import { persist, createJSONStorage } from 'zustand/middleware'
+import type { User } from '@/types'
 
 interface AuthState {
-    user: User | null;
-    isAuthenticated: boolean;
-    setUser: (user: User | null) => void;
-    setToken: (token: string | null) => void;
-    login: (user: User, token: string) => void;
-    logout: () => void;
-    getToken: () => string | null;
+    user: User | null
+    isAuthenticated: boolean
 }
 
-export const useAuthStore = create<AuthState>()(
+interface AuthActions {
+    setUser: (user: User) => void
+    clearUser: () => void
+    updateUser: (data: Partial<User>) => void
+}
+
+type AuthStore = AuthState & AuthActions
+
+export const useAuthStore = create<AuthStore>()(
     persist(
-        (set, get) => ({
+        (set) => ({
             user: null,
             isAuthenticated: false,
 
-            setUser: (user) => set({ user, isAuthenticated: !!user }),
+            setUser: (user) => set({ user, isAuthenticated: true }),
 
-            setToken: (token) => {
-                if (token) {
-                    Cookies.set('auth_token', token, {
-                        expires: 7, // 7 dias
-                        sameSite: 'strict',
-                        secure: process.env.NODE_ENV === 'production'
-                    });
-                } else {
-                    Cookies.remove('auth_token');
-                }
-            },
+            clearUser: () => set({ user: null, isAuthenticated: false }),
 
-            login: (user, token) => {
-                set({ user, isAuthenticated: true });
-                get().setToken(token);
-            },
-
-            logout: () => {
-                set({ user: null, isAuthenticated: false });
-                get().setToken(null);
-            },
-
-            getToken: () => {
-                return Cookies.get('auth_token') || null;
-            },
+            updateUser: (data) =>
+                set((state) => ({
+                    user: state.user ? { ...state.user, ...data } : null,
+                })),
         }),
         {
             name: 'auth-storage',
+            storage: createJSONStorage(() => localStorage),
             partialize: (state) => ({
                 user: state.user,
-                isAuthenticated: state.isAuthenticated,
             }),
-        })
-);
+        }
+    )
+)
+
