@@ -6,14 +6,6 @@ import { filterTickets, paginateTickets, extractDistinctResponsibles } from '@/l
 const TICKET_STATUSES: TicketStatus[] = ['Aberto', 'Em andamento', 'Fechado'];
 const TICKET_PRIORITIES: TicketPriority[] = ['Baixa', 'Média', 'Urgente'];
 
-/**
- * Hook that combines filtering and pagination with memoization
- * Optimized for client-side filtering of large datasets
- * 
- * @param filters - Current filter state
- * @param page - Current page number (1-indexed)
- * @param pageSize - Number of items per page
- */
 export function useFilteredTickets(
     filters: TicketFilters,
     page: number,
@@ -21,10 +13,8 @@ export function useFilteredTickets(
 ) {
     const { data, isLoading, error } = useAllTickets();
 
-    // Extract all tickets from response
     const allTickets = useMemo(() => data?.data || [], [data]);
 
-    // Memoize filter options extraction
     const filterOptions = useMemo<TicketFilterOptions>(() => {
         return {
             statuses: TICKET_STATUSES,
@@ -33,12 +23,10 @@ export function useFilteredTickets(
         };
     }, [allTickets]);
 
-    // Memoize filtered results
     const filteredTickets = useMemo(() => {
         return filterTickets(allTickets, filters);
     }, [allTickets, filters]);
 
-    // Memoize paginated results
     const paginatedResult = useMemo(() => {
         return paginateTickets(filteredTickets, page, pageSize);
     }, [filteredTickets, page, pageSize]);

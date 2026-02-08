@@ -21,7 +21,6 @@ export function TicketList({ onEdit }: TicketListProps) {
         responsible: 'all',
     });
 
-    // Debounce search input to avoid excessive re-renders
     const debouncedSearch = useDebounce(searchInput, 300);
 
     // Update filters when debounced search changes
@@ -38,7 +37,6 @@ export function TicketList({ onEdit }: TicketListProps) {
 
     const { mutate: deleteTicket } = useDeleteTicket();
 
-    // Reset to page 1 when filters change
     const handleFilterChange = (key: keyof TicketFilters, value: string) => {
         setFilters(prev => ({ ...prev, [key]: value }));
         setPage(1);

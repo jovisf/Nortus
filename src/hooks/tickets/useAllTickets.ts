@@ -2,9 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 import { ticketsService } from '@/services';
 
 /**
- * Hook to fetch ALL tickets with aggressive caching
- * Uses staleTime: Infinity to prevent unnecessary refetches
- * Cache is only invalidated on mutations (create/update/delete)
+ * Hook to fetch ALL tickets with aggressive caching.
+ * Cache is only invalidated on mutations.
  */
 export function useAllTickets() {
     return useQuery({
