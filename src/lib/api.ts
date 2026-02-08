@@ -1,7 +1,8 @@
-import axios from 'axios';
-import Cookies from 'js-cookie';
+import axios from 'axios'
+import { getCookie, COOKIE_NAMES } from '@/lib/cookies'
+import { handleApiError } from './apiErrorHandler'
 
-const API_BASE_URL = 'https://nortus-challenge.api.stage.loomi.com.br';
+const API_BASE_URL = 'https://nortus-challenge.api.stage.loomi.com.br'
 
 export const api = axios.create({
     baseURL: API_BASE_URL,
@@ -9,33 +10,28 @@ export const api = axios.create({
     headers: {
         'Content-Type': 'application/json',
     },
-});
+})
 
 api.interceptors.request.use(
     (config) => {
-        const token = Cookies.get('auth_token');
+        const token = getCookie(COOKIE_NAMES.AUTH_TOKEN)
         if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
+            config.headers.Authorization = `Bearer ${token}`
         }
-        return config;
+        return config
     },
     (error) => {
-        return Promise.reject(error);
+        return Promise.reject(error)
     }
-);
+)
 
 api.interceptors.response.use(
     (response) => response,
     (error) => {
-        // Tratamento de erro 401 - redirecionar para login
-        if (error.response?.status === 401) {
-            Cookies.remove('auth_token');
-            if (typeof window !== 'undefined') {
-                window.location.href = '/login';
-            }
-        }
-        return Promise.reject(error);
+        handleApiError(error)
+        return Promise.reject(error)
     }
-);
+)
 
-export default api;
+export default api
+
