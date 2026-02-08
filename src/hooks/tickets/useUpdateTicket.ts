@@ -13,7 +13,7 @@ export function useUpdateTicket() {
             ticketsService.update(id, data),
         onSuccess: (updatedTicket) => {
             updateTicketInList(updatedTicket);
-            queryClient.invalidateQueries({ queryKey: ['tickets'] });
+            queryClient.invalidateQueries({ queryKey: ['tickets', 'all'] });
             queryClient.invalidateQueries({ queryKey: ['tickets', updatedTicket.id] });
             toast.success('Ticket atualizado com sucesso!');
         },

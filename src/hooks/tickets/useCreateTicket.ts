@@ -12,7 +12,7 @@ export function useCreateTicket() {
         mutationFn: (data: CreateTicketRequest) => ticketsService.create(data),
         onSuccess: (newTicket) => {
             addTicket(newTicket);
-            queryClient.invalidateQueries({ queryKey: ['tickets'] });
+            queryClient.invalidateQueries({ queryKey: ['tickets', 'all'] });
             toast.success('Ticket criado com sucesso!');
         },
         onError: (error: any) => {

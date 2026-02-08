@@ -3,12 +3,12 @@ import { ticketsService } from '@/services';
 import { useTicketStore } from '@/store/ticketStore';
 import { useEffect } from 'react';
 
-export function useTickets() {
+export function useTickets(params?: { page?: number; limit?: number }) {
     const { setTickets, setLoading, setError } = useTicketStore();
 
     const query = useQuery({
-        queryKey: ['tickets'],
-        queryFn: ticketsService.list,
+        queryKey: ['tickets', params],
+        queryFn: () => ticketsService.list(params),
     });
 
     useEffect(() => {

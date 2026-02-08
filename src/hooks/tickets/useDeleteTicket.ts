@@ -11,7 +11,7 @@ export function useDeleteTicket() {
         mutationFn: (id: string) => ticketsService.delete(id),
         onSuccess: (_, id) => {
             removeTicketFromList(id);
-            queryClient.invalidateQueries({ queryKey: ['tickets'] });
+            queryClient.invalidateQueries({ queryKey: ['tickets', 'all'] });
             toast.success('Ticket excluído com sucesso!');
         },
         onError: (error: any) => {
