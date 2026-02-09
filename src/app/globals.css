@@ -1,8 +1,36 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0f172a;
+  --foreground: #ffffff;
+
+  /* App Specific Palette */
+  --app-bg: #0f172a;
+  --dashboard-bg: #0f1322;
+  --card-bg: #1d233d;
+  --layout-bg: #20273e;
+
+  /* Brand Colors */
+  --primary: #1876d2;
+  --primary-hover: #0ea5e9;
+
+  /* Text Colors */
+  --text-primary: #ffffff;
+  --text-secondary: #8e98b0;
+
+  /* Status Colors */
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #f43f5e;
+
+  /* Dashboard Colors */
+  --chart-kpi-color: #2db3c8;
+  --chart-conversion-color: #75dfff;
+  --chart-conversion-gradient: linear-gradient(90deg, #75dfff 100%, #75dfff 10%);
+
+  /* UI Details */
+  --border: #1e293b;
+  --grid: #334155;
 }
 
 @theme inline {
@@ -11,20 +39,38 @@
   --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
 
-  --color-sidebar: #20273e;
-  --color-main-bg: #0b111d;
-  --color-primary-blue: #0066ff;
-  --color-border-muted: #2a2d45;
+  /* Mapping to Tailwind Colors */
+  --color-app-bg: var(--app-bg);
+  --color-dashboard-bg: var(--dashboard-bg);
+  --color-card-bg: var(--card-bg);
+  --color-layout-bg: var(--layout-bg);
 
-  --sidebar-width: 80px;
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+
+  --color-border-ui: var(--border);
+  --color-grid: var(--grid);
+
+  --color-chart-kpi: var(--chart-kpi-color);
+  --color-chart-conversion: var(--chart-conversion-color);
+  --image-chart-conversion-gradient: var(--chart-conversion-gradient);
+
+  /* Aliases for backward compatibility */
+  --color-sidebar: var(--layout-bg);
+  --color-sidebar-bg: var(--layout-bg);
+  --color-main-bg: var(--app-bg);
+  --color-primary-blue: var(--primary);
+  --color-border-muted: var(--border);
+
+  --sidebar-width: 100px;
   --header-height: 88px;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {

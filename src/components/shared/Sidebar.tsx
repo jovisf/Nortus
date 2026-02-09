@@ -17,7 +17,7 @@ export function Sidebar() {
 
     return (
         <aside
-            className="fixed left-0 top-0 bottom-0 flex flex-col items-center py-8 bg-sidebar border-r border-border-muted z-50"
+            className="fixed left-0 top-0 h-screen flex flex-col items-center py-8 bg-layout-bg border-r border-border-ui z-50 rounded-r-[24px] shadow-[10px_0px_30px_0px_rgba(0,0,0,0.3)]"
             style={{ width: 'var(--sidebar-width)' }}
         >
             {/* Logo */}
@@ -36,7 +36,7 @@ export function Sidebar() {
             </div>
 
             {/* Navigation Icons */}
-            <nav className="flex-1 flex flex-col gap-6">
+            <nav className="flex-1 flex flex-col items-center justify-center gap-[29px]">
                 {NAV_ITEMS.map((item) => {
                     const isActive = pathname.startsWith(item.href);
 
@@ -45,10 +45,10 @@ export function Sidebar() {
                             key={item.href}
                             href={item.href}
                             className={cn(
-                                "group relative w-12 h-12 flex items-center justify-center rounded-xl transition-all duration-200",
+                                "group relative w-12 h-12 flex items-center justify-center rounded-xl transition-all duration-200 bg-white/5",
                                 isActive
-                                    ? "bg-primary-blue text-white shadow-lg shadow-primary-blue/20"
-                                    : "text-gray-400 hover:text-white hover:bg-white/5"
+                                    ? "bg-primary text-white shadow-[0px_0px_20px_rgba(24,118,210,0.8)]"
+                                    : "text-gray-400 hover:text-white hover:bg-white/10"
                             )}
                             title={item.label}
                         >
@@ -69,8 +69,8 @@ export function Sidebar() {
             </nav>
 
             {/* User Avatar */}
-            <div className="mt-auto">
-                <div className="w-10 h-10 rounded-full bg-blue-400 flex items-center justify-center text-white font-bold text-sm border-2 border-white/10">
+            <div className="mt-auto flex items-center justify-center w-full">
+                <div className="w-10 h-10 rounded-full bg-blue-400 flex items-center justify-center text-white font-bold text-sm border-2 border-white/10 uppercase">
                     AC
                 </div>
             </div>
