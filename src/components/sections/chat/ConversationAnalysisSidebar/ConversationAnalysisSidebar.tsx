@@ -44,7 +44,7 @@ export function ConversationAnalysisSidebar({
                 <div className="p-4 space-y-6">
                     <section>
                         <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
-                            <span>💡</span>
+                            <span></span>
                             {analysis.insights.title}
                         </h3>
                         <div className="space-y-2">
@@ -66,7 +66,7 @@ export function ConversationAnalysisSidebar({
 
                     <section>
                         <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
-                            <span>🎯</span>
+                            <span></span>
                             {analysis.futureSteps.title}
                         </h3>
                         <div className="space-y-2">

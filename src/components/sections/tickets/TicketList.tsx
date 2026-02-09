@@ -57,7 +57,7 @@ export function TicketList({ onEdit }: TicketListProps) {
                 <div className="relative">
                     <input
                         type="text"
-                        placeholder="🔍 Buscar por ID, cliente ou assunto..."
+                        placeholder=" Buscar por ID, cliente ou assunto..."
                         value={searchInput}
                         onChange={(e) => handleSearchChange(e.target.value)}
                         className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -166,7 +166,7 @@ export function TicketList({ onEdit }: TicketListProps) {
                                                 className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                                                 title="Editar"
                                             >
-                                                ✏️
+                                                
                                             </button>
                                             <button
                                                 onClick={() => {
@@ -177,14 +177,14 @@ export function TicketList({ onEdit }: TicketListProps) {
                                                 className="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                                                 title="Excluir"
                                             >
-                                                🗑️
+                                                
                                             </button>
                                             <button
                                                 onClick={() => console.log('Visualizar ticket:', ticket.id)}
                                                 className="p-1.5 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
                                                 title="Ver"
                                             >
-                                                👁️
+                                                
                                             </button>
                                         </div>
                                     </td>

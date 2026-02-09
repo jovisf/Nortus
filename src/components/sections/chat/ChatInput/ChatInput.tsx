@@ -27,7 +27,7 @@ export function ChatInput({ value, isTyping, onChange, onSend }: ChatInputProps)
                     disabled={!value.trim()}
                     className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                    <span className="text-white text-lg transform rotate-45">➤</span>
+                    <span className="text-white text-lg transform rotate-45"></span>
                 </button>
             </div>
 

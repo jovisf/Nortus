@@ -11,9 +11,9 @@ interface ActionButton {
 }
 
 const QUICK_ACTIONS: ActionButton[] = [
-    { id: 'send_proposal', label: 'Enviar proposta', icon: '📄' },
-    { id: 'make_call', label: 'Fazer ligação', icon: '📞' },
-    { id: 'view_history', label: 'Ver histórico', icon: '📋' },
+    { id: 'send_proposal', label: 'Enviar proposta', icon: '' },
+    { id: 'make_call', label: 'Fazer ligação', icon: '' },
+    { id: 'view_history', label: 'Ver histórico', icon: '' },
 ]
 
 export function QuickActions({ selectedAction, onActionClick }: QuickActionsProps) {

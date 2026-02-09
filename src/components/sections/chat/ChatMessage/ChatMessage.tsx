@@ -23,7 +23,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
                     (isAssistantMessage || isAISuggestion) && 'text-right'
                 )}
             >
-                {isAISuggestion && '✨ '}
+                {isAISuggestion && ' '}
                 {message.author}
             </span>
 
@@ -47,7 +47,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
             >
                 {message.timestamp}
                 {isUserMessage && (
-                    <span className="ml-1 text-blue-400">✓✓</span>
+                    <span className="ml-1 text-blue-400"></span>
                 )}
             </span>
         </div>

@@ -65,7 +65,7 @@ export function ActiveClientsTable({
                 <div className="relative">
                     <input
                         type="text"
-                        placeholder="🔍 Buscar por nome ou email..."
+                        placeholder=" Buscar por nome ou email..."
                         value={searchInput}
                         onChange={(e) => handleSearchChange(e.target.value)}
                         className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
