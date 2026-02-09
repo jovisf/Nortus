@@ -2,21 +2,14 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import {
-    LayoutDashboard,
-    FolderOpen,
-    MessageSquare,
-    User,
-    Calculator
-} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 
 const NAV_ITEMS = [
-    { icon: LayoutDashboard, href: '/dashboard', label: 'Dashboard' },
-    { icon: FolderOpen, href: '/tickets', label: 'Tickets' },
-    { icon: MessageSquare, href: '/chat', label: 'Chat' },
-    { icon: Calculator, href: '/simulator', label: 'Simulador' },
+    { icon: '/sidebar/dashboard.svg', href: '/dashboard', label: 'Dashboard' },
+    { icon: '/sidebar/tickets.svg', href: '/tickets', label: 'Tickets' },
+    { icon: '/sidebar/chat.svg', href: '/chat', label: 'Chat' },
+    { icon: '/sidebar/simulator.svg', href: '/simulator', label: 'Simulador' },
 ];
 
 export function Sidebar() {
@@ -46,7 +39,6 @@ export function Sidebar() {
             <nav className="flex-1 flex flex-col gap-6">
                 {NAV_ITEMS.map((item) => {
                     const isActive = pathname.startsWith(item.href);
-                    const Icon = item.icon;
 
                     return (
                         <Link
@@ -60,9 +52,17 @@ export function Sidebar() {
                             )}
                             title={item.label}
                         >
-                            <Icon size={24} strokeWidth={isActive ? 2.5 : 2} />
-
-                            {/* Tooltip or Label could go here if needed, but per Figma it's a rail */}
+                            <div className={cn(
+                                "relative w-6 h-6 transition-all duration-200",
+                                isActive ? "scale-110" : "opacity-70 group-hover:opacity-100"
+                            )}>
+                                <Image
+                                    src={item.icon}
+                                    alt={item.label}
+                                    fill
+                                    className="object-contain transition-all"
+                                />
+                            </div>
                         </Link>
                     );
                 })}
