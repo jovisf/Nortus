@@ -5,3 +5,4 @@ export * from './api';
 export * from './common';
 export * from './simulator';
 export * from './dashboard';
+export * from './chat';
