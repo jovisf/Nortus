@@ -1,3 +1,5 @@
+'use client';
+
 import { useMemo } from 'react';
 import type { TicketFilters, TicketFilterOptions, TicketPriority, TicketStatus } from '@/types';
 import { useAllTickets } from './useAllTickets';
