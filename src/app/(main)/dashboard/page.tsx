@@ -1,12 +1,14 @@
 'use client'
 
-import { useDashboard } from '@/hooks'
+import { useDashboard, useHeader } from '@/hooks'
 import { KpiTrendChart } from '@/components/sections/dashboard/KpiTrendChart'
 import { ConversionChart } from '@/components/sections/dashboard/ConversionChart'
 import { ClientsMap } from '@/components/sections/dashboard/ClientsMap'
 import { ActiveClientsTable } from '@/components/sections/dashboard/ActiveClientsTable'
 
 export default function DashboardPage() {
+    useHeader('Dashboard')
+
     const {
         kpisTrend,
         activeClients,
@@ -22,16 +24,16 @@ export default function DashboardPage() {
 
     if (error) {
         return (
-            <main className="p-6">
-                <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-800">
+            <div className="p-6">
+                <div className="bg-red-50/10 border border-red-200/20 rounded-lg p-4 text-red-400">
                     Erro ao carregar dados do dashboard. Por favor, tente novamente.
                 </div>
-            </main>
+            </div>
         )
     }
 
     return (
-        <main className="p-6 space-y-6">
+        <div className="p-6 space-y-6">
             {/* Charts Row */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2">
@@ -67,6 +69,6 @@ export default function DashboardPage() {
                 availableFilters={activeClients?.filters || { status: [], secureType: [], locations: [] }}
                 onFilterChange={actions.setTableFilter}
             />
-        </main>
+        </div>
     )
 }
