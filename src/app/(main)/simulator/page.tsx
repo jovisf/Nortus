@@ -5,8 +5,11 @@ import { PlanCard } from '@/components/sections/simulator/PlanCard'
 import { SimulatorSliders } from '@/components/sections/simulator/SimulatorSliders'
 import { AdditionalCoverages } from '@/components/sections/simulator/AdditionalCoverages'
 import { IndicatorsSidebar } from '@/components/sections/simulator/IndicatorsSidebar'
+import { useHeader } from '@/hooks'
 
 export default function SimulatorPage() {
+    useHeader('Simulador de Planos')
+
     const {
         plans,
         includedBenefits,
@@ -31,14 +34,14 @@ export default function SimulatorPage() {
     }
 
     return (
-        <main className="min-h-screen bg-[#0a0b1e] p-6 lg:p-10">
-            <div className="max-w-[1400px] mx-auto">
+        <div className="p-10">
+            <div className="max-w-[1400px]">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
                     {/* Main Content Area */}
                     <div className="lg:col-span-2 flex flex-col gap-8">
-                        <section className="bg-[#1a1b2e] rounded-3xl p-8 border border-[#2a2d45]">
-                            <h1 className="text-2xl font-bold text-white mb-8">Planos personalizados</h1>
+                        <section className="bg-sidebar rounded-3xl p-8 border border-border-muted">
+                            <h2 className="text-2xl font-bold text-white mb-8">Planos personalizados</h2>
 
                             {/* Plans Grid */}
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
@@ -95,6 +98,6 @@ export default function SimulatorPage() {
 
                 </div>
             </div>
-        </main>
+        </div>
     )
 }

@@ -8,8 +8,16 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
+
+  --color-sidebar: #20273e;
+  --color-main-bg: #0b111d;
+  --color-primary-blue: #0066ff;
+  --color-border-muted: #2a2d45;
+
+  --sidebar-width: 80px;
+  --header-height: 88px;
 }
 
 @media (prefers-color-scheme: dark) {
