@@ -4,11 +4,12 @@ import { useState, Suspense, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useResetPassword } from '@/hooks/auth';
 import { getResetPasswordSchema, type ResetPasswordFormData } from '@/lib/validations/auth';
-import { PasswordInput } from '@/components/auth/PasswordInput';
 import { useTranslations } from 'next-intl';
+import { Eye, EyeOff } from 'lucide-react';
 
 function ResetPasswordForm() {
     const tAuth = useTranslations('Auth.resetPassword');
+    const tAuthLogin = useTranslations('Auth.login');
     const tValidations = useTranslations('Validations');
     const tErr = useTranslations('Errors');
     const tCommon = useTranslations('Common');
@@ -24,15 +25,17 @@ function ResetPasswordForm() {
         confirm_password: '',
     });
 
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [errors, setErrors] = useState<Partial<Record<keyof ResetPasswordFormData, string>>>({});
     const [generalError, setGeneralError] = useState<string | null>(null);
 
     if (!id) {
         return (
-            <div className="text-center">
-                <p className="text-red-600 mb-4">{tErr('unexpected')}</p>
-                <a href="/forgot-password" className="text-blue-600 hover:underline">
-                    {tAuth('title')}
+            <div className="text-center bg-danger/10 border border-danger/20 rounded-xl p-6">
+                <p className="text-danger mb-4">{tErr('unexpected')}</p>
+                <a href="/login" className="text-primary hover:text-primary-hover font-medium underline">
+                    {tAuthLogin('signIn')}
                 </a>
             </div>
         );
@@ -84,55 +87,88 @@ function ResetPasswordForm() {
     };
 
     return (
-        <form onSubmit={handleSubmit} noValidate className="space-y-4">
+        <form onSubmit={handleSubmit} noValidate className="space-y-6">
             {generalError && (
-                <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
-                    <p className="text-sm text-red-600">{generalError}</p>
+                <div className="p-4 bg-danger/10 border border-danger/20 rounded-xl">
+                    <p className="text-sm text-danger">{generalError}</p>
                 </div>
             )}
 
-            <div>
-                <label htmlFor="code" className="block text-sm font-medium text-gray-700 mb-1">
-                    {tCommon('id')}
-                </label>
-                <input
-                    id="code"
-                    name="code"
-                    type="text"
-                    value={formData.code}
-                    onChange={handleChange}
-                    className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all ${errors.code ? 'border-red-500' : 'border-gray-300'
-                        }`}
-                    placeholder={tCommon('search')}
-                    disabled={resetPasswordMutation.isPending}
-                />
-                {errors.code && <p className="mt-1 text-xs text-red-500">{errors.code}</p>}
+            {/* Verification Code */}
+            <div className="space-y-1.5 pt-2">
+                <div className="relative group">
+                    <label className="absolute -top-3 left-4 bg-[var(--app-bg)] px-2 text-xs font-medium text-text-secondary group-focus-within:text-primary transition-colors">
+                        {tAuth('codeLabel')}*
+                    </label>
+                    <input
+                        name="code"
+                        type="text"
+                        value={formData.code}
+                        onChange={handleChange}
+                        className={`w-full bg-transparent border ${errors.code ? 'border-danger' : 'border-white/20'} group-focus-within:border-primary rounded-xl px-4 py-4 text-white placeholder-white/20 outline-none transition-all`}
+                        placeholder={tAuth('codePlaceholder')}
+                        disabled={resetPasswordMutation.isPending}
+                    />
+                </div>
+                {errors.code && <p className="text-xs text-danger mt-1">{errors.code}</p>}
             </div>
 
-            <PasswordInput
-                name="new_password"
-                label={tAuth('newPassword')}
-                placeholder={tAuth('newPassword')}
-                value={formData.new_password}
-                onChange={handleChange}
-                error={errors.new_password}
-                disabled={resetPasswordMutation.isPending}
-            />
+            {/* New Password */}
+            <div className="space-y-1.5 pt-2">
+                <div className="relative group">
+                    <label className="absolute -top-3 left-4 bg-[var(--app-bg)] px-2 text-xs font-medium text-text-secondary group-focus-within:text-primary transition-colors">
+                        {tAuth('newPassword')}*
+                    </label>
+                    <input
+                        name="new_password"
+                        type={showPassword ? 'text' : 'password'}
+                        value={formData.new_password}
+                        onChange={handleChange}
+                        className={`w-full bg-transparent border ${errors.new_password ? 'border-danger' : 'border-white/20'} group-focus-within:border-primary rounded-xl px-4 py-4 pr-12 text-white outline-none transition-all`}
+                        placeholder={tAuth('newPassword')}
+                        disabled={resetPasswordMutation.isPending}
+                    />
+                    <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 text-text-secondary hover:text-white transition-colors"
+                    >
+                        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </button>
+                </div>
+                {errors.new_password && <p className="text-xs text-danger mt-1">{errors.new_password}</p>}
+            </div>
 
-            <PasswordInput
-                name="confirm_password"
-                label={tAuth('confirmPassword')}
-                placeholder={tAuth('confirmPassword')}
-                value={formData.confirm_password}
-                onChange={handleChange}
-                error={errors.confirm_password}
-                disabled={resetPasswordMutation.isPending}
-            />
+            {/* Confirm Password */}
+            <div className="space-y-1.5 pt-2">
+                <div className="relative group">
+                    <label className="absolute -top-3 left-4 bg-[var(--app-bg)] px-2 text-xs font-medium text-text-secondary group-focus-within:text-primary transition-colors">
+                        {tAuth('confirmPassword')}*
+                    </label>
+                    <input
+                        name="confirm_password"
+                        type={showConfirmPassword ? 'text' : 'password'}
+                        value={formData.confirm_password}
+                        onChange={handleChange}
+                        className={`w-full bg-transparent border ${errors.confirm_password ? 'border-danger' : 'border-white/20'} group-focus-within:border-primary rounded-xl px-4 py-4 pr-12 text-white outline-none transition-all`}
+                        placeholder={tAuth('confirmPassword')}
+                        disabled={resetPasswordMutation.isPending}
+                    />
+                    <button
+                        type="button"
+                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 text-text-secondary hover:text-white transition-colors"
+                    >
+                        {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </button>
+                </div>
+                {errors.confirm_password && <p className="text-xs text-danger mt-1">{errors.confirm_password}</p>}
+            </div>
 
             <button
                 type="submit"
                 disabled={resetPasswordMutation.isPending}
-                className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors mt-6"
+                className="w-full bg-primary hover:bg-primary-hover text-white font-semibold py-4 rounded-xl shadow-lg shadow-primary/20 transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed mt-4 cursor-pointer"
             >
                 {resetPasswordMutation.isPending ? tCommon('loading') : tAuth('submit')}
             </button>
@@ -146,28 +182,28 @@ export default function ResetPasswordPage() {
     const tCommon = useTranslations('Common');
 
     return (
-        <main className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
-            <div className="w-full max-w-md">
-                <div className="bg-white rounded-lg shadow-md p-8">
-                    <h1 className="text-2xl font-bold text-center mb-6">{tAuth('title')}</h1>
-                    <p className="text-gray-600 text-center mb-8">
-                        {tAuth('title')}
-                    </p>
+        <>
+            <h2 className="text-3xl font-semibold mb-3">{tAuth('title')}</h2>
+            <p className="text-text-secondary text-base mb-10">
+                {tAuth('description')}
+            </p>
 
-                    <Suspense fallback={<div className="text-center">{tCommon('loading')}</div>}>
-                        <ResetPasswordForm />
-                    </Suspense>
-
-                    <div className="mt-8 text-center">
-                        <a
-                            href="/login"
-                            className="text-sm text-gray-600 hover:text-blue-600 font-medium"
-                        >
-                            {tAuthLogin('backToLogin')}
-                        </a>
-                    </div>
+            <Suspense fallback={
+                <div className="flex items-center justify-center p-12">
+                    <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
                 </div>
+            }>
+                <ResetPasswordForm />
+            </Suspense>
+
+            <div className="mt-8 text-center">
+                <a
+                    href="/login"
+                    className="text-sm text-primary hover:text-primary-hover font-medium transition-colors"
+                >
+                    {tAuthLogin('backToLogin')}
+                </a>
             </div>
-        </main>
+        </>
     );
 }

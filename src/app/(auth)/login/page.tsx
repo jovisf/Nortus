@@ -5,9 +5,10 @@ import { useRouter } from 'next/navigation';
 import { useLogin } from '@/hooks/auth';
 import { useRedirectIfAuthenticated } from '@/hooks/useProtectedRoute';
 import { getLoginSchema, type LoginFormData } from '@/lib/validations/auth';
-import { EmailInput } from '@/components/auth/EmailInput';
-import { PasswordInput } from '@/components/auth/PasswordInput';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
+import { Headset, Eye, EyeOff } from 'lucide-react';
+import { LanguageSwitcher } from '@/components/shared/LanguageSwitcher';
 
 export default function LoginPage() {
     useRedirectIfAuthenticated('/chat');
@@ -25,6 +26,7 @@ export default function LoginPage() {
         password: '',
     });
 
+    const [showPassword, setShowPassword] = useState(false);
     const [errors, setErrors] = useState<Partial<Record<keyof LoginFormData, string>>>({});
     const [generalError, setGeneralError] = useState<string | null>(null);
 
@@ -70,76 +72,109 @@ export default function LoginPage() {
     };
 
     return (
-        <main className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
-            <div className="w-full max-w-md">
-                <div className="bg-white rounded-lg shadow-md p-8">
-                    <h1 className="text-2xl font-bold text-center mb-6">{tAuth('title')}</h1>
+        <>
+            <h2 className="text-3xl font-semibold mb-3">Login</h2>
+            <p className="text-text-secondary text-base mb-10">
+                {tAuth('description')}
+            </p>
 
-                    {generalError && (
-                        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-                            <p className="text-sm text-red-600">{generalError}</p>
-                        </div>
-                    )}
+            {generalError && (
+                <div className="mb-6 p-4 bg-danger/10 border border-danger/20 rounded-xl">
+                    <p className="text-sm text-danger">{generalError}</p>
+                </div>
+            )}
 
-                    <form onSubmit={handleSubmit} noValidate className="space-y-4">
-                        <EmailInput
+            <form onSubmit={handleSubmit} noValidate className="space-y-6">
+                {/* User/Email Input */}
+                <div className="space-y-1.5">
+                    <div className="relative group">
+                        <label className="absolute -top-3 left-4 bg-[var(--app-bg)] px-2 text-xs font-medium text-text-secondary group-focus-within:text-primary transition-colors">
+                            {tAuth('emailLabel')}*
+                        </label>
+                        <input
+                            type="text"
                             name="email"
-                            label={tAuth('emailLabel')}
-                            placeholder={tAuth('emailPlaceholder')}
                             value={formData.email}
                             onChange={handleChange}
-                            error={errors.email}
-                            disabled={loginMutation.isPending}
-                            autoComplete="email"
+                            className={`w-full bg-transparent border ${errors.email ? 'border-danger' : 'border-white/20'} group-focus-within:border-primary rounded-xl px-4 py-4 text-white placeholder-white/20 outline-none transition-all`}
+                            placeholder={tAuth('emailPlaceholder')}
                         />
+                    </div>
+                    <p className="text-[11px] text-text-secondary px-1">
+                        {tAuth('userHint')}
+                    </p>
+                    {errors.email && (
+                        <p className="text-xs text-danger mt-1">{errors.email}</p>
+                    )}
+                </div>
 
-                        <PasswordInput
+                {/* Password Input */}
+                <div className="space-y-1.5 pt-2">
+                    <div className="relative group">
+                        <label className="absolute -top-3 left-4 bg-[var(--app-bg)] px-2 text-xs font-medium text-text-secondary group-focus-within:text-primary transition-colors">
+                            {tAuth('passwordLabel')}*
+                        </label>
+                        <input
+                            type={showPassword ? 'text' : 'password'}
                             name="password"
-                            label={tAuth('passwordLabel')}
-                            placeholder={tAuth('passwordPlaceholder')}
                             value={formData.password}
                             onChange={handleChange}
-                            error={errors.password}
-                            disabled={loginMutation.isPending}
-                            autoComplete="current-password"
+                            className={`w-full bg-transparent border ${errors.password ? 'border-danger' : 'border-white/20'} group-focus-within:border-primary rounded-xl px-4 py-4 pr-12 text-white placeholder-white/20 outline-none transition-all`}
+                            placeholder={tAuth('passwordPlaceholder')}
                         />
-
-                        <div className="flex items-center justify-between">
-                            <label className="flex items-center">
-                                <input
-                                    type="checkbox"
-                                    className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                                />
-                                <span className="ml-2 text-sm text-gray-600">{tAuth('rememberMe')}</span>
-                            </label>
-
-                            <a
-                                href="/forgot-password"
-                                className="text-sm text-blue-600 hover:text-blue-700"
-                            >
-                                {tAuth('forgotPassword')}
-                            </a>
-                        </div>
-
                         <button
-                            type="submit"
-                            disabled={loginMutation.isPending}
-                            className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute right-4 top-1/2 -translate-y-1/2 text-text-secondary hover:text-white transition-colors"
                         >
-                            {loginMutation.isPending ? tAuth('signingIn') : tAuth('signIn')}
+                            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                         </button>
-                    </form>
-
-                    <div className="mt-6 text-center">
-                        <p className="text-sm text-gray-600">
-                            {tAuth('noAccount')}{' '}
-                            <a href="/register" className="text-blue-600 hover:text-blue-700 font-medium">
-                                {tAuth('signUp')}
-                            </a>
-                        </p>
                     </div>
+                    {errors.password && (
+                        <p className="text-xs text-danger mt-1 text-right">{errors.password}</p>
+                    )}
                 </div>
-            </div>
-        </main>
+
+                {/* Actions area */}
+                <div className="flex items-center justify-between pt-2">
+                    <label className="flex items-center gap-3 cursor-pointer group">
+                        <div className="relative flex items-center justify-center">
+                            <input
+                                type="checkbox"
+                                className="peer appearance-none w-5 h-5 rounded border border-white/20 checked:border-primary checked:bg-primary transition-all cursor-pointer"
+                            />
+                            <svg
+                                className="absolute w-3 h-3 text-white opacity-0 peer-checked:opacity-100 transition-opacity pointer-events-none"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                        <span className="text-sm text-text-secondary group-hover:text-white transition-colors">
+                            {tAuth('rememberMe')}
+                        </span>
+                    </label>
+
+                    <a
+                        href="/forgot-password"
+                        className="text-sm text-primary hover:text-primary-hover font-medium transition-colors"
+                    >
+                        {tAuth('forgotPassword')}
+                    </a>
+                </div>
+
+                {/* Submit Button */}
+                <button
+                    type="submit"
+                    disabled={loginMutation.isPending}
+                    className="w-full bg-primary hover:bg-primary-hover text-white font-semibold py-4 rounded-xl shadow-lg shadow-primary/20 transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed mt-4 cursor-pointer"
+                >
+                    {loginMutation.isPending ? tAuth('signingIn') : tAuth('signIn')}
+                </button>
+            </form>
+        </>
     );
 }
