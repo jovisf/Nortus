@@ -5,9 +5,11 @@ import { KpiTrendChart } from '@/components/sections/dashboard/KpiTrendChart'
 import { ConversionChart } from '@/components/sections/dashboard/ConversionChart'
 import { ClientsMap } from '@/components/sections/dashboard/ClientsMap'
 import { ActiveClientsTable } from '@/components/sections/dashboard/ActiveClientsTable'
+import { useTranslations } from 'next-intl'
 
 export default function DashboardPage() {
     useHeader('Dashboard')
+    const t = useTranslations('Errors');
 
     const {
         kpisTrend,
@@ -26,7 +28,7 @@ export default function DashboardPage() {
         return (
             <div className="page-container">
                 <div className="bg-red-50/10 border border-red-200/20 rounded-lg p-4 text-red-400">
-                    Erro ao carregar dados do dashboard. Por favor, tente novamente.
+                    {t('serverError')}
                 </div>
             </div>
         )

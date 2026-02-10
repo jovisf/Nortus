@@ -19,11 +19,14 @@ import { SearchableSelect } from '@/components/ui/SearchableSelect'
 import { createMarkerIcon } from './utils'
 import { LocationDetailsCard } from './components/LocationDetailsCard'
 import { useMapLogic } from './hooks/useMapLogic'
+import { useTranslations } from 'next-intl'
 
 export function ClientsMap({ className, clients, filters, onFilterChange, availableFilters }: ClientsMapProps) {
     const mapRef = useRef<HTMLDivElement>(null)
     const mapInstanceRef = useRef<OLMap | null>(null)
     const vectorSourceRef = useRef<VectorSource | null>(null)
+
+    const t = useTranslations('Dashboard')
 
     const {
         locations,
@@ -36,7 +39,7 @@ export function ClientsMap({ className, clients, filters, onFilterChange, availa
         categoryOptions,
         locationOptions,
         filteredLocations
-    } = useMapLogic()
+    } = useMapLogic({ t })
 
     useEffect(() => {
         if (!mapRef.current) return
@@ -146,9 +149,9 @@ export function ClientsMap({ className, clients, filters, onFilterChange, availa
         <div className={cn('bg-[rgba(255,255,255,0.05)] rounded-[32px] p-10 shadow-sm border border-white/5 relative', className)}>
             <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-6 mb-8">
                 <div className="flex items-center gap-3">
-                    <h2 className="text-xl font-semibold text-white tracking-tight">Mapa de clientes por região</h2>
+                    <h2 className="text-xl font-semibold text-white tracking-tight">{t('mapTitle')}</h2>
                     {isLoading && (
-                        <span className="text-xs text-text-secondary italic">Carregando locais...</span>
+                        <span className="text-xs text-text-secondary italic">{t('loadingLocals')}</span>
                     )}
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4 w-full xl:w-auto">
@@ -157,16 +160,16 @@ export function ClientsMap({ className, clients, filters, onFilterChange, availa
                         value={selectedLocationId}
                         onChange={setSelectedLocationId}
                         className="w-full sm:w-[280px]"
-                        placeholder="Todos os locais"
-                        searchPlaceholder="Buscar local..."
+                        placeholder={t('allLocals')}
+                        searchPlaceholder={t('searchLocal')}
                     />
                     <SearchableSelect
                         options={categoryOptions}
                         value={selectedCategory}
                         onChange={handleCategoryChange}
                         className="w-full sm:w-[220px]"
-                        placeholder="Todos os tipos"
-                        searchPlaceholder="Buscar tipo..."
+                        placeholder={t('allTypes')}
+                        searchPlaceholder={t('searchType')}
                     />
                 </div>
             </div>
