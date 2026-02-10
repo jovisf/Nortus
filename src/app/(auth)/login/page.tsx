@@ -10,7 +10,7 @@ import { useTranslations } from 'next-intl';
 import { Eye, EyeOff } from 'lucide-react';
 
 export default function LoginPage() {
-  useRedirectIfAuthenticated('/chat');
+  useRedirectIfAuthenticated('/dashboard');
 
   const tAuth = useTranslations('Auth.login');
   const tErr = useTranslations('Errors');
@@ -34,7 +34,10 @@ export default function LoginPage() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    // Trim spaces if the field is email
+    const updatedValue = name === 'email' ? value.trim() : value;
+
+    setFormData((prev) => ({ ...prev, [name]: updatedValue }));
 
     if (errors[name as keyof LoginFormData]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
@@ -70,13 +73,13 @@ export default function LoginPage() {
     try {
       await loginMutation.mutateAsync(formData);
       resetRateLimit();
-      router.push('/chat');
+      router.push('/dashboard');
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       incrementAttempts();
       const errorMessage =
         error.response?.status === 401
-          ? tErr('unauthorized')
+          ? tErr('invalidCredentials')
           : error.response?.data?.message || tErr('serverError');
       setGeneralError(errorMessage);
     }
