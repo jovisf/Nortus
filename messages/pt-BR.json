@@ -20,7 +20,8 @@
         "back": "Voltar",
         "error": "Erro",
         "success": "Sucesso",
-        "close": "Fechar"
+        "close": "Fechar",
+        "help": "Ajuda"
     },
     "Auth": {
         "login": {
@@ -29,21 +30,29 @@
             "emailPlaceholder": "seu@email.com",
             "passwordLabel": "Senha",
             "passwordPlaceholder": "Digite sua senha",
-            "rememberMe": "Lembrar-me",
-            "forgotPassword": "Esqueceu a senha?",
+            "description": "Entre com suas credenciais para acessar a sua conta.",
+            "userHint": "Insira o seu e-mail, CPF ou passaporte.",
+            "rememberMe": "Lembrar meu usuário",
+            "forgotPassword": "Esqueci minha senha",
             "signIn": "Entrar",
             "signingIn": "Entrando...",
             "noAccount": "Não tem uma conta?",
-            "signUp": "Cadastre-se"
+            "signUp": "Cadastre-se",
+            "backToLogin": "Voltar para o login"
         },
         "forgotPassword": {
             "title": "Recuperar senha",
             "description": "Insira seu e-mail para receber um link de recuperação.",
+            "emailLabel": "E-mail",
+            "emailPlaceholder": "seu@email.com",
             "send": "Enviar link",
             "backToLogin": "Voltar para o login"
         },
         "resetPassword": {
             "title": "Resetar senha",
+            "description": "Crie uma nova senha segura para acessar a sua conta.",
+            "codeLabel": "Código de Verificação",
+            "codePlaceholder": "Insira o código enviado",
             "newPassword": "Nova senha",
             "confirmPassword": "Confirmar nova senha",
             "submit": "Resetar senha"
@@ -151,13 +160,9 @@
         "recommended": "Recomendado",
         "conversion": "Conversão:",
         "roi": "ROI:",
-        "sliders": {
-            "vehicleValue": "Valor do veículo",
-            "clientAge": "Idade do Cliente"
-        },
-        "units": {
-            "years": " anos"
-        },
+        "vehicleValueLabel": "Valor do veículo",
+        "clientAgeLabel": "Idade do Cliente",
+        "yearsSuffix": "anos",
         "error": {
             "loading": "Erro ao carregar o simulador",
             "tryLater": "Tente atualizar a página mais tarde."
@@ -245,6 +250,7 @@
         "serviceUnavailable": "Serviço temporariamente indisponível.",
         "gatewayTimeout": "Tempo de resposta excedido. Tente novamente.",
         "unexpected": "Ocorreu um erro inesperado. Tente novamente.",
-        "manyRequestsWait": "Muitas requisições. Aguarde um momento antes de tentar novamente."
+        "manyRequestsWait": "Muitas requisições. Aguarde um momento antes de tentar novamente.",
+        "blocked": "Muitas tentativas falharam. Tente novamente em {seconds} segundos."
     }
 }

@@ -20,7 +20,8 @@
         "back": "Back",
         "error": "Error",
         "success": "Success",
-        "close": "Close"
+        "close": "Close",
+        "help": "Help"
     },
     "Auth": {
         "login": {
@@ -29,21 +30,29 @@
             "emailPlaceholder": "your@email.com",
             "passwordLabel": "Password",
             "passwordPlaceholder": "Enter your password",
+            "description": "Enter your credentials to access your account.",
+            "userHint": "Enter your email, CPF or passport.",
             "rememberMe": "Remember me",
             "forgotPassword": "Forgot password?",
             "signIn": "Sign In",
             "signingIn": "Signing In...",
             "noAccount": "Don't have an account?",
-            "signUp": "Sign Up"
+            "signUp": "Sign Up",
+            "backToLogin": "Back to login"
         },
         "forgotPassword": {
             "title": "Recover password",
             "description": "Enter your email to receive a recovery link.",
+            "emailLabel": "Email",
+            "emailPlaceholder": "your@email.com",
             "send": "Send link",
             "backToLogin": "Back to login"
         },
         "resetPassword": {
             "title": "Reset password",
+            "description": "Create a new secure password to access your account.",
+            "codeLabel": "Verification Code",
+            "codePlaceholder": "Enter the code sent",
             "newPassword": "New password",
             "confirmPassword": "Confirm new password",
             "submit": "Reset password"
@@ -151,13 +160,9 @@
         "recommended": "Recommended",
         "conversion": "Conversion:",
         "roi": "ROI:",
-        "sliders": {
-            "vehicleValue": "Vehicle Value",
-            "clientAge": "Client Age"
-        },
-        "units": {
-            "years": " years"
-        },
+        "vehicleValueLabel": "Vehicle Value",
+        "clientAgeLabel": "Client Age",
+        "yearsSuffix": "years",
         "error": {
             "loading": "Error loading simulator",
             "tryLater": "Try updating the page later."
@@ -245,6 +250,7 @@
         "serviceUnavailable": "Service temporarily unavailable.",
         "gatewayTimeout": "Response time exceeded. Please try again.",
         "unexpected": "An unexpected error occurred. Please try again.",
-        "manyRequestsWait": "Too many requests. Please wait a moment before trying again."
+        "manyRequestsWait": "Too many requests. Please wait a moment before trying again.",
+        "blocked": "Too many failed attempts. Please try again in {seconds} seconds."
     }
 }
