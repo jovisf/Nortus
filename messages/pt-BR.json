@@ -228,6 +228,12 @@
             "createError": "Erro ao criar ticket",
             "updateError": "Erro ao atualizar ticket",
             "deleteError": "Erro ao excluir ticket"
+        },
+        "chat": {
+            "maintenanceTitle": "Sistema em Manutenção",
+            "maintenanceDescription": "A API do chat não está disponível no momento. Tente novamente mais tarde.",
+            "unavailableActionTitle": "Ação Indisponível",
+            "unavailableActionDescription": "Esta funcionalidade depende da API do chat, que está temporariamente offline."
         }
     },
     "Pagination": {
@@ -252,6 +258,7 @@
         "gatewayTimeout": "Tempo de resposta excedido. Tente novamente.",
         "unexpected": "Ocorreu um erro inesperado. Tente novamente.",
         "manyRequestsWait": "Muitas requisições. Aguarde um momento antes de tentar novamente.",
-        "blocked": "Muitas tentativas falharam. Tente novamente em {seconds} segundos."
+        "blocked": "Muitas tentativas falharam. Tente novamente em {seconds} segundos.",
+        "invalidCredentials": "Usuário ou senha inválidos"
     }
 }

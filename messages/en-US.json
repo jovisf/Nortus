@@ -228,6 +228,12 @@
             "createError": "Error creating ticket",
             "updateError": "Error updating ticket",
             "deleteError": "Error deleting ticket"
+        },
+        "chat": {
+            "maintenanceTitle": "System under Maintenance",
+            "maintenanceDescription": "The chat API is not available at the moment. Please try again later.",
+            "unavailableActionTitle": "Action Unavailable",
+            "unavailableActionDescription": "This feature depends on the chat API, which is temporarily offline."
         }
     },
     "Pagination": {
@@ -252,6 +258,7 @@
         "gatewayTimeout": "Response time exceeded. Please try again.",
         "unexpected": "An unexpected error occurred. Please try again.",
         "manyRequestsWait": "Too many requests. Please wait a moment before trying again.",
-        "blocked": "Too many failed attempts. Please try again in {seconds} seconds."
+        "blocked": "Too many failed attempts. Please try again in {seconds} seconds.",
+        "invalidCredentials": "Invalid username or password"
     }
 }

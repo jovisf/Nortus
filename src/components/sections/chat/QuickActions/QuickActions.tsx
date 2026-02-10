@@ -1,19 +1,21 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { Badge } from '@/components/ui/Badge';
-
 import type { QuickActionsProps } from './QuickActions.types';
 
-const QUICK_ACTIONS = [
-  { id: 'send_proposal', label: 'Enviar proposta' },
-  { id: 'make_call', label: 'Fazer ligação' },
-  { id: 'view_history', label: 'Ver histórico' },
-] as const;
-
 export function QuickActions({ onActionClick }: QuickActionsProps) {
+  const t = useTranslations('Chat.actions');
+
+  const actions = [
+    { id: 'send_proposal', label: t('sendProposal') },
+    { id: 'make_call', label: t('makeCall') },
+    { id: 'view_history', label: t('viewHistory') },
+  ] as const;
+
   return (
     <div className="flex flex-wrap justify-end gap-2.5">
-      {QUICK_ACTIONS.map((action) => (
+      {actions.map((action) => (
         <button
           key={action.id}
           onClick={() => onActionClick(action.id)}
