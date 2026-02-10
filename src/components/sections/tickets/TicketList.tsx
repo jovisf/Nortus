@@ -5,12 +5,14 @@ import type { Ticket } from '@/types';
 import { Table, Pagination } from '@/components/ui';
 import { useTicketColumns } from './hooks/useTicketColumns';
 import { TicketFiltersSection } from './components/TicketFiltersSection';
+import { useTranslations } from 'next-intl';
 
 interface TicketListProps {
     onEdit: (ticket: Ticket) => void;
 }
 
 export function TicketList({ onEdit }: TicketListProps) {
+    const t = useTranslations('Tickets');
     const {
         page,
         setPage,
@@ -31,7 +33,7 @@ export function TicketList({ onEdit }: TicketListProps) {
     return (
         <div className="bg-white/5 border border-white/5 rounded-[22px] overflow-hidden flex flex-col">
             <div className="px-8 pt-5 ">
-                <h2 className="text-white text-[22px] font-bold tracking-tight">Lista de Tickets</h2>
+                <h2 className="text-white text-[22px] font-bold tracking-tight">{t('listTitle')}</h2>
             </div>
 
             <TicketFiltersSection
@@ -47,7 +49,7 @@ export function TicketList({ onEdit }: TicketListProps) {
                     columns={columns}
                     data={tickets}
                     isLoading={isLoading}
-                    emptyMessage="Nenhum ticket encontrado."
+                    emptyMessage={t('table.empty')}
                 />
             </div>
 

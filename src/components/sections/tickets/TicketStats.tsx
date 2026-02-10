@@ -3,8 +3,10 @@
 import { useMemo } from 'react';
 import { useAllTickets } from '@/hooks';
 import { StatCard } from './StatCard';
+import { useTranslations } from 'next-intl';
 
 export function TicketStats() {
+    const t = useTranslations('Tickets.stats');
     const { data } = useAllTickets();
     const tickets = data?.data || [];
 
@@ -19,27 +21,27 @@ export function TicketStats() {
 
         return [
             {
-                title: 'Tickets Abertos',
+                title: t('open'),
                 value: counts.open,
                 icon: '/tickets/opened.svg',
             },
             {
-                title: 'Em andamento',
+                title: t('inProgress'),
                 value: counts.inProgress,
                 icon: '/tickets/progress.svg',
             },
             {
-                title: 'Resolvidos hoje',
+                title: t('resolvedToday'),
                 value: counts.closed,
                 icon: '/tickets/closed.svg',
             },
             {
-                title: 'Total de Tickets',
+                title: t('total'),
                 value: counts.total,
                 icon: '/tickets/total.svg',
             },
         ];
-    }, [tickets]);
+    }, [tickets, t]);
 
     return (
         <div className="flex flex-row items-stretch gap-5 mb-4 w-full overflow-x-auto pb-4 md:pb-0 scrollbar-hide">
