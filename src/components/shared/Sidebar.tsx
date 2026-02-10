@@ -1,10 +1,13 @@
 'use client';
 
+import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
+import { motion } from 'framer-motion';
+import { UserMenu } from './UserMenu';
 
 const NAV_ITEMS = [
     { icon: '/sidebar/dashboard.svg', href: '/dashboard', key: 'dashboard' },
@@ -49,21 +52,33 @@ export function Sidebar() {
                             href={item.href}
                             className={cn(
                                 "group relative w-12 h-12 flex items-center justify-center rounded-xl transition-all duration-200 bg-white/5",
-                                isActive
-                                    ? "bg-primary text-white shadow-[0px_0px_20px_rgba(24,118,210,0.8)]"
-                                    : "text-gray-400 hover:text-white hover:bg-white/10"
+                                !isActive && "text-gray-400 hover:text-white hover:bg-white/10"
                             )}
                             title={label}
                         >
+                            {isActive && (
+                                <motion.div
+                                    layoutId="sidebar-active"
+                                    className="absolute inset-0 bg-primary rounded-xl shadow-[0px_0px_20px_rgba(24,118,210,0.8)]"
+                                    transition={{
+                                        type: "spring",
+                                        stiffness: 300,
+                                        damping: 30
+                                    }}
+                                />
+                            )}
                             <div className={cn(
                                 "relative w-6 h-6 transition-all duration-200",
-                                isActive ? "scale-110" : "opacity-70 group-hover:opacity-100"
+                                isActive ? "scale-110 text-white" : "opacity-70 group-hover:opacity-100"
                             )}>
                                 <Image
                                     src={item.icon}
                                     alt={label}
                                     fill
-                                    className="object-contain transition-all"
+                                    className={cn(
+                                        "object-contain transition-all",
+                                        isActive ? "brightness-0 invert" : ""
+                                    )}
                                 />
                             </div>
                         </Link>
@@ -72,11 +87,7 @@ export function Sidebar() {
             </nav>
 
             {/* User Avatar */}
-            <div className="mt-auto flex items-center justify-center w-full">
-                <div className="w-10 h-10 rounded-full bg-blue-400 flex items-center justify-center text-white font-bold text-sm border-2 border-white/10 uppercase">
-                    AC
-                </div>
-            </div>
+            <UserMenu />
         </aside>
     );
 }

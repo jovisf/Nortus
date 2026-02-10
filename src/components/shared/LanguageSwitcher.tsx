@@ -20,7 +20,11 @@ const languages = [
     },
 ];
 
-export function LanguageSwitcher() {
+interface LanguageSwitcherProps {
+    direction?: 'up' | 'down';
+}
+
+export function LanguageSwitcher({ direction = 'down' }: LanguageSwitcherProps) {
     const locale = useLocale();
     const router = useRouter();
     const [isOpen, setIsOpen] = useState(false);
@@ -74,7 +78,12 @@ export function LanguageSwitcher() {
             </button>
 
             {isOpen && (
-                <div className="absolute top-full right-0 mt-2 w-40 bg-[#161D33] border border-white/10 rounded-xl shadow-2xl overflow-hidden z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                <div
+                    className={`absolute right-0 w-40 bg-[#161D33] border border-white/10 rounded-xl shadow-2xl overflow-hidden z-50 animate-in fade-in zoom-in-95 duration-200 ${direction === 'up'
+                            ? 'bottom-full mb-2 slide-in-from-bottom-2'
+                            : 'top-full mt-2 slide-in-from-top-2'
+                        }`}
+                >
                     <div className="py-1">
                         {languages.map((lang) => (
                             <button

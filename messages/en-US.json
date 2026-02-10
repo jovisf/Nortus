@@ -21,7 +21,8 @@
         "error": "Error",
         "success": "Success",
         "close": "Close",
-        "help": "Help"
+        "help": "Help",
+        "logout": "Logout"
     },
     "Auth": {
         "login": {
