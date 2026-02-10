@@ -10,7 +10,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'Nortus - Sistema de Gestão',
+  title: 'Nortus',
   description:
     'Sistema de gestão de tickets e atendimento ao cliente da Nortus',
   keywords: ['nortus', 'gestão', 'tickets', 'atendimento'],
@@ -30,6 +30,7 @@ export default function RootLayout({
           {children}
           <Toaster
             position="bottom-center"
+            closeButton
             icons={{
               success: (
                 <div className="flex items-center justify-center w-8 h-8 rounded-full bg-white text-primary">
