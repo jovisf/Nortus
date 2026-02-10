@@ -30,9 +30,15 @@ export default function AuthLayout({
         {/* Left Side - Content Container */}
         <div className="relative z-10 flex w-full flex-col justify-center px-8 sm:px-16 lg:w-[45%] lg:px-24 xl:px-32">
           <div className="mb-16">
-            <h1 className="text-primary text-[40px] font-bold tracking-tight">
-              Nortus
-            </h1>
+            <div className="relative h-12 w-40">
+              <Image
+                src="/logo.svg"
+                alt="Nortus Logo"
+                fill
+                className="object-contain object-left"
+                priority
+              />
+            </div>
           </div>
 
           <div className="w-full max-w-[420px]">{children}</div>

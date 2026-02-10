@@ -27,11 +27,9 @@
   /* Dashboard Colors */
   --chart-kpi-color: #2db3c8;
   --chart-conversion-color: #75dfff;
-  --chart-conversion-gradient: linear-gradient(
-    90deg,
-    #75dfff 100%,
-    #75dfff 10%
-  );
+  --chart-conversion-gradient: linear-gradient(90deg,
+      #75dfff 100%,
+      #75dfff 10%);
 
   /* UI Details */
   --border: #1e293b;
@@ -56,7 +54,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter);
+  --font-sans: var(--font-montserrat);
   --font-mono: var(--font-geist-mono);
 
   /* Mapping to Tailwind Colors */
@@ -108,7 +106,7 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
 }
 
 /* Sonner Toast Custom Styles */
