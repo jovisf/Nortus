@@ -24,7 +24,7 @@ export default function DashboardPage() {
 
     if (error) {
         return (
-            <div className="p-6">
+            <div className="page-container">
                 <div className="bg-red-50/10 border border-red-200/20 rounded-lg p-4 text-red-400">
                     Erro ao carregar dados do dashboard. Por favor, tente novamente.
                 </div>
@@ -33,7 +33,7 @@ export default function DashboardPage() {
     }
 
     return (
-        <div className="p-6 space-y-6">
+        <div className="page-container space-y-6">
             {/* Charts Row */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2">
