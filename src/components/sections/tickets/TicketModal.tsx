@@ -1,7 +1,7 @@
 'use client';
 
 import { ActionButtons } from './components/ActionButtons';
-import { useTicketForm } from '@/hooks';
+import { useTicketForm, useRateLimit } from '@/hooks';
 import type { Ticket } from '@/types';
 import { X } from 'lucide-react';
 import { TextInput, TextAreaInput, SelectInput } from '@/components/ui';
@@ -17,6 +17,9 @@ interface TicketModalProps {
 export function TicketModal({ isOpen, onClose, ticketToEdit }: TicketModalProps) {
     const t = useTranslations('Tickets');
     const tCommon = useTranslations('Common');
+    const tErr = useTranslations('Errors');
+
+    const { isBlocked, timeLeft, incrementAttempts } = useRateLimit('tickets', 10, 60000);
 
     const priorityOptions = useMemo(() => [
         { label: t('priorities.low'), value: 'Baixa' },
@@ -30,8 +33,17 @@ export function TicketModal({ isOpen, onClose, ticketToEdit }: TicketModalProps)
         errors,
         isPending,
         handleChange,
-        handleSubmit
+        handleSubmit: baseHandleSubmit
     } = useTicketForm({ ticketToEdit, isOpen, onClose });
+
+    const handleSubmit = (e: React.FormEvent) => {
+        if (isBlocked) {
+            e.preventDefault();
+            return;
+        }
+        incrementAttempts();
+        baseHandleSubmit(e);
+    };
 
     if (!isOpen) return null;
 
@@ -44,6 +56,14 @@ export function TicketModal({ isOpen, onClose, ticketToEdit }: TicketModalProps)
                 className="bg-background border border-white/5 rounded-[40px] shadow-2xl w-full max-w-[620px] overflow-hidden relative p-10"
                 onClick={(e) => e.stopPropagation()}
             >
+                {isBlocked && (
+                    <div className="absolute top-0 left-0 right-0 p-4 bg-danger/10 border-b border-danger/20 z-10 text-center">
+                        <p className="text-xs text-danger font-medium">
+                            {tErr('blocked', { seconds: timeLeft })}
+                        </p>
+                    </div>
+                )}
+
                 <button
                     onClick={onClose}
                     className="absolute top-8 right-8 w-11 h-11 flex items-center justify-center rounded-full border border-white text-white hover:bg-white/10 transition-all cursor-pointer"
