@@ -1,75 +1,55 @@
 'use client'
 
-import { useMemo } from 'react'
 import dynamic from 'next/dynamic'
+import { useState } from 'react'
+import { ChevronRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { ConversionChartProps } from './ConversionChart.types'
+import { useConversionChartOptions } from './hooks/useConversionChartOptions'
+
+import { ChartSkeleton } from '../shared/ChartSkeleton'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 export function ConversionChart({ conversionData, labels, className }: ConversionChartProps) {
-    const chartData = useMemo(() => {
-        if (!conversionData) return null
+    const [page, setPage] = useState(0)
 
-        return {
-            series: [{
-                name: 'Novos clientes',
-                data: conversionData.data
-            }],
-            options: {
-                chart: {
-                    type: 'bar' as const,
-                    height: 350,
-                    toolbar: {
-                        show: false
-                    }
-                },
-                plotOptions: {
-                    bar: {
-                        borderRadius: 4,
-                        columnWidth: '60%',
-                    }
-                },
-                dataLabels: {
-                    enabled: false
-                },
-                xaxis: {
-                    categories: labels
-                },
-                fill: {
-                    type: 'gradient',
-                    gradient: {
-                        shadeIntensity: 1,
-                        opacityFrom: 1,
-                        opacityTo: 0.2,
-                        stops: [0, 100]
-                    }
-                },
-                colors: ['#75dfff']
-            }
-        }
-    }, [conversionData, labels])
+    const currentLabels = labels.slice(page * 6, (page + 1) * 6)
+    const currentSeriesData = conversionData?.data.slice(page * 6, (page + 1) * 6) || []
 
-    if (!conversionData || !chartData) {
-        return (
-            <div className={cn('bg-card-bg rounded-lg p-6 shadow-sm border border-border-ui', className)}>
-                <div className="h-4 bg-gray-700 rounded w-1/3 mb-4 animate-pulse"></div>
-                <div className="h-64 bg-gray-800 rounded animate-pulse"></div>
-            </div>
-        )
+    const chartOptions = useConversionChartOptions({
+        conversionData: { data: currentSeriesData },
+        labels: currentLabels
+    })
+
+    if (!conversionData || !chartOptions) {
+        return <ChartSkeleton className={className} />
     }
 
     return (
-        <div className={cn('bg-card-bg rounded-lg p-6 shadow-sm border border-border-ui', className)}>
-            <div className="mb-6">
-                <h2 className="text-lg font-semibold text-text-primary">Taxa de conversão</h2>
+        <div className={cn('bg-card-bg rounded-[22px] p-6 border border-white/5', className)}>
+            <div className="flex items-center justify-between mb-6">
+                <h2 className="text-xl font-semibold text-white tracking-tight">Taxa de conversão</h2>
+                <button
+                    onClick={() => setPage(page === 0 ? 1 : 0)}
+                    className="p-1 hover:bg-white/10 rounded-lg transition-all duration-200 group cursor-pointer"
+                >
+                    <ChevronRight
+                        className={cn(
+                            "w-6 h-6 text-white transition-transform duration-300",
+                            page === 1 ? "rotate-180" : "rotate-0"
+                        )}
+                    />
+                </button>
             </div>
-            <Chart
-                options={chartData.options}
-                series={chartData.series}
-                type="bar"
-                height={350}
-            />
+            <div className="h-[350px] w-full">
+                <Chart
+                    options={chartOptions.options}
+                    series={chartOptions.series}
+                    type="bar"
+                    height="100%"
+                />
+            </div>
         </div>
     )
 }
