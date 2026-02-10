@@ -23,7 +23,7 @@ export default function TicketsPage() {
     const headerActions = useMemo(() => (
         <button
             onClick={handleCreate}
-            className="bg-primary-blue hover:bg-blue-700 text-white px-6 py-2.5 rounded-xl font-semibold shadow-lg shadow-primary-blue/20 transition-all flex items-center gap-2"
+            className="bg-primary-blue hover:bg-blue-700 text-white px-6 py-2.5 rounded-4xl font-semibold shadow-lg shadow-primary-blue/20 transition-all flex items-center gap-2 cursor-pointer"
         >
             <Plus size={20} />
             Novo Ticket
@@ -33,12 +33,10 @@ export default function TicketsPage() {
     useHeader('Gestão de Tickets', headerActions);
 
     return (
-        <div className="p-10 max-w-[1600px]">
+        <div className="px-10 max-w-[1600px] mx-auto py-5">
             <TicketStats />
 
-            <div className="mt-8">
-                <TicketList onEdit={handleEdit} />
-            </div>
+            <TicketList onEdit={handleEdit} />
 
             <TicketModal
                 isOpen={isModalOpen}
