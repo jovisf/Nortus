@@ -1,2 +1,2 @@
-export { ConversionChart } from './ConversionChart'
-export type { ConversionChartProps } from './ConversionChart.types'
+export { ConversionChart } from './ConversionChart';
+export type { ConversionChartProps } from './ConversionChart.types';

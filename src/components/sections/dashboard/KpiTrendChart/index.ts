@@ -1,2 +1,2 @@
-export { KpiTrendChart } from './KpiTrendChart'
-export type { KpiTrendChartProps } from './KpiTrendChart.types'
+export { KpiTrendChart } from './KpiTrendChart';
+export type { KpiTrendChartProps } from './KpiTrendChart.types';

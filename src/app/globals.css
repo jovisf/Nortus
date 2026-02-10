@@ -1,11 +1,11 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
-  --background: #0B1125;
+  --background: #0b1125;
   --foreground: #ffffff;
 
   /* App Specific Palette */
-  --app-bg: #0B1125;
+  --app-bg: #0b1125;
   --dashboard-bg: #0f1322;
   --card-bg: rgba(255, 255, 255, 0.05);
   --layout-bg: #20273e;
@@ -27,22 +27,26 @@
   /* Dashboard Colors */
   --chart-kpi-color: #2db3c8;
   --chart-conversion-color: #75dfff;
-  --chart-conversion-gradient: linear-gradient(90deg, #75dfff 100%, #75dfff 10%);
+  --chart-conversion-gradient: linear-gradient(
+    90deg,
+    #75dfff 100%,
+    #75dfff 10%
+  );
 
   /* UI Details */
   --border: #1e293b;
   --grid: #334155;
 
   /* Ticket Specifics */
-  --priority-urgent: #BA1A1A;
-  --priority-medium: #B5EDFF;
-  --priority-low: #E0F7FF;
-  --status-inprogress: #D2B843;
-  --status-open: #43D2CB;
-  --brand-cyan: #43D2CB;
-  --conversion-green: #00DC04;
-  --filter-bg: #0B1125;
-  --filter-text: #F6F8FC;
+  --priority-urgent: #ba1a1a;
+  --priority-medium: #b5edff;
+  --priority-low: #e0f7ff;
+  --status-inprogress: #d2b843;
+  --status-open: #43d2cb;
+  --brand-cyan: #43d2cb;
+  --conversion-green: #00dc04;
+  --filter-bg: #0b1125;
+  --filter-text: #f6f8fc;
   --input-bg: rgba(255, 255, 255, 0.05);
   --input-placeholder: rgba(255, 255, 255, 0.1);
   --text-header-table: rgba(255, 255, 255, 0.43);
@@ -163,13 +167,12 @@ body {
   transition: all 0.2s !important;
 }
 
-
 .sonner-toast-close:hover {
   opacity: 1 !important;
 }
 
 .page-container {
-  @apply px-10 max-w-[1600px] mx-auto py-5;
+  @apply mx-auto max-w-[1600px] px-10 py-5;
 }
 
 /* Custom Scrollbar */

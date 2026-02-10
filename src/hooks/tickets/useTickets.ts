@@ -6,24 +6,35 @@ import { useTicketStore } from '@/store/ticketStore';
 import { useEffect } from 'react';
 
 export function useTickets(params?: { page?: number; limit?: number }) {
-    const { setTickets, setLoading, setError } = useTicketStore();
+  const { setTickets, setLoading, setError } = useTicketStore();
 
-    const query = useQuery({
-        queryKey: ['tickets', params],
-        queryFn: () => ticketsService.list(params),
-    });
+  const query = useQuery({
+    queryKey: ['tickets', params],
+    queryFn: () => ticketsService.list(params),
+  });
 
-    useEffect(() => {
-        if (query.data) {
-            setTickets(query.data.data);
-        }
-        setLoading(query.isLoading);
-        if (query.error) {
-            setError(query.error instanceof Error ? query.error.message : 'Erro ao carregar tickets');
-        } else {
-            setError(null);
-        }
-    }, [query.data, query.isLoading, query.error, setTickets, setLoading, setError]);
+  useEffect(() => {
+    if (query.data) {
+      setTickets(query.data.data);
+    }
+    setLoading(query.isLoading);
+    if (query.error) {
+      setError(
+        query.error instanceof Error
+          ? query.error.message
+          : 'Erro ao carregar tickets'
+      );
+    } else {
+      setError(null);
+    }
+  }, [
+    query.data,
+    query.isLoading,
+    query.error,
+    setTickets,
+    setLoading,
+    setError,
+  ]);
 
-    return query;
+  return query;
 }

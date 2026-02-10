@@ -1,5 +1,5 @@
-export { ChatMessage } from './ChatMessage'
-export { QuickActions } from './QuickActions'
-export { ChatInput } from './ChatInput'
-export { MessageList } from './MessageList'
-export { DateDivider } from './DateDivider'
+export { ChatMessage } from './ChatMessage';
+export { QuickActions } from './QuickActions';
+export { ChatInput } from './ChatInput';
+export { MessageList } from './MessageList';
+export { DateDivider } from './DateDivider';

@@ -1,60 +1,58 @@
 'use client';
 
-import { useChat, useHeader } from '@/hooks'
+import { useChat, useHeader } from '@/hooks';
 import {
-    ChatInput,
-    MessageList,
-    DateDivider
-} from '@/components/sections/chat'
-import { useTranslations } from 'next-intl'
-import { PageSkeleton } from '@/components/shared'
+  ChatInput,
+  MessageList,
+  DateDivider,
+} from '@/components/sections/chat';
+import { useTranslations } from 'next-intl';
+import { PageSkeleton } from '@/components/shared';
 
 export default function ChatPage() {
-    useHeader('Chat')
-    const t = useTranslations('Chat')
-    const tCommon = useTranslations('Common')
+  useHeader('Chat');
+  const t = useTranslations('Chat');
 
-    const {
-        messages,
-        iaSuggestion,
-        inputMessage,
-        isTyping,
-        selectedAction,
-        isLoading,
-        actions
-    } = useChat()
+  const {
+    messages,
+    iaSuggestion,
+    inputMessage,
+    isTyping,
+    selectedAction,
+    isLoading,
+    actions,
+  } = useChat();
 
-    if (isLoading) {
-        return <PageSkeleton type="chat" />
-    }
+  if (isLoading) {
+    return <PageSkeleton type="chat" />;
+  }
 
-    return (
-        <div className="flex flex-col flex-1 h-full min-h-0 page-container gap-8 overflow-hidden max-w-[1400px] mx-auto w-full">
-            {/* Main Chat Area */}
-            <div className="flex-1 bg-card-bg rounded-3xl border border-white/10 flex flex-col overflow-hidden">
-                <div className="flex-1 overflow-y-auto px-10 py-6 custom-scrollbar flex flex-col gap-8">
+  return (
+    <div className="page-container mx-auto flex h-full min-h-0 w-full max-w-[1400px] flex-1 flex-col gap-8 overflow-hidden">
+      {/* Main Chat Area */}
+      <div className="bg-card-bg flex flex-1 flex-col overflow-hidden rounded-3xl border border-white/10">
+        <div className="custom-scrollbar flex flex-1 flex-col gap-8 overflow-y-auto px-10 py-6">
+          {/* In a real scenario, this would come from the messages grouping logic */}
+          <DateDivider dateLabel={t('today') + ', 16:40'} />
 
-                    {/* In a real scenario, this would come from the messages grouping logic */}
-                    <DateDivider dateLabel={t('today') + ", 16:40"} />
-
-                    <MessageList
-                        messages={messages}
-                        selectedAction={selectedAction}
-                        onQuickActionClick={actions.handleQuickAction}
-                    />
-                </div>
-            </div>
-
-            {/* Chat Input Footer */}
-            <div className="flex justify-center shrink-0">
-                <ChatInput
-                    value={inputMessage}
-                    suggestion={iaSuggestion}
-                    isTyping={isTyping}
-                    onChange={actions.handleInputChange}
-                    onSend={actions.handleSendMessage}
-                />
-            </div>
+          <MessageList
+            messages={messages}
+            selectedAction={selectedAction}
+            onQuickActionClick={actions.handleQuickAction}
+          />
         </div>
-    )
+      </div>
+
+      {/* Chat Input Footer */}
+      <div className="flex shrink-0 justify-center">
+        <ChatInput
+          value={inputMessage}
+          suggestion={iaSuggestion}
+          isTyping={isTyping}
+          onChange={actions.handleInputChange}
+          onSend={actions.handleSendMessage}
+        />
+      </div>
+    </div>
+  );
 }

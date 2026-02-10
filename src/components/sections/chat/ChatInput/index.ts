@@ -1,2 +1,2 @@
-export { ChatInput } from './ChatInput'
-export type { ChatInputProps } from './ChatInput.types'
+export { ChatInput } from './ChatInput';
+export type { ChatInputProps } from './ChatInput.types';

@@ -1,6 +1,6 @@
-import type { QuickActionType } from '@/types'
+import type { QuickActionType } from '@/types';
 
 export interface QuickActionsProps {
-    selectedAction: QuickActionType
-    onActionClick: (action: QuickActionType) => void
+  selectedAction: QuickActionType;
+  onActionClick: (action: QuickActionType) => void;
 }

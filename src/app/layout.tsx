@@ -39,7 +39,7 @@ export default async function RootLayout({
               closeButton
               icons={{
                 success: (
-                  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-white text-primary">
+                  <div className="text-primary flex h-8 w-8 items-center justify-center rounded-full bg-white">
                     <Check size={18} strokeWidth={3} />
                   </div>
                 ),
@@ -51,7 +51,7 @@ export default async function RootLayout({
                   title: 'sonner-toast-title',
                   description: 'sonner-toast-description',
                   closeButton: 'sonner-toast-close',
-                }
+                },
               }}
             />
           </QueryProvider>
