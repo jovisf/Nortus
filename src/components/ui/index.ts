@@ -5,3 +5,4 @@ export * from './CustomSelect';
 export * from './FormInputs';
 export * from './Badge';
 export * from './SearchableSelect';
+export * from './Skeleton';

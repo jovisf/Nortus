@@ -7,6 +7,7 @@ import {
     DateDivider
 } from '@/components/sections/chat'
 import { useTranslations } from 'next-intl'
+import { PageSkeleton } from '@/components/shared'
 
 export default function ChatPage() {
     useHeader('Chat')
@@ -24,11 +25,7 @@ export default function ChatPage() {
     } = useChat()
 
     if (isLoading) {
-        return (
-            <div className="flex-1 flex items-center justify-center h-full">
-                <div className="text-gray-400">{tCommon('loading')}</div>
-            </div>
-        )
+        return <PageSkeleton type="chat" />
     }
 
     return (

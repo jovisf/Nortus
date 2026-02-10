@@ -21,7 +21,8 @@
         "error": "Erro",
         "success": "Sucesso",
         "close": "Fechar",
-        "help": "Ajuda"
+        "help": "Ajuda",
+        "logout": "Sair"
     },
     "Auth": {
         "login": {

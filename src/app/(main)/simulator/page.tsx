@@ -7,6 +7,7 @@ import { AdditionalCoverages } from '@/components/sections/simulator/AdditionalC
 import { IndicatorsSidebar } from '@/components/sections/simulator/IndicatorsSidebar'
 import { useHeader } from '@/hooks'
 import { useTranslations } from 'next-intl'
+import { PageSkeleton } from '@/components/shared'
 
 export default function SimulatorPage() {
     useHeader('Simulador')
@@ -26,6 +27,10 @@ export default function SimulatorPage() {
         additionalCoveragesList,
         actions
     } = useSimulator()
+
+    if (isLoading) {
+        return <PageSkeleton type="simulator" />
+    }
 
     if (error) {
         return (
@@ -47,22 +52,16 @@ export default function SimulatorPage() {
 
                         {/* Plans Grid */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
-                            {isLoading ? (
-                                Array(3).fill(0).map((_, i) => (
-                                    <div key={i} className="h-48 bg-card-bg animate-pulse rounded-2xl border border-border-ui" />
-                                ))
-                            ) : (
-                                plans.map((plan) => (
-                                    <PlanCard
-                                        key={plan.name}
-                                        name={plan.name}
-                                        price={plan.finalValue}
-                                        isSelected={selectedPlanName === plan.name}
-                                        isRecommended={plan.name === recommendedPlanName}
-                                        onSelect={() => actions.setSelectedPlan(plan.name)}
-                                    />
-                                ))
-                            )}
+                            {plans.map((plan) => (
+                                <PlanCard
+                                    key={plan.name}
+                                    name={plan.name}
+                                    price={plan.finalValue}
+                                    isSelected={selectedPlanName === plan.name}
+                                    isRecommended={plan.name === recommendedPlanName}
+                                    onSelect={() => actions.setSelectedPlan(plan.name)}
+                                />
+                            ))}
                         </div>
 
                         {/* Controls */}
@@ -85,17 +84,10 @@ export default function SimulatorPage() {
 
                 {/* Sidebar Area */}
                 <div className="lg:col-span-1">
-                    {isLoading ? (
-                        <div className="flex flex-col gap-8">
-                            <div className="h-40 bg-card-bg animate-pulse rounded-2xl border border-border-ui" />
-                            <div className="h-[400px] bg-card-bg animate-pulse rounded-2xl border border-border-ui" />
-                        </div>
-                    ) : (
-                        <IndicatorsSidebar
-                            includedBenefits={includedBenefits}
-                            plans={plans}
-                        />
-                    )}
+                    <IndicatorsSidebar
+                        includedBenefits={includedBenefits}
+                        plans={plans}
+                    />
                 </div>
 
             </div>
