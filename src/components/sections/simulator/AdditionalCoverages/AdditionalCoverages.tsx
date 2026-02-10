@@ -3,6 +3,7 @@
 import { cn } from '@/lib'
 import type { BaseComponentProps, AdditionalCoverage } from '@/types'
 import { CoverageItem } from './CoverageItem'
+import { useTranslations } from 'next-intl'
 
 interface AdditionalCoveragesProps extends BaseComponentProps {
     coverages: AdditionalCoverage[]
@@ -16,9 +17,11 @@ export function AdditionalCoverages({
     onToggle,
     className
 }: AdditionalCoveragesProps) {
+    const t = useTranslations('Simulator')
+
     return (
         <div className={cn('flex flex-col gap-4', className)}>
-            <h3 className="text-white font-semibold mb-2">Coberturas Adicionais</h3>
+            <h3 className="text-white font-semibold mb-2">{t('additionalCoverages')}</h3>
             <div className="flex flex-col gap-3">
                 {coverages.map((coverage) => (
                     <CoverageItem

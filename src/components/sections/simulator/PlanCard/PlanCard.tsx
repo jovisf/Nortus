@@ -2,6 +2,7 @@
 
 import { cn, formatCurrency } from '@/lib'
 import type { PlanCardProps } from './PlanCard.types'
+import { useTranslations } from 'next-intl'
 
 export function PlanCard({
     name,
@@ -11,6 +12,8 @@ export function PlanCard({
     onSelect,
     className
 }: PlanCardProps) {
+    const t = useTranslations('Simulator')
+
     return (
         <div
             onClick={onSelect}
@@ -23,7 +26,7 @@ export function PlanCard({
         >
             {isRecommended && (
                 <span className="absolute right-4 top-4 rounded-full bg-brand-cyan px-4 py-1.5 text-[10px] font-bold text-app-bg uppercase tracking-wide">
-                    Recomendado
+                    {t('recommended')}
                 </span>
             )}
 
@@ -35,7 +38,7 @@ export function PlanCard({
                 <span className="text-3xl font-bold text-white">
                     {formatCurrency(price)}
                 </span>
-                <span className="text-sm text-text-secondary">Por mês</span>
+                <span className="text-sm text-text-secondary">{t('perMonth')}</span>
             </div>
         </div>
     )
