@@ -72,24 +72,24 @@ export function KpiTrendChart({ kpisTrend, activeKpiTrend, onKpiChange, classNam
                         opacityTo: 0.3,
                     }
                 },
-                colors: ['#3b82f6']
+                colors: ['#2db3c8']
             }
         }
     }, [kpisTrend, activeKpiTrend])
 
     if (!kpisTrend || !chartData) {
         return (
-            <div className={cn('bg-white rounded-lg p-6 shadow-sm border border-gray-200', className)}>
-                <div className="h-4 bg-gray-300 rounded w-1/3 mb-4 animate-pulse"></div>
-                <div className="h-64 bg-gray-100 rounded animate-pulse"></div>
+            <div className={cn('bg-card-bg rounded-lg p-6 shadow-sm border border-border-ui', className)}>
+                <div className="h-4 bg-gray-700 rounded w-1/3 mb-4 animate-pulse"></div>
+                <div className="h-64 bg-gray-800 rounded animate-pulse"></div>
             </div>
         )
     }
 
     return (
-        <div className={cn('bg-white rounded-lg p-6 shadow-sm border border-gray-200', className)}>
+        <div className={cn('bg-card-bg rounded-lg p-6 shadow-sm border border-border-ui', className)}>
             <div className="flex items-center justify-between mb-6">
-                <h2 className="text-lg font-semibold text-gray-900">Evolução dos KPI&apos;s</h2>
+                <h2 className="text-lg font-semibold text-text-primary">Evolução dos KPI&apos;s</h2>
                 <div className="flex gap-2">
                     {kpiButtons.map((btn) => (
                         <button
@@ -98,8 +98,8 @@ export function KpiTrendChart({ kpisTrend, activeKpiTrend, onKpiChange, classNam
                             className={cn(
                                 'px-4 py-2 rounded-md text-sm font-medium transition-colors',
                                 activeKpiTrend === btn.value
-                                    ? 'bg-blue-500 text-white'
-                                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                    ? 'bg-primary text-white'
+                                    : 'bg-app-bg text-text-secondary hover:bg-white/5'
                             )}
                         >
                             {btn.label}

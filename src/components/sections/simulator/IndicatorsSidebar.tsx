@@ -16,42 +16,42 @@ export function IndicatorsSidebar({
     return (
         <div className={cn('flex flex-col gap-8 h-full', className)}>
             {/* Benefícios Inclusos Section */}
-            <div className="bg-[#1a1b2e] rounded-2xl p-6 border border-[#2a2d45]">
-                <h3 className="text-white font-semibold mb-6">Benefícios Inclusos</h3>
+            <div className="bg-card-bg rounded-2xl p-6 border border-border-ui">
+                <h3 className="text-text-primary font-semibold mb-6">Benefícios Inclusos</h3>
                 <div className="flex flex-wrap gap-3">
                     {includedBenefits.map((benefit, idx) => (
                         <div
                             key={idx}
-                            className="flex items-center gap-2 rounded-full bg-[#1e2038] px-4 py-2 border border-[#2a2d45]"
+                            className="flex items-center gap-2 rounded-full bg-app-bg px-4 py-2 border border-border-ui"
                         >
-                            <div className="w-2 h-2 rounded-full bg-blue-500" />
-                            <span className="text-sm text-gray-300">{benefit}</span>
+                            <div className="w-2 h-2 rounded-full bg-primary" />
+                            <span className="text-sm text-text-secondary">{benefit}</span>
                         </div>
                     ))}
                 </div>
             </div>
 
             {/* Indicadores Section (My Page in image) */}
-            <div className="bg-[#1a1b2e] rounded-2xl p-6 border border-[#2a2d45] flex-1">
-                <h3 className="text-white font-semibold mb-6">Indicadores</h3>
+            <div className="bg-card-bg rounded-2xl p-6 border border-border-ui flex-1">
+                <h3 className="text-text-primary font-semibold mb-6">Indicadores</h3>
                 <div className="flex flex-col gap-4">
                     {plans.map((plan) => (
                         <div
                             key={plan.name}
-                            className="bg-[#141526] rounded-xl p-5 border border-[#2a2d45] flex justify-between items-center"
+                            className="bg-dashboard-bg rounded-xl p-5 border border-border-ui flex justify-between items-center"
                         >
                             <div>
-                                <h4 className="text-white font-medium mb-2">{plan.name}</h4>
+                                <h4 className="text-text-primary font-medium mb-2">{plan.name}</h4>
                                 <div className="flex gap-4 text-xs">
-                                    <span className="text-gray-500">
-                                        Conversão: <span className="text-green-500">{plan.conversion}%</span>
+                                    <span className="text-text-secondary">
+                                        Conversão: <span className="text-success">{plan.conversion}%</span>
                                     </span>
-                                    <span className="text-gray-500">
-                                        ROI: <span className="text-green-500">{plan.roi}%</span>
+                                    <span className="text-text-secondary">
+                                        ROI: <span className="text-success">{plan.roi}%</span>
                                     </span>
                                 </div>
                             </div>
-                            <span className="text-xl font-bold text-white whitespace-nowrap">
+                            <span className="text-xl font-bold text-text-primary whitespace-nowrap">
                                 {formatCurrency(plan.finalValue)}
                             </span>
                         </div>
