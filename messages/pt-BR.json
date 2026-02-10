@@ -250,6 +250,7 @@
         "serviceUnavailable": "Serviço temporariamente indisponível.",
         "gatewayTimeout": "Tempo de resposta excedido. Tente novamente.",
         "unexpected": "Ocorreu um erro inesperado. Tente novamente.",
-        "manyRequestsWait": "Muitas requisições. Aguarde um momento antes de tentar novamente."
+        "manyRequestsWait": "Muitas requisições. Aguarde um momento antes de tentar novamente.",
+        "blocked": "Muitas tentativas falharam. Tente novamente em {seconds} segundos."
     }
 }

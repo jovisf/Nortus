@@ -250,6 +250,7 @@
         "serviceUnavailable": "Service temporarily unavailable.",
         "gatewayTimeout": "Response time exceeded. Please try again.",
         "unexpected": "An unexpected error occurred. Please try again.",
-        "manyRequestsWait": "Too many requests. Please wait a moment before trying again."
+        "manyRequestsWait": "Too many requests. Please wait a moment before trying again.",
+        "blocked": "Too many failed attempts. Please try again in {seconds} seconds."
     }
 }

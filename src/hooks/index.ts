@@ -6,3 +6,4 @@ export { useSimulator } from './simulator/useSimulator';
 export * from './dashboard';
 export { useChat } from './chat';
 export { useHeader } from './useHeader';
+export { useRateLimit } from './useRateLimit';
