@@ -44,6 +44,7 @@ export function TicketModal({
     formData,
     errors,
     isPending,
+    isDirty,
     handleChange,
     handleSubmit: baseHandleSubmit,
   } = useTicketForm({ ticketToEdit, isOpen, onClose });
@@ -159,6 +160,7 @@ export function TicketModal({
                 onCancel={onClose}
                 isPending={isPending}
                 submitLabel={ticketToEdit ? tCommon('save') : tCommon('create')}
+                disabled={!isDirty}
               />
             </form>
           </motion.div>

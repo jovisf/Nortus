@@ -6,12 +6,14 @@ interface ActionButtonsProps {
   onCancel: () => void;
   isPending: boolean;
   submitLabel?: string;
+  disabled?: boolean;
 }
 
 export function ActionButtons({
   onCancel,
   isPending,
   submitLabel,
+  disabled,
 }: ActionButtonsProps) {
   const t = useTranslations('Common');
   const label = submitLabel || t('save');
@@ -27,7 +29,7 @@ export function ActionButtons({
       </button>
       <button
         type="submit"
-        disabled={isPending}
+        disabled={isPending || disabled}
         className="bg-primary shadow-primary/20 text-md max-w-[160px] flex-1 cursor-pointer rounded-2xl py-4 font-semibold text-white shadow-lg transition-all hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-50"
       >
         {isPending ? t('loading') : label}

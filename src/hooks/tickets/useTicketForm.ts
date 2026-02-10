@@ -109,11 +109,27 @@ export function useTicketForm({
     }
   };
 
+  const isDirty = (() => {
+    if (!ticketToEdit) {
+      return true;
+    }
+
+    return (
+      formData.client !== ticketToEdit.client ||
+      formData.email !== ticketToEdit.email ||
+      formData.subject !== ticketToEdit.subject ||
+      formData.responsible !== ticketToEdit.responsible ||
+      formData.priority !== ticketToEdit.priority ||
+      status !== ticketToEdit.status
+    );
+  })();
+
   return {
     formData,
     errors,
     status,
     isPending: isCreating || isUpdating,
+    isDirty,
     handleChange,
     handleSubmit,
   };
