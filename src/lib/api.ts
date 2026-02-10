@@ -2,7 +2,7 @@ import axios from 'axios'
 import { getCookie, COOKIE_NAMES } from '@/lib/cookies'
 import { handleApiError } from './apiErrorHandler'
 
-const API_BASE_URL = 'https://nortus-challenge.api.stage.loomi.com.br'
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL
 
 export const api = axios.create({
     baseURL: API_BASE_URL,
