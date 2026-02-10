@@ -45,6 +45,7 @@ export function useKpiChartOptions({ kpisTrend, activeKpiTrend }: UseKpiChartOpt
                 },
                 xaxis: {
                     ...CHART_COMMON_OPTIONS.xaxis,
+                    type: 'category' as const,
                     categories: kpisTrend.labels,
                 },
                 grid: {
@@ -52,10 +53,11 @@ export function useKpiChartOptions({ kpisTrend, activeKpiTrend }: UseKpiChartOpt
                     padding: { left: 10 }
                 },
                 annotations: {
-                    xaxis: kpisTrend.labels.slice(1, -1).map(label => ({
+                    xaxis: kpisTrend.labels.map((label) => ({
                         x: label,
                         borderColor: CHART_COLORS.gridBorder,
                         strokeDashArray: 5,
+                        borderWidth: 1,
                     }))
                 },
                 fill: {

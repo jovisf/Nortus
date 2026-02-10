@@ -60,7 +60,7 @@ export function useConversionChartOptions({ conversionData, labels }: UseConvers
                     }
                 },
                 annotations: {
-                    xaxis: labels.slice(1, -1).map(label => ({
+                    xaxis: labels.map(label => ({
                         x: label,
                         borderColor: CHART_COLORS.gridBorder,
                         strokeDashArray: 5,
