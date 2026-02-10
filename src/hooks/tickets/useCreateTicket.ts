@@ -15,7 +15,9 @@ export function useCreateTicket() {
         onSuccess: (newTicket) => {
             addTicket(newTicket);
             queryClient.invalidateQueries({ queryKey: ['tickets', 'all'] });
-            toast.success('Ticket criado com sucesso!');
+            toast.success('Ticket criado com sucesso!', {
+                description: 'O ticket foi criado e já está na sua lista.'
+            });
         },
         onError: (error: any) => {
             toast.error(error?.response?.data?.message || 'Erro ao criar ticket');

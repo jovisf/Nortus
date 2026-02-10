@@ -17,7 +17,9 @@ export function useUpdateTicket() {
             updateTicketInList(updatedTicket);
             queryClient.invalidateQueries({ queryKey: ['tickets', 'all'] });
             queryClient.invalidateQueries({ queryKey: ['tickets', updatedTicket.id] });
-            toast.success('Ticket atualizado com sucesso!');
+            toast.success('Ticket atualizado com sucesso!', {
+                description: 'As alterações foram salvas com sucesso.'
+            });
         },
         onError: (error: any) => {
             toast.error(error?.response?.data?.message || 'Erro ao atualizar ticket');
