@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { SearchInput, CustomSelect } from '@/components/ui';
+import { SearchInput, CustomSelect, SearchableSelect } from '@/components/ui';
 import type { TicketFilters } from '@/types';
 
 interface TicketFiltersSectionProps {
@@ -57,7 +57,7 @@ export function TicketFiltersSection({
                         onChange={(val) => onFilterChange('priority', val)}
                         className="min-w-[180px]"
                     />
-                    <CustomSelect
+                    <SearchableSelect
                         options={responsibleOptions}
                         value={filters.responsible}
                         onChange={(val) => onFilterChange('responsible', val)}
