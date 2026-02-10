@@ -1,5 +1,6 @@
 import { useCallback } from 'react'
 import { useQuery } from '@tanstack/react-query'
+import { toast } from 'sonner'
 import { chatService } from '@/services'
 import { useChatStore } from '@/store'
 import type { QuickActionType } from '@/types'
@@ -25,25 +26,32 @@ export function useChat() {
 
     const handleSendMessage = useCallback(() => {
         if (inputMessage.trim()) {
-            storeSendMessage()
+            toast.success('Sistema em Manutenção', {
+                description: 'A API do chat não está disponível no momento. Tente novamente mais tarde.'
+            })
+            // TODO: Reativar envio quando a API de chat estiver disponível
+            // storeSendMessage()
         }
-    }, [inputMessage, storeSendMessage])
+    }, [inputMessage])
 
     const handleQuickAction = useCallback((action: QuickActionType) => {
         setSelectedAction(action)
 
+        toast.success('Ação Indisponível', {
+            description: 'Esta funcionalidade depende da API do chat, que está temporariamente offline.'
+        })
+
         switch (action) {
             case 'send_proposal':
-                console.log('Opening proposal modal...')
                 break
             case 'make_call':
-                console.log('Initiating call...')
                 break
             case 'view_history':
-                console.log('Opening history...')
                 break
         }
+
     }, [setSelectedAction])
+
 
     const handleInputChange = useCallback((value: string) => {
         setInputMessage(value)

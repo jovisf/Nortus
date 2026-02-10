@@ -1,40 +1,30 @@
 'use client'
 
+import { Badge } from '@/components/ui/Badge'
 import { cn } from '@/lib'
 import type { QuickActionsProps } from './QuickActions.types'
-import type { QuickActionType } from '@/types'
 
-interface ActionButton {
-    id: QuickActionType
-    label: string
-    icon: string
-}
-
-const QUICK_ACTIONS: ActionButton[] = [
-    { id: 'send_proposal', label: 'Enviar proposta', icon: '📄' },
-    { id: 'make_call', label: 'Fazer ligação', icon: '📞' },
-    { id: 'view_history', label: 'Ver histórico', icon: '📋' },
-]
+const QUICK_ACTIONS = [
+    { id: 'send_proposal', label: 'Enviar proposta' },
+    { id: 'make_call', label: 'Fazer ligação' },
+    { id: 'view_history', label: 'Ver histórico' },
+] as const
 
 export function QuickActions({ selectedAction, onActionClick }: QuickActionsProps) {
     return (
-        <div className="flex flex-wrap gap-3 p-4 border-t border-gray-700">
+        <div className="flex flex-wrap gap-2.5 justify-end">
             {QUICK_ACTIONS.map((action) => (
                 <button
                     key={action.id}
                     onClick={() => onActionClick(action.id)}
-                    className={cn(
-                        'flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-200',
-                        'text-sm font-medium',
-                        selectedAction === action.id
-                            ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30'
-                            : 'bg-blue-600/20 text-blue-400 hover:bg-blue-600/40 border border-blue-500/30'
-                    )}
+                    className="hover:opacity-80 transition-opacity active:scale-95 cursor-pointer"
                 >
-                    <span>{action.icon}</span>
-                    <span>{action.label}</span>
+                    <Badge className="bg-primary text-white px-8 py-2.5 text-[11px] font-semibold border-none rounded-full shadow-lg shadow-primary/20">
+                        {action.label}
+                    </Badge>
                 </button>
             ))}
         </div>
     )
 }
+

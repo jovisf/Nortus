@@ -5,3 +5,5 @@ export { useUpdateTicket } from './useUpdateTicket';
 export { useDeleteTicket } from './useDeleteTicket';
 export { useAllTickets } from './useAllTickets';
 export { useFilteredTickets } from './useFilteredTickets';
+export { useTicketForm } from './useTicketForm';
+export { useTicketList } from './useTicketList';

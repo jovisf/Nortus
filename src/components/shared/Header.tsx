@@ -16,8 +16,11 @@ export function Header({ title: propTitle, actions: propActions }: HeaderProps) 
 
     return (
         <header
-            className="flex items-center justify-between px-10 bg-sidebar border-b border-border-muted flex-shrink-0"
-            style={{ height: 'var(--header-height)' }}
+            className="fixed top-0 left-0 w-full flex items-center justify-between px-10 bg-layout-bg border-b border-border-ui z-40"
+            style={{
+                height: 'var(--header-height)',
+                paddingLeft: 'calc(var(--sidebar-width) + 40px)'
+            }}
         >
             <h1 className="text-2xl font-bold text-white tracking-tight">
                 {title}

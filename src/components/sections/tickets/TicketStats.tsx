@@ -1,36 +1,56 @@
 'use client';
 
+import { useMemo } from 'react';
 import { useAllTickets } from '@/hooks';
+import { StatCard } from './StatCard';
 
 export function TicketStats() {
     const { data } = useAllTickets();
     const tickets = data?.data || [];
 
-    const stats = {
-        total: tickets.length,
-        open: tickets.filter((t) => t.status === 'Aberto').length,
-        completed: tickets.filter((t) => t.status === 'Fechado').length,
-        inProgress: tickets.filter((t) => t.status === 'Em andamento').length,
-    };
+    const stats = useMemo(() => {
+        const counts = tickets.reduce((acc, ticket) => {
+            acc.total++;
+            if (ticket.status === 'Aberto') acc.open++;
+            if (ticket.status === 'Em andamento') acc.inProgress++;
+            if (ticket.status === 'Fechado') acc.closed++;
+            return acc;
+        }, { open: 0, inProgress: 0, closed: 0, total: 0 });
+
+        return [
+            {
+                title: 'Tickets Abertos',
+                value: counts.open,
+                icon: '/tickets/opened.svg',
+            },
+            {
+                title: 'Em andamento',
+                value: counts.inProgress,
+                icon: '/tickets/progress.svg',
+            },
+            {
+                title: 'Resolvidos hoje',
+                value: counts.closed,
+                icon: '/tickets/closed.svg',
+            },
+            {
+                title: 'Total de Tickets',
+                value: counts.total,
+                icon: '/tickets/total.svg',
+            },
+        ];
+    }, [tickets]);
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-            <div className="p-4 border rounded shadow-sm bg-white">
-                <p className="text-gray-500 text-sm">Total de Tickets</p>
-                <p className="text-2xl font-bold">{stats.total}</p>
-            </div>
-            <div className="p-4 border rounded shadow-sm bg-white">
-                <p className="text-gray-500 text-sm">Em Aberto</p>
-                <p className="text-2xl font-bold text-yellow-600">{stats.open}</p>
-            </div>
-            <div className="p-4 border rounded shadow-sm bg-white">
-                <p className="text-gray-500 text-sm">Concluídos</p>
-                <p className="text-2xl font-bold text-green-600">{stats.completed}</p>
-            </div>
-            <div className="p-4 border rounded shadow-sm bg-white">
-                <p className="text-gray-500 text-sm">Em andamento</p>
-                <p className="text-2xl font-bold text-blue-600">{stats.inProgress}</p>
-            </div>
+        <div className="flex flex-row items-stretch gap-5 mb-4 w-full overflow-x-auto pb-4 md:pb-0 scrollbar-hide">
+            {stats.map((stat, index) => (
+                <StatCard
+                    key={index}
+                    title={stat.title}
+                    value={stat.value}
+                    icon={stat.icon}
+                />
+            ))}
         </div>
     );
 }

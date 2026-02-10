@@ -1,8 +1,52 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0B1125;
+  --foreground: #ffffff;
+
+  /* App Specific Palette */
+  --app-bg: #0B1125;
+  --dashboard-bg: #0f1322;
+  --card-bg: rgba(255, 255, 255, 0.05);
+  --layout-bg: #20273e;
+
+  /* Brand Colors */
+  --primary: #1876d2;
+  --primary-hover: #0ea5e9;
+  --blue-100: #eff6ff;
+
+  /* Text Colors */
+  --text-primary: #ffffff;
+  --text-secondary: #8e98b0;
+
+  /* Status Colors */
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #f43f5e;
+
+  /* Dashboard Colors */
+  --chart-kpi-color: #2db3c8;
+  --chart-conversion-color: #75dfff;
+  --chart-conversion-gradient: linear-gradient(90deg, #75dfff 100%, #75dfff 10%);
+
+  /* UI Details */
+  --border: #1e293b;
+  --grid: #334155;
+
+  /* Ticket Specifics */
+  --priority-urgent: #BA1A1A;
+  --priority-medium: #B5EDFF;
+  --priority-low: #E0F7FF;
+  --status-inprogress: #D2B843;
+  --status-open: #43D2CB;
+  --brand-cyan: #43D2CB;
+  --conversion-green: #00DC04;
+  --filter-bg: #0B1125;
+  --filter-text: #F6F8FC;
+  --input-bg: rgba(255, 255, 255, 0.05);
+  --input-placeholder: rgba(255, 255, 255, 0.1);
+  --text-header-table: rgba(255, 255, 255, 0.43);
+  --table-divider: rgba(255, 255, 255, 0.18);
 }
 
 @theme inline {
@@ -11,24 +55,137 @@
   --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
 
-  --color-sidebar: #20273e;
-  --color-main-bg: #0b111d;
-  --color-primary-blue: #0066ff;
-  --color-border-muted: #2a2d45;
+  /* Mapping to Tailwind Colors */
+  --color-app-bg: var(--app-bg);
+  --color-dashboard-bg: var(--dashboard-bg);
+  --color-card-bg: var(--card-bg);
+  --color-layout-bg: var(--layout-bg);
+  --color-card-ticket: var(--card-bg);
 
-  --sidebar-width: 80px;
-  --header-height: 88px;
-}
+  /* Ticket Colors */
+  --color-priority-urgent: var(--priority-urgent);
+  --color-priority-medium: var(--priority-medium);
+  --color-priority-low: var(--priority-low);
+  --color-status-inprogress: var(--status-inprogress);
+  --color-status-open: var(--brand-cyan);
+  --color-brand-cyan: var(--brand-cyan);
+  --color-conversion-green: var(--conversion-green);
+  --color-filter-bg: var(--filter-bg);
+  --color-filter-text: var(--filter-text);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+
+  --color-border-ui: var(--border);
+  --color-grid: var(--grid);
+
+  --color-chart-kpi: var(--chart-kpi-color);
+  --color-chart-conversion: var(--chart-conversion-color);
+  --image-chart-conversion-gradient: var(--chart-conversion-gradient);
+
+  /* Aliases for backward compatibility */
+  --color-sidebar: var(--layout-bg);
+  --color-sidebar-bg: var(--layout-bg);
+  --color-main-bg: var(--app-bg);
+  --color-primary-blue: var(--primary);
+  --color-border-muted: var(--border);
+
+  --sidebar-width: 100px;
+  --header-height: 66px;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Sonner Toast Custom Styles */
+[data-sonner-toast] {
+  border-radius: 12px !important;
+}
+
+.sonner-toast-custom {
+  background: var(--primary) !important;
+  border: none !important;
+  border-radius: 12px !important;
+  padding: 16px 20px !important;
+  padding-right: 40px !important;
+  color: white !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 18px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
+  min-width: 350px !important;
+}
+
+.sonner-toast-custom [data-icon] {
+  margin: 0 !important;
+  flex-shrink: 0 !important;
+}
+
+.sonner-toast-title {
+  color: white !important;
+  font-weight: 700 !important;
+  font-size: 15px !important;
+  letter-spacing: -0.01em !important;
+  margin-bottom: 2px !important;
+}
+
+.sonner-toast-description {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-size: 13px !important;
+  line-height: 1.4 !important;
+}
+
+.sonner-toast-close {
+  left: unset !important;
+  right: 8px !important;
+  top: 12px !important;
+  transform: none !important;
+  color: white !important;
+  opacity: 0.8 !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: none !important;
+  border-radius: 6px !important;
+  width: 20px !important;
+  height: 20px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.2s !important;
+}
+
+
+.sonner-toast-close:hover {
+  opacity: 1 !important;
+}
+
+.page-container {
+  @apply px-10 max-w-[1600px] mx-auto py-5;
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
 }

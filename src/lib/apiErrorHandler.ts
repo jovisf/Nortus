@@ -1,4 +1,5 @@
 import { AxiosError } from 'axios';
+import { toast } from 'sonner';
 import { handleUnauthorizedError } from './authErrorHandler';
 import type { ApiError, ApiErrorResponse, ErrorHandlerOptions } from '@/types/api';
 import { ErrorCategory, HttpStatus } from '@/types/api';
@@ -125,9 +126,7 @@ function logError(error: ApiError, context?: Record<string, any>): void {
 }
 
 function showErrorNotification(message: string): void {
-    if (process.env.NODE_ENV === 'development') {
-        console.log('[Toast]', message);
-    }
+    toast.error(message);
 }
 
 export function handleApiError(
