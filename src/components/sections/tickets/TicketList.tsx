@@ -9,9 +9,10 @@ import { useTranslations } from 'next-intl';
 
 interface TicketListProps {
   onEdit: (ticket: Ticket) => void;
+  onView: (ticket: Ticket) => void;
 }
 
-export function TicketList({ onEdit }: TicketListProps) {
+export function TicketList({ onEdit, onView }: TicketListProps) {
   const t = useTranslations('Tickets');
   const {
     page,
@@ -28,7 +29,7 @@ export function TicketList({ onEdit }: TicketListProps) {
     itemsPerPage,
   } = useTicketList();
 
-  const columns = useTicketColumns({ onEdit });
+  const columns = useTicketColumns({ onEdit, onView });
 
   return (
     <div className="flex flex-col overflow-hidden rounded-[22px] border border-white/5 bg-white/5">

@@ -9,9 +9,10 @@ import { useTranslations } from 'next-intl';
 
 interface UseTicketColumnsProps {
   onEdit: (ticket: Ticket) => void;
+  onView: (ticket: Ticket) => void;
 }
 
-export function useTicketColumns({ onEdit }: UseTicketColumnsProps) {
+export function useTicketColumns({ onEdit, onView }: UseTicketColumnsProps) {
   const t = useTranslations('Tickets.table');
   const tCommon = useTranslations('Common');
 
@@ -87,7 +88,10 @@ export function useTicketColumns({ onEdit }: UseTicketColumnsProps) {
                 height={16}
               />
             </button>
-            <button className="text-filter-text/60 flex cursor-pointer items-center gap-2 text-xs transition-colors hover:text-white">
+            <button
+              onClick={() => onView(ticket)}
+              className="text-filter-text/60 flex cursor-pointer items-center gap-2 text-xs transition-colors hover:text-white"
+            >
               <span>{tCommon('view')}</span>
               <Image
                 src="/tickets/arrow.svg"

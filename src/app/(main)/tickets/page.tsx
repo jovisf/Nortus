@@ -5,6 +5,7 @@ import {
   TicketStats,
   TicketList,
   TicketModal,
+  TicketDetailsModal,
 } from '@/components/sections/tickets';
 import { useHeader, useTicketList } from '@/hooks';
 import { PageSkeleton } from '@/components/shared';
@@ -18,9 +19,17 @@ export default function TicketsPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [ticketToEdit, setTicketToEdit] = useState<Ticket | null>(null);
 
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+  const [ticketToView, setTicketToView] = useState<Ticket | null>(null);
+
   const handleEdit = useCallback((ticket: Ticket) => {
     setTicketToEdit(ticket);
     setIsModalOpen(true);
+  }, []);
+
+  const handleView = useCallback((ticket: Ticket) => {
+    setTicketToView(ticket);
+    setIsViewModalOpen(true);
   }, []);
 
   const handleCreate = useCallback(() => {
@@ -51,12 +60,18 @@ export default function TicketsPage() {
     <div className="page-container">
       <TicketStats />
 
-      <TicketList onEdit={handleEdit} />
+      <TicketList onEdit={handleEdit} onView={handleView} />
 
       <TicketModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         ticketToEdit={ticketToEdit}
+      />
+
+      <TicketDetailsModal
+        isOpen={isViewModalOpen}
+        onClose={() => setIsViewModalOpen(false)}
+        ticket={ticketToView}
       />
     </div>
   );
