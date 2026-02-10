@@ -34,69 +34,67 @@ export default function SimulatorPage() {
     }
 
     return (
-        <div className="p-10">
-            <div className="max-w-[1400px]">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="page-container">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-                    {/* Main Content Area */}
-                    <div className="lg:col-span-2 flex flex-col gap-8">
-                        <section className="bg-sidebar rounded-3xl p-8 border border-border-muted">
-                            <h2 className="text-2xl font-bold text-white mb-8">Planos personalizados</h2>
+                {/* Main Content Area */}
+                <div className="lg:col-span-2 flex flex-col gap-8">
+                    <section className="bg-card-bg rounded-3xl p-8 border border-border-ui">
+                        <h2 className="text-2xl font-bold text-white mb-8">Planos personalizados</h2>
 
-                            {/* Plans Grid */}
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
-                                {isLoading ? (
-                                    Array(3).fill(0).map((_, i) => (
-                                        <div key={i} className="h-48 bg-[#1e2038] animate-pulse rounded-2xl border border-[#2a2d45]" />
-                                    ))
-                                ) : (
-                                    plans.map((plan) => (
-                                        <PlanCard
-                                            key={plan.name}
-                                            name={plan.name}
-                                            price={plan.finalValue}
-                                            isSelected={selectedPlanName === plan.name}
-                                            isRecommended={plan.name === recommendedPlanName}
-                                            onSelect={() => actions.setSelectedPlan(plan.name)}
-                                        />
-                                    ))
-                                )}
-                            </div>
+                        {/* Plans Grid */}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
+                            {isLoading ? (
+                                Array(3).fill(0).map((_, i) => (
+                                    <div key={i} className="h-48 bg-card-bg animate-pulse rounded-2xl border border-border-ui" />
+                                ))
+                            ) : (
+                                plans.map((plan) => (
+                                    <PlanCard
+                                        key={plan.name}
+                                        name={plan.name}
+                                        price={plan.finalValue}
+                                        isSelected={selectedPlanName === plan.name}
+                                        isRecommended={plan.name === recommendedPlanName}
+                                        onSelect={() => actions.setSelectedPlan(plan.name)}
+                                    />
+                                ))
+                            )}
+                        </div>
 
-                            {/* Controls */}
-                            <div className="flex flex-col gap-10">
-                                <SimulatorSliders
-                                    vehicleValue={vehicleValue}
-                                    clientAge={clientAge}
-                                    onVehicleValueChange={actions.setVehicleValue}
-                                    onClientAgeChange={actions.setClientAge}
-                                />
-
-                                <AdditionalCoverages
-                                    coverages={additionalCoveragesList}
-                                    selectedIds={selectedAdditionalCoverages}
-                                    onToggle={actions.toggleAdditionalCoverage}
-                                />
-                            </div>
-                        </section>
-                    </div>
-
-                    {/* Sidebar Area */}
-                    <div className="lg:col-span-1">
-                        {isLoading ? (
-                            <div className="flex flex-col gap-8">
-                                <div className="h-40 bg-[#1a1b2e] animate-pulse rounded-2xl border border-[#2a2d45]" />
-                                <div className="h-[400px] bg-[#1a1b2e] animate-pulse rounded-2xl border border-[#2a2d45]" />
-                            </div>
-                        ) : (
-                            <IndicatorsSidebar
-                                includedBenefits={includedBenefits}
-                                plans={plans}
+                        {/* Controls */}
+                        <div className="flex flex-col gap-10">
+                            <SimulatorSliders
+                                vehicleValue={vehicleValue}
+                                clientAge={clientAge}
+                                onVehicleValueChange={actions.setVehicleValue}
+                                onClientAgeChange={actions.setClientAge}
                             />
-                        )}
-                    </div>
 
+                            <AdditionalCoverages
+                                coverages={additionalCoveragesList}
+                                selectedIds={selectedAdditionalCoverages}
+                                onToggle={actions.toggleAdditionalCoverage}
+                            />
+                        </div>
+                    </section>
                 </div>
+
+                {/* Sidebar Area */}
+                <div className="lg:col-span-1">
+                    {isLoading ? (
+                        <div className="flex flex-col gap-8">
+                            <div className="h-40 bg-card-bg animate-pulse rounded-2xl border border-border-ui" />
+                            <div className="h-[400px] bg-card-bg animate-pulse rounded-2xl border border-border-ui" />
+                        </div>
+                    ) : (
+                        <IndicatorsSidebar
+                            includedBenefits={includedBenefits}
+                            plans={plans}
+                        />
+                    )}
+                </div>
+
             </div>
         </div>
     )

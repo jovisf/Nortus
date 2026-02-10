@@ -33,7 +33,7 @@ export default function TicketsPage() {
     useHeader('Gestão de Tickets', headerActions);
 
     return (
-        <div className="px-10 max-w-[1600px] mx-auto py-5">
+        <div className="page-container">
             <TicketStats />
 
             <TicketList onEdit={handleEdit} />
