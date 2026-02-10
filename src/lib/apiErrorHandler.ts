@@ -3,6 +3,20 @@ import { toast } from 'sonner';
 import { handleUnauthorizedError } from './authErrorHandler';
 import type { ApiError, ApiErrorResponse, ErrorHandlerOptions } from '@/types/api';
 import { ErrorCategory, HttpStatus } from '@/types/api';
+import { getCookie } from './cookies';
+
+import ptBR from '../../messages/pt-BR.json';
+import enUS from '../../messages/en-US.json';
+
+const translations: Record<string, any> = {
+    'pt-BR': ptBR.Errors,
+    'en-US': enUS.Errors
+};
+
+function getT() {
+    const locale = typeof window !== 'undefined' ? getCookie('NEXT_LOCALE') || 'pt-BR' : 'pt-BR';
+    return (key: string) => translations[locale]?.[key] || translations['pt-BR'][key] || key;
+}
 
 export function getErrorCategory(statusCode?: number): ErrorCategory {
     if (!statusCode) return ErrorCategory.UNKNOWN;
@@ -30,44 +44,46 @@ export function getErrorCategory(statusCode?: number): ErrorCategory {
 }
 
 export function getErrorMessage(error: ApiError): string {
+    const t = getT();
+
     if (error.response?.data?.message) {
         return error.response.data.message;
     }
 
     if (error.code === 'ECONNABORTED') {
-        return 'A requisição demorou muito tempo. Tente novamente.';
+        return t('timeout');
     }
 
     if (error.code === 'ERR_NETWORK') {
-        return 'Erro de conexão. Verifique sua internet.';
+        return t('network');
     }
 
     const statusCode = error.response?.status;
 
     switch (statusCode) {
         case HttpStatus.BAD_REQUEST:
-            return 'Requisição inválida. Verifique os dados enviados.';
+            return t('badRequest');
         case HttpStatus.UNAUTHORIZED:
-            return 'Sessão expirada. Faça login novamente.';
+            return t('unauthorized');
         case HttpStatus.FORBIDDEN:
-            return 'Você não tem permissão para realizar esta ação.';
+            return t('forbidden');
         case HttpStatus.NOT_FOUND:
-            return 'Recurso não encontrado.';
+            return t('notFound');
         case HttpStatus.CONFLICT:
-            return 'Este recurso já existe ou está em conflito.';
+            return t('conflict');
         case HttpStatus.UNPROCESSABLE_ENTITY:
-            return 'Dados inválidos. Verifique os campos.';
+            return t('unprocessable');
         case HttpStatus.TOO_MANY_REQUESTS:
-            return 'Muitas requisições. Aguarde um momento.';
+            return t('tooManyRequests');
         case HttpStatus.INTERNAL_SERVER_ERROR:
-            return 'Erro no servidor. Tente novamente mais tarde.';
+            return t('serverError');
         case HttpStatus.BAD_GATEWAY:
         case HttpStatus.SERVICE_UNAVAILABLE:
-            return 'Serviço temporariamente indisponível.';
+            return t('serviceUnavailable');
         case HttpStatus.GATEWAY_TIMEOUT:
-            return 'Tempo de resposta excedido. Tente novamente.';
+            return t('gatewayTimeout');
         default:
-            return 'Ocorreu um erro inesperado. Tente novamente.';
+            return t('unexpected');
     }
 }
 
@@ -133,6 +149,8 @@ export function handleApiError(
     error: unknown,
     options: ErrorHandlerOptions = {}
 ): ApiError {
+    const t = getT();
+
     if (!error || typeof error !== 'object' || !('isAxiosError' in error)) {
         const unknownError = new Error('Unknown error') as any;
         unknownError.isAxiosError = false;
@@ -165,14 +183,14 @@ export function handleApiError(
         case HttpStatus.FORBIDDEN:
             if (showToast) {
                 showErrorNotification(
-                    customMessage || 'Você não tem permissão para realizar esta ação.'
+                    customMessage || t('forbidden')
                 );
             }
             break;
 
         case HttpStatus.NOT_FOUND:
             if (showToast) {
-                showErrorNotification(customMessage || 'Recurso não encontrado.');
+                showErrorNotification(customMessage || t('notFound'));
             }
             break;
 
@@ -187,7 +205,7 @@ export function handleApiError(
         case HttpStatus.TOO_MANY_REQUESTS:
             if (showToast) {
                 showErrorNotification(
-                    customMessage || 'Muitas requisições. Aguarde um momento antes de tentar novamente.'
+                    customMessage || t('tooManyRequests')
                 );
             }
             break;
