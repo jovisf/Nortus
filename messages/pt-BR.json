@@ -1,0 +1,250 @@
+{
+    "Common": {
+        "login": "Login",
+        "email": "E-mail",
+        "password": "Senha",
+        "save": "Salvar",
+        "cancel": "Cancelar",
+        "create": "Criar",
+        "edit": "Editar",
+        "view": "Ver",
+        "delete": "Excluir",
+        "search": "Buscar...",
+        "loading": "Carregando...",
+        "noData": "Nenhum dado encontrado.",
+        "actions": "Ações",
+        "id": "ID",
+        "status": "Status",
+        "name": "Nome",
+        "all": "Todos",
+        "back": "Voltar",
+        "error": "Erro",
+        "success": "Sucesso",
+        "close": "Fechar"
+    },
+    "Auth": {
+        "login": {
+            "title": "Login",
+            "emailLabel": "E-mail",
+            "emailPlaceholder": "seu@email.com",
+            "passwordLabel": "Senha",
+            "passwordPlaceholder": "Digite sua senha",
+            "rememberMe": "Lembrar-me",
+            "forgotPassword": "Esqueceu a senha?",
+            "signIn": "Entrar",
+            "signingIn": "Entrando...",
+            "noAccount": "Não tem uma conta?",
+            "signUp": "Cadastre-se"
+        },
+        "forgotPassword": {
+            "title": "Recuperar senha",
+            "description": "Insira seu e-mail para receber um link de recuperação.",
+            "send": "Enviar link",
+            "backToLogin": "Voltar para o login"
+        },
+        "resetPassword": {
+            "title": "Resetar senha",
+            "newPassword": "Nova senha",
+            "confirmPassword": "Confirmar nova senha",
+            "submit": "Resetar senha"
+        }
+    },
+    "Layout": {
+        "sidebar": {
+            "dashboard": "Dashboard",
+            "tickets": "Tickets",
+            "chat": "Chat",
+            "simulator": "Simulador"
+        },
+        "header": {
+            "defaultTitle": "Nortus",
+            "dashboard": "Dashboard",
+            "tickets": "Tickets",
+            "chat": "Chat & Assistente Virtual",
+            "simulator": "Simulador de Planos"
+        }
+    },
+    "Dashboard": {
+        "kpiEvolution": "Evolução dos KPI's",
+        "conversionRate": "Taxa de conversão",
+        "activeClients": "Clientes ativos",
+        "mapTitle": "Mapa de clientes por região",
+        "loadingLocals": "Carregando locais...",
+        "searchLocal": "Buscar local...",
+        "searchType": "Buscar tipo...",
+        "allLocals": "Todos os locais",
+        "allTypes": "Todos os tipos",
+        "kpis": {
+            "retention": "Retenção",
+            "conversion": "Conversão",
+            "churn": "Churn",
+            "arpu": "ARPU"
+        },
+        "table": {
+            "name": "Nome",
+            "secureType": "Tipo de Seguro",
+            "monthValue": "Valor mensal",
+            "status": "Status",
+            "renewal": "Renovação",
+            "location": "Região",
+            "searchPlaceholder": "Buscar por nome ou email...",
+            "empty": "Nenhum cliente encontrado."
+        }
+    },
+    "Tickets": {
+        "listTitle": "Lista de Tickets",
+        "newTicket": "Novo Ticket",
+        "editTicket": "Editar Ticket",
+        "stats": {
+            "open": "Tickets Abertos",
+            "inProgress": "Em andamento",
+            "resolvedToday": "Resolvidos hoje",
+            "total": "Total de Tickets"
+        },
+        "filters": {
+            "search": "Buscar por ID, cliente ou assunto...",
+            "allStatus": "Todos os status",
+            "allPriorities": "Todas as prioridades",
+            "allResponsibles": "Todos os responsáveis"
+        },
+        "table": {
+            "priority": "Prioridade",
+            "client": "Cliente",
+            "subject": "Assunto",
+            "status": "Status",
+            "createdAt": "Criado em",
+            "responsible": "Responsável",
+            "actions": "Ações",
+            "empty": "Nenhum ticket encontrado."
+        },
+        "modal": {
+            "createDescription": "Preencha os dados abaixo para registrar um novo ticket na plataforma.",
+            "editDescription": "Atualize os dados abaixo para modificar o ticket na plataforma.",
+            "clientLabel": "Nome do cliente",
+            "clientPlaceholder": "Nome da pessoa ou empresa que está solicitando o suporte",
+            "emailLabel": "Email",
+            "emailPlaceholder": "E-mail de contato para atualizações e resposta",
+            "priorityLabel": "Prioridade",
+            "responsibleLabel": "Responsável",
+            "responsiblePlaceholder": "Quem será o responsável",
+            "subjectLabel": "Assunto",
+            "subjectPlaceholder": "Resumo breve do problema ou solicitação"
+        },
+        "priorities": {
+            "low": "Baixa",
+            "medium": "Média",
+            "high": "Alta",
+            "urgent": "Urgente"
+        },
+        "statuses": {
+            "open": "Aberto",
+            "inProgress": "Em andamento",
+            "closed": "Fechado"
+        }
+    },
+    "Simulator": {
+        "title": "Planos personalizados",
+        "indicators": "Indicadores",
+        "includedBenefits": "Benefícios Inclusos",
+        "additionalCoverages": "Coberturas Adicionais",
+        "perMonth": "Por mês",
+        "recommended": "Recomendado",
+        "conversion": "Conversão:",
+        "roi": "ROI:",
+        "sliders": {
+            "vehicleValue": "Valor do veículo",
+            "clientAge": "Idade do Cliente"
+        },
+        "units": {
+            "years": " anos"
+        },
+        "error": {
+            "loading": "Erro ao carregar o simulador",
+            "tryLater": "Tente atualizar a página mais tarde."
+        }
+    },
+    "Chat": {
+        "loading": "Carregando chat...",
+        "today": "HOJE",
+        "iaSuggestion": "Sugestão da IA",
+        "tabToFill": "para preencher a resposta",
+        "placeholder": "Escreva aqui...",
+        "typing": "Digitando...",
+        "actions": {
+            "sendProposal": "Enviar proposta",
+            "makeCall": "Fazer ligação",
+            "viewHistory": "Ver histórico"
+        },
+        "maintenance": {
+            "title": "Sistema em Manutenção",
+            "description": "A API do chat não está disponível no momento. Tente novamente mais tarde."
+        },
+        "unavailable": {
+            "title": "Ação Indisponível",
+            "description": "Esta funcionalidade depende da API do chat, que está temporariamente offline."
+        }
+    },
+    "Validations": {
+        "required": "Campo obrigatório",
+        "email": {
+            "required": "E-mail é obrigatório",
+            "invalid": "E-mail inválido"
+        },
+        "password": {
+            "required": "Senha é obrigatória",
+            "min": "Senha deve ter pelo menos {min} caracteres",
+            "dontMatch": "As senhas não coincidem"
+        },
+        "clientName": {
+            "min": "Nome do cliente deve ter pelo menos 3 caracteres",
+            "max": "Nome muito longo"
+        },
+        "priority": {
+            "invalid": "Selecione uma prioridade válida"
+        },
+        "responsible": {
+            "min": "Responsável deve ter pelo menos 3 caracteres",
+            "max": "Nome muito longo"
+        },
+        "subject": {
+            "min": "O assunto deve ter pelo menos 5 caracteres",
+            "max": "Assunto excedeu 200"
+        }
+    },
+    "Toasts": {
+        "tickets": {
+            "createSuccess": "Ticket criado com sucesso!",
+            "createDescription": "O ticket foi criado e já está na sua lista.",
+            "updateSuccess": "Ticket atualizado com sucesso!",
+            "updateDescription": "As alterações foram salvas corretamente.",
+            "deleteSuccess": "Ticket excluído com sucesso!",
+            "deleteDescription": "O ticket foi removido da plataforma.",
+            "createError": "Erro ao criar ticket",
+            "updateError": "Erro ao atualizar ticket",
+            "deleteError": "Erro ao excluir ticket"
+        }
+    },
+    "Pagination": {
+        "first": "Primeira página",
+        "previous": "Página anterior",
+        "next": "Próxima página",
+        "last": "Última página",
+        "of": "{current} de {total}"
+    },
+    "Errors": {
+        "timeout": "A requisição demorou muito tempo. Tente novamente.",
+        "network": "Erro de conexão. Verifique sua internet.",
+        "badRequest": "Requisição inválida. Verifique os dados enviados.",
+        "unauthorized": "Sessão expirada. Faça login novamente.",
+        "forbidden": "Você não tem permissão para realizar esta ação.",
+        "notFound": "Recurso não encontrado.",
+        "conflict": "Este recurso já existe ou está em conflito.",
+        "unprocessable": "Dados inválidos. Verifique os campos.",
+        "tooManyRequests": "Muitas requisições. Aguarde um momento.",
+        "serverError": "Erro no servidor. Tente novamente mais tarde.",
+        "serviceUnavailable": "Serviço temporariamente indisponível.",
+        "gatewayTimeout": "Tempo de resposta excedido. Tente novamente.",
+        "unexpected": "Ocorreu um erro inesperado. Tente novamente.",
+        "manyRequestsWait": "Muitas requisições. Aguarde um momento antes de tentar novamente."
+    }
+}

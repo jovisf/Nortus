@@ -5,20 +5,24 @@ import type { Column } from '@/components/ui';
 import { Badge } from '@/components/ui';
 import { getPriorityStyles, getStatusStyles } from '@/constants/tickets';
 import { formatDate } from '@/lib/utils';
+import { useTranslations } from 'next-intl';
 
 interface UseTicketColumnsProps {
     onEdit: (ticket: Ticket) => void;
 }
 
 export function useTicketColumns({ onEdit }: UseTicketColumnsProps) {
+    const t = useTranslations('Tickets.table');
+    const tCommon = useTranslations('Common');
+
     const columns = useMemo<Column<Ticket>[]>(() => [
         {
-            header: 'ID',
+            header: tCommon('id'),
             key: 'ticketId',
             className: 'font-bold text-white',
         },
         {
-            header: 'Prioridade',
+            header: t('priority'),
             key: 'priority',
             render: (ticket) => (
                 <Badge className={getPriorityStyles(ticket.priority)}>
@@ -27,7 +31,7 @@ export function useTicketColumns({ onEdit }: UseTicketColumnsProps) {
             ),
         },
         {
-            header: 'Cliente',
+            header: t('client'),
             key: 'client',
             render: (ticket) => (
                 <div className="flex flex-col">
@@ -37,12 +41,12 @@ export function useTicketColumns({ onEdit }: UseTicketColumnsProps) {
             )
         },
         {
-            header: 'Assunto',
+            header: t('subject'),
             key: 'subject',
             className: 'font-bold text-white max-w-[200px] truncate',
         },
         {
-            header: 'Status',
+            header: t('status'),
             key: 'status',
             render: (ticket) => (
                 <Badge className={getStatusStyles(ticket.status)}>
@@ -51,17 +55,17 @@ export function useTicketColumns({ onEdit }: UseTicketColumnsProps) {
             )
         },
         {
-            header: 'Criado em',
+            header: t('createdAt'),
             key: 'createdAt',
             render: (ticket) => <span className="text-white font-bold">{formatDate(ticket.createdAt)}</span>,
         },
         {
-            header: 'Responsável',
+            header: t('responsible'),
             key: 'responsible',
             className: 'font-bold text-white',
         },
         {
-            header: 'Ações',
+            header: t('actions'),
             key: 'actions',
             headerClassName: 'text-start pr-6',
             render: (ticket) => (
@@ -70,19 +74,19 @@ export function useTicketColumns({ onEdit }: UseTicketColumnsProps) {
                         onClick={() => onEdit(ticket)}
                         className="flex items-center gap-2 text-filter-text/60 hover:text-white transition-colors text-xs cursor-pointer"
                     >
-                        <span>Editar</span>
-                        <Image src="/tickets/edit.svg" alt="Editar" width={16} height={16} />
+                        <span>{tCommon('edit')}</span>
+                        <Image src="/tickets/edit.svg" alt={tCommon('edit')} width={16} height={16} />
                     </button>
                     <button
                         className="flex items-center gap-2 text-filter-text/60 hover:text-white transition-colors text-xs cursor-pointer"
                     >
-                        <span>Ver</span>
-                        <Image src="/tickets/arrow.svg" alt="Ver" width={20} height={20} />
+                        <span>{tCommon('view')}</span>
+                        <Image src="/tickets/arrow.svg" alt={tCommon('view')} width={20} height={20} />
                     </button>
                 </div>
             )
         }
-    ], [onEdit]);
+    ], [onEdit, t, tCommon]);
 
     return columns;
 }

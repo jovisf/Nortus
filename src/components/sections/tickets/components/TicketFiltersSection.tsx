@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { SearchInput, CustomSelect, SearchableSelect } from '@/components/ui';
 import type { TicketFilters } from '@/types';
+import { useTranslations } from 'next-intl';
 
 interface TicketFiltersSectionProps {
     searchInput: string;
@@ -21,6 +22,8 @@ export function TicketFiltersSection({
     onFilterChange,
     filterOptions
 }: TicketFiltersSectionProps) {
+    const t = useTranslations('Tickets.filters');
+
     const { statusOptions, priorityOptions, responsibleOptions } = useMemo(() => {
         const createOptions = (list: string[], allLabel: string) => [
             { label: allLabel, value: 'all' },
@@ -28,17 +31,17 @@ export function TicketFiltersSection({
         ];
 
         return {
-            statusOptions: createOptions(filterOptions.statuses, 'Todos os status'),
-            priorityOptions: createOptions(filterOptions.priorities, 'Todas as prioridades'),
-            responsibleOptions: createOptions(filterOptions.responsibles, 'Todos os responsáveis')
+            statusOptions: createOptions(filterOptions.statuses, t('allStatus')),
+            priorityOptions: createOptions(filterOptions.priorities, t('allPriorities')),
+            responsibleOptions: createOptions(filterOptions.responsibles, t('allResponsibles'))
         };
-    }, [filterOptions]);
+    }, [filterOptions, t]);
 
     return (
         <div className="px-8 py-3 flex flex-col lg:flex-row items-center justify-between gap-4">
             <div className="flex flex-col sm:flex-row items-center gap-4 w-full">
                 <SearchInput
-                    placeholder="Buscar por ID, cliente ou assunto..."
+                    placeholder={t('search')}
                     value={searchInput}
                     onChange={(e) => onSearchChange(e.target.value)}
                     className="flex-1"

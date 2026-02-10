@@ -1,0 +1,250 @@
+{
+    "Common": {
+        "login": "Login",
+        "email": "Email",
+        "password": "Password",
+        "save": "Save",
+        "cancel": "Cancel",
+        "create": "Create",
+        "edit": "Edit",
+        "view": "View",
+        "delete": "Delete",
+        "search": "Search...",
+        "loading": "Loading...",
+        "noData": "No data found.",
+        "actions": "Actions",
+        "id": "ID",
+        "status": "Status",
+        "name": "Name",
+        "all": "All",
+        "back": "Back",
+        "error": "Error",
+        "success": "Success",
+        "close": "Close"
+    },
+    "Auth": {
+        "login": {
+            "title": "Login",
+            "emailLabel": "Email",
+            "emailPlaceholder": "your@email.com",
+            "passwordLabel": "Password",
+            "passwordPlaceholder": "Enter your password",
+            "rememberMe": "Remember me",
+            "forgotPassword": "Forgot password?",
+            "signIn": "Sign In",
+            "signingIn": "Signing In...",
+            "noAccount": "Don't have an account?",
+            "signUp": "Sign Up"
+        },
+        "forgotPassword": {
+            "title": "Recover password",
+            "description": "Enter your email to receive a recovery link.",
+            "send": "Send link",
+            "backToLogin": "Back to login"
+        },
+        "resetPassword": {
+            "title": "Reset password",
+            "newPassword": "New password",
+            "confirmPassword": "Confirm new password",
+            "submit": "Reset password"
+        }
+    },
+    "Layout": {
+        "sidebar": {
+            "dashboard": "Dashboard",
+            "tickets": "Tickets",
+            "chat": "Chat",
+            "simulator": "Simulator"
+        },
+        "header": {
+            "defaultTitle": "Nortus",
+            "dashboard": "Dashboard",
+            "tickets": "Tickets",
+            "chat": "Chat & Virtual Assistant",
+            "simulator": "Plan Simulator"
+        }
+    },
+    "Dashboard": {
+        "kpiEvolution": "KPI's Evolution",
+        "conversionRate": "Conversion Rate",
+        "activeClients": "Active Clients",
+        "mapTitle": "Clients map by region",
+        "loadingLocals": "Loading locations...",
+        "searchLocal": "Search location...",
+        "searchType": "Search type...",
+        "allLocals": "All locations",
+        "allTypes": "All types",
+        "kpis": {
+            "retention": "Retention",
+            "conversion": "Conversion",
+            "churn": "Churn",
+            "arpu": "ARPU"
+        },
+        "table": {
+            "name": "Name",
+            "secureType": "Insurance Type",
+            "monthValue": "Monthly Value",
+            "status": "Status",
+            "renewal": "Renewal",
+            "location": "Region",
+            "searchPlaceholder": "Search by name or email...",
+            "empty": "No clients found."
+        }
+    },
+    "Tickets": {
+        "listTitle": "Ticket List",
+        "newTicket": "New Ticket",
+        "editTicket": "Edit Ticket",
+        "stats": {
+            "open": "Open Tickets",
+            "inProgress": "In Progress",
+            "resolvedToday": "Resolved Today",
+            "total": "Total Tickets"
+        },
+        "filters": {
+            "search": "Search by ID, client or subject...",
+            "allStatus": "All status",
+            "allPriorities": "All priorities",
+            "allResponsibles": "All responsibles"
+        },
+        "table": {
+            "priority": "Priority",
+            "client": "Client",
+            "subject": "Subject",
+            "status": "Status",
+            "createdAt": "Created at",
+            "responsible": "Responsible",
+            "actions": "Actions",
+            "empty": "No tickets found."
+        },
+        "modal": {
+            "createDescription": "Fill in the data below to register a new ticket on the platform.",
+            "editDescription": "Update the data below to modify the ticket on the platform.",
+            "clientLabel": "Client name",
+            "clientPlaceholder": "Name of the person or company requesting support",
+            "emailLabel": "Email",
+            "emailPlaceholder": "Contact email for updates and response",
+            "priorityLabel": "Priority",
+            "responsibleLabel": "Responsible",
+            "responsiblePlaceholder": "Who will be responsible",
+            "subjectLabel": "Subject",
+            "subjectPlaceholder": "Brief summary of the problem or request"
+        },
+        "priorities": {
+            "low": "Low",
+            "medium": "Medium",
+            "high": "High",
+            "urgent": "Urgent"
+        },
+        "statuses": {
+            "open": "Open",
+            "inProgress": "In Progress",
+            "closed": "Closed"
+        }
+    },
+    "Simulator": {
+        "title": "Custom plans",
+        "indicators": "Indicators",
+        "includedBenefits": "Included Benefits",
+        "additionalCoverages": "Additional Coverages",
+        "perMonth": "Per month",
+        "recommended": "Recommended",
+        "conversion": "Conversion:",
+        "roi": "ROI:",
+        "sliders": {
+            "vehicleValue": "Vehicle Value",
+            "clientAge": "Client Age"
+        },
+        "units": {
+            "years": " years"
+        },
+        "error": {
+            "loading": "Error loading simulator",
+            "tryLater": "Try updating the page later."
+        }
+    },
+    "Chat": {
+        "loading": "Loading chat...",
+        "today": "TODAY",
+        "iaSuggestion": "AI Suggestion",
+        "tabToFill": "to fill the response",
+        "placeholder": "Write here...",
+        "typing": "Typing...",
+        "actions": {
+            "sendProposal": "Send proposal",
+            "makeCall": "Make call",
+            "viewHistory": "View history"
+        },
+        "maintenance": {
+            "title": "System under Maintenance",
+            "description": "The chat API is not available at the moment. Please try again later."
+        },
+        "unavailable": {
+            "title": "Action Unavailable",
+            "description": "This feature depends on the chat API, which is temporarily offline."
+        }
+    },
+    "Validations": {
+        "required": "Required field",
+        "email": {
+            "required": "Email is required",
+            "invalid": "Invalid email"
+        },
+        "password": {
+            "required": "Password is required",
+            "min": "Password must be at least {min} characters",
+            "dontMatch": "Passwords do not match"
+        },
+        "clientName": {
+            "min": "Client name must be at least 3 characters",
+            "max": "Name too long"
+        },
+        "priority": {
+            "invalid": "Select a valid priority"
+        },
+        "responsible": {
+            "min": "Responsible must be at least 3 characters",
+            "max": "Name too long"
+        },
+        "subject": {
+            "min": "Subject must be at least 5 characters",
+            "max": "Subject exceeded 200"
+        }
+    },
+    "Toasts": {
+        "tickets": {
+            "createSuccess": "Ticket created successfully!",
+            "createDescription": "The ticket was created and is already in your list.",
+            "updateSuccess": "Ticket updated successfully!",
+            "updateDescription": "Changes have been saved correctly.",
+            "deleteSuccess": "Ticket deleted successfully!",
+            "deleteDescription": "The ticket was removed from the platform.",
+            "createError": "Error creating ticket",
+            "updateError": "Error updating ticket",
+            "deleteError": "Error deleting ticket"
+        }
+    },
+    "Pagination": {
+        "first": "First page",
+        "previous": "Previous page",
+        "next": "Next page",
+        "last": "Last page",
+        "of": "{current} of {total}"
+    },
+    "Errors": {
+        "timeout": "The request took too long. Please try again.",
+        "network": "Connection error. Please check your internet.",
+        "badRequest": "Invalid request. Please check the information provided.",
+        "unauthorized": "Session expired. Please log in again.",
+        "forbidden": "You do not have permission to perform this action.",
+        "notFound": "Resource not found.",
+        "conflict": "This resource already exists or is in conflict.",
+        "unprocessable": "Invalid data. Please check the fields.",
+        "tooManyRequests": "Too many requests. Please wait a moment.",
+        "serverError": "Server error. Please try again later.",
+        "serviceUnavailable": "Service temporarily unavailable.",
+        "gatewayTimeout": "Response time exceeded. Please try again.",
+        "unexpected": "An unexpected error occurred. Please try again.",
+        "manyRequestsWait": "Too many requests. Please wait a moment before trying again."
+    }
+}

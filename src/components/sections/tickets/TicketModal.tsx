@@ -5,7 +5,8 @@ import { useTicketForm } from '@/hooks';
 import type { Ticket } from '@/types';
 import { X } from 'lucide-react';
 import { TextInput, TextAreaInput, SelectInput } from '@/components/ui';
-import { PRIORITY_OPTIONS } from '@/constants/tickets';
+import { useTranslations } from 'next-intl';
+import { useMemo } from 'react';
 
 interface TicketModalProps {
     isOpen: boolean;
@@ -14,6 +15,16 @@ interface TicketModalProps {
 }
 
 export function TicketModal({ isOpen, onClose, ticketToEdit }: TicketModalProps) {
+    const t = useTranslations('Tickets');
+    const tCommon = useTranslations('Common');
+
+    const priorityOptions = useMemo(() => [
+        { label: t('priorities.low'), value: 'Baixa' },
+        { label: t('priorities.medium'), value: 'Média' },
+        { label: t('priorities.high'), value: 'Alta' },
+        { label: t('priorities.urgent'), value: 'Urgente' },
+    ], [t]);
+
     const {
         formData,
         errors,
@@ -42,12 +53,12 @@ export function TicketModal({ isOpen, onClose, ticketToEdit }: TicketModalProps)
 
                 <div className="mb-10">
                     <h2 className="text-[28px] font-bold text-white mb-4">
-                        {ticketToEdit ? 'Editar Ticket' : 'Novo Ticket'}
+                        {ticketToEdit ? t('editTicket') : t('newTicket')}
                     </h2>
                     <p className="text-white/60 text-sm font-light">
                         {ticketToEdit
-                            ? 'Atualize os dados abaixo para modificar o ticket na plataforma.'
-                            : 'Preencha os dados abaixo para registrar um novo ticket na plataforma.'
+                            ? t('modal.editDescription')
+                            : t('modal.createDescription')
                         }
                     </p>
                 </div>
@@ -55,57 +66,57 @@ export function TicketModal({ isOpen, onClose, ticketToEdit }: TicketModalProps)
                 <form onSubmit={handleSubmit} noValidate className="space-y-2">
                     <TextInput
                         name="client"
-                        label="Nome do cliente"
+                        label={t('modal.clientLabel')}
                         value={formData.client}
                         onChange={handleChange}
                         error={errors.client}
-                        placeholder="Nome da pessoa ou empresa que está solicitando o suporte"
+                        placeholder={t('modal.clientPlaceholder')}
                         maxLength={100}
                     />
 
                     <TextInput
                         name="email"
-                        label="Email"
+                        label={t('modal.emailLabel')}
                         type="email"
                         value={formData.email}
                         onChange={handleChange}
                         error={errors.email}
-                        placeholder="E-mail de contato para atualizações e resposta"
+                        placeholder={t('modal.emailPlaceholder')}
                     />
 
                     <SelectInput
                         name="priority"
-                        label="Prioridade"
+                        label={t('modal.priorityLabel')}
                         value={formData.priority}
                         onChange={handleChange}
                         error={errors.priority}
-                        options={PRIORITY_OPTIONS}
+                        options={priorityOptions}
                     />
 
                     <TextInput
                         name="responsible"
-                        label="Responsável"
+                        label={t('modal.responsibleLabel')}
                         value={formData.responsible}
                         onChange={handleChange}
                         error={errors.responsible}
-                        placeholder="Quem será o responsável"
+                        placeholder={t('modal.responsiblePlaceholder')}
                         maxLength={50}
                     />
 
                     <TextAreaInput
                         name="subject"
-                        label="Assunto"
+                        label={t('modal.subjectLabel')}
                         value={formData.subject}
                         onChange={handleChange}
                         error={errors.subject}
-                        placeholder="Resumo breve do problema ou solicitação"
+                        placeholder={t('modal.subjectPlaceholder')}
                         maxLength={200}
                     />
 
                     <ActionButtons
                         onCancel={onClose}
                         isPending={isPending}
-                        submitLabel={ticketToEdit ? 'Salvar' : 'Criar'}
+                        submitLabel={ticketToEdit ? tCommon('save') : tCommon('create')}
                     />
                 </form>
             </div>

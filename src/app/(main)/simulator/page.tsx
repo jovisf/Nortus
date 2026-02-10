@@ -6,9 +6,12 @@ import { SimulatorSliders } from '@/components/sections/simulator/SimulatorSlide
 import { AdditionalCoverages } from '@/components/sections/simulator/AdditionalCoverages'
 import { IndicatorsSidebar } from '@/components/sections/simulator/IndicatorsSidebar'
 import { useHeader } from '@/hooks'
+import { useTranslations } from 'next-intl'
 
 export default function SimulatorPage() {
-    useHeader('Simulador de Planos')
+    useHeader('Simulador')
+    const t = useTranslations('Simulator')
+    const tErr = useTranslations('Errors')
 
     const {
         plans,
@@ -27,8 +30,8 @@ export default function SimulatorPage() {
     if (error) {
         return (
             <div className="flex flex-col items-center justify-center p-10 text-white">
-                <h2 className="text-xl font-bold text-red-500">Erro ao carregar o simulador</h2>
-                <p className="text-gray-400 mt-2">Tente atualizar a página mais tarde.</p>
+                <h2 className="text-xl font-bold text-red-500">{tErr('unexpected')}</h2>
+                <p className="text-gray-400 mt-2">{tErr('serverError')}</p>
             </div>
         )
     }
@@ -40,7 +43,7 @@ export default function SimulatorPage() {
                 {/* Main Content Area */}
                 <div className="lg:col-span-2 flex flex-col gap-8">
                     <section className="bg-card-bg rounded-3xl p-8 border border-border-ui">
-                        <h2 className="text-2xl font-bold text-white mb-8">Planos personalizados</h2>
+                        <h2 className="text-2xl font-bold text-white mb-8">{t('title')}</h2>
 
                         {/* Plans Grid */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">

@@ -9,6 +9,7 @@ import { ActiveClientsFilters } from './ActiveClientsFilters'
 import type { ActiveClientsTableProps } from './ActiveClientsTable.types'
 import type { Column } from '@/components/ui'
 import type { ActiveClient } from '@/types'
+import { useTranslations } from 'next-intl'
 
 export function ActiveClientsTable({
     clients,
@@ -17,6 +18,9 @@ export function ActiveClientsTable({
     onFilterChange,
     className
 }: ActiveClientsTableProps) {
+    const t = useTranslations('Dashboard.table')
+    const tDash = useTranslations('Dashboard')
+
     const {
         searchInput,
         handleSearchChange,
@@ -40,7 +44,7 @@ export function ActiveClientsTable({
                     className="flex items-center gap-2 cursor-pointer transition-colors hover:text-white select-none"
                     onClick={toggleSortOrder}
                 >
-                    Nome
+                    {t('name')}
                     {sortOrder === 'asc' ? <ArrowDownAZ size={16} /> : <ArrowUpAZ size={16} />}
                 </div>
             ),
@@ -53,18 +57,18 @@ export function ActiveClientsTable({
             )
         },
         {
-            header: 'Tipo de Seguro',
+            header: t('secureType'),
             key: 'secureType',
             className: 'text-white font-bold',
         },
         {
-            header: 'Valor mensal',
+            header: t('monthValue'),
             key: 'monthValue',
             render: (client: ActiveClient) => `R$ ${client.monthValue.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`,
             className: 'text-white font-bold',
         },
         {
-            header: 'Status',
+            header: t('status'),
             key: 'status',
             render: (client) => {
                 const isActive = client.status === 'Ativo'
@@ -83,21 +87,21 @@ export function ActiveClientsTable({
             }
         },
         {
-            header: 'Renovação',
+            header: t('renewal'),
             key: 'renewalDate',
             className: 'text-white font-light',
         },
         {
-            header: 'Região',
+            header: t('location'),
             key: 'location',
             className: 'text-white font-light',
         }
-    ], [sortOrder, toggleSortOrder])
+    ], [sortOrder, toggleSortOrder, t])
 
     return (
         <div className={cn('bg-white/5 border border-white/5 rounded-[22px] overflow-hidden flex flex-col px-5', className)}>
             <div className="pt-5 flex items-center justify-between">
-                <h2 className="text-white text-[22px] font-bold tracking-tight">Clientes ativos</h2>
+                <h2 className="text-white text-[22px] font-bold tracking-tight">{tDash('activeClients')}</h2>
             </div>
 
             <ActiveClientsFilters
@@ -114,7 +118,7 @@ export function ActiveClientsTable({
                 <Table
                     columns={columns}
                     data={paginatedClients}
-                    emptyMessage="Nenhum cliente encontrado."
+                    emptyMessage={t('empty')}
                     className="bg-transparent rounded-none"
                 />
             </div>
@@ -131,5 +135,3 @@ export function ActiveClientsTable({
         </div>
     )
 }
-
-

@@ -1,41 +1,54 @@
 import { z } from 'zod';
 
-export const loginSchema = z.object({
+export const getLoginSchema = (t: any) => z.object({
     email: z
         .string()
-        .min(1, 'E-mail é obrigatório')
-        .email('E-mail inválido'),
+        .min(1, t('email.required'))
+        .email(t('email.invalid')),
     password: z
         .string()
-        .min(1, 'Senha é obrigatória')
-        .min(6, 'Senha deve ter pelo menos 6 caracteres'),
+        .min(1, t('password.required'))
+        .min(6, t('password.min', { min: 6 })),
 });
 
-export type LoginFormData = z.infer<typeof loginSchema>;
-
-export const forgotPasswordSchema = z.object({
+export const getForgotPasswordSchema = (t: any) => z.object({
     email: z
         .string()
-        .min(1, 'E-mail é obrigatório')
-        .email('E-mail inválido'),
+        .min(1, t('email.required'))
+        .email(t('email.invalid')),
 });
 
-export type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>;
-
-export const resetPasswordSchema = z.object({
+export const getResetPasswordSchema = (t: any) => z.object({
     code: z
         .string()
-        .min(1, 'Código é obrigatório'),
+        .min(1, t('required')),
     new_password: z
         .string()
-        .min(1, 'Nova senha é obrigatória')
-        .min(6, 'Senha deve ter pelo menos 6 caracteres'),
+        .min(1, t('password.required'))
+        .min(6, t('password.min', { min: 6 })),
     confirm_password: z
         .string()
-        .min(1, 'Confirmação de senha é obrigatória'),
+        .min(1, t('required')),
 }).refine((data) => data.new_password === data.confirm_password, {
-    message: 'As senhas não coincidem',
+    message: t('password.dontMatch'),
     path: ['confirm_password'],
 });
 
-export type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>;
+// For types, we can use a dummy schema or just keep using the same shape
+const baseLoginSchema = z.object({
+    email: z.string(),
+    password: z.string(),
+});
+export type LoginFormData = z.infer<typeof baseLoginSchema>;
+
+const baseForgotPasswordSchema = z.object({
+    email: z.string(),
+});
+export type ForgotPasswordFormData = z.infer<typeof baseForgotPasswordSchema>;
+
+const baseResetPasswordSchema = z.object({
+    code: z.string(),
+    new_password: z.string(),
+    confirm_password: z.string(),
+});
+export type ResetPasswordFormData = z.infer<typeof baseResetPasswordSchema>;

@@ -1,5 +1,6 @@
 import { SearchInput, CustomSelect, SearchableSelect } from '@/components/ui'
 import type { DashboardFilters } from '@/types'
+import { useTranslations } from 'next-intl'
 
 interface Option {
     label: string
@@ -25,11 +26,13 @@ export function ActiveClientsFilters({
     typeOptions,
     locationOptions
 }: ActiveClientsFiltersProps) {
+    const t = useTranslations('Dashboard.table')
+
     return (
         <div className="py-4 flex flex-col lg:flex-row items-center justify-between gap-4">
             <div className="flex flex-col lg:flex-row items-center gap-4 w-full">
                 <SearchInput
-                    placeholder="Buscar por nome ou email..."
+                    placeholder={t('searchPlaceholder')}
                     value={searchInput}
                     onChange={(e) => onSearchChange(e.target.value)}
                     className="flex-1"

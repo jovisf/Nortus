@@ -6,9 +6,12 @@ import {
     MessageList,
     DateDivider
 } from '@/components/sections/chat'
+import { useTranslations } from 'next-intl'
 
 export default function ChatPage() {
-    useHeader('Chat & Assistente Virtual')
+    useHeader('Chat')
+    const t = useTranslations('Chat')
+    const tCommon = useTranslations('Common')
 
     const {
         messages,
@@ -23,7 +26,7 @@ export default function ChatPage() {
     if (isLoading) {
         return (
             <div className="flex-1 flex items-center justify-center h-full">
-                <div className="text-gray-400">Carregando chat...</div>
+                <div className="text-gray-400">{tCommon('loading')}</div>
             </div>
         )
     }
@@ -35,7 +38,7 @@ export default function ChatPage() {
                 <div className="flex-1 overflow-y-auto px-10 py-6 custom-scrollbar flex flex-col gap-8">
 
                     {/* In a real scenario, this would come from the messages grouping logic */}
-                    <DateDivider dateLabel="HOJE, 16:40" />
+                    <DateDivider dateLabel={t('today') + ", 16:40"} />
 
                     <MessageList
                         messages={messages}

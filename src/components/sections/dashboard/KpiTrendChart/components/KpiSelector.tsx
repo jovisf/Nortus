@@ -1,19 +1,24 @@
+'use client'
+
 import { cn } from '@/lib/utils'
 import type { KpiType } from '@/types'
+import { useTranslations } from 'next-intl'
 
 interface KpiSelectorProps {
     activeKpiTrend: KpiType
     onKpiChange: (kpiType: KpiType) => void
 }
 
-const KPI_BUTTONS: { label: string; value: KpiType }[] = [
-    { label: 'Retenção', value: 'retention' },
-    { label: 'Conversão', value: 'conversion' },
-    { label: 'Churn', value: 'churn' },
-    { label: 'ARPU', value: 'arpu' },
+const KPI_BUTTONS: { key: string; value: KpiType }[] = [
+    { key: 'retention', value: 'retention' },
+    { key: 'conversion', value: 'conversion' },
+    { key: 'churn', value: 'churn' },
+    { key: 'arpu', value: 'arpu' },
 ]
 
 export function KpiSelector({ activeKpiTrend, onKpiChange }: KpiSelectorProps) {
+    const t = useTranslations('Dashboard.kpis')
+
     return (
         <div className="flex bg-white/5 p-2 rounded-[22px] gap-4">
             {KPI_BUTTONS.map((btn) => (
@@ -27,7 +32,7 @@ export function KpiSelector({ activeKpiTrend, onKpiChange }: KpiSelectorProps) {
                             : 'bg-white/10 text-white hover:bg-white/15'
                     )}
                 >
-                    {btn.label}
+                    {t(btn.key as any)}
                 </button>
             ))}
         </div>

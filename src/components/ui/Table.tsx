@@ -2,6 +2,7 @@
 
 import { ReactNode } from 'react';
 import { cn } from '@/lib/utils';
+import { useTranslations } from 'next-intl';
 
 export interface Column<T> {
     header: string | ReactNode;
@@ -24,10 +25,13 @@ export function Table<T>({
     columns,
     data,
     isLoading,
-    emptyMessage = 'Nenhum dado encontrado.',
+    emptyMessage,
     className,
     onRowClick
 }: TableProps<T>) {
+    const tCommon = useTranslations('Common');
+    const displayEmptyMessage = emptyMessage || tCommon('noData');
+
     return (
         <div className={cn('w-full overflow-hidden bg-white/5 pb-3 rounded-[22px]', className)}>
             <div className="overflow-x-auto scrollbar-hide">
@@ -37,9 +41,9 @@ export function Table<T>({
                     </thead>
                     <tbody className="relative">
                         {isLoading ? (
-                            <TableMessage columns={columns} message="Carregando..." />
+                            <TableMessage columns={columns} message={tCommon('loading')} />
                         ) : data.length === 0 ? (
-                            <TableMessage columns={columns} message={emptyMessage} />
+                            <TableMessage columns={columns} message={displayEmptyMessage} />
                         ) : (
                             data.map((item, index) => (
                                 <TableRow

@@ -16,39 +16,46 @@ export const metadata: Metadata = {
   keywords: ['nortus', 'gestão', 'tickets', 'atendimento'],
 };
 
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages, getLocale } from 'next-intl/server';
 import { Check } from 'lucide-react';
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+  const messages = await getMessages();
+
   return (
-    <html lang="pt-BR">
+    <html lang={locale}>
       <body className={`${inter.variable} font-sans antialiased`}>
-        <QueryProvider>
-          {children}
-          <Toaster
-            position="bottom-center"
-            closeButton
-            icons={{
-              success: (
-                <div className="flex items-center justify-center w-8 h-8 rounded-full bg-white text-primary">
-                  <Check size={18} strokeWidth={3} />
-                </div>
-              ),
-            }}
-            toastOptions={{
-              className: 'sonner-toast-custom',
-              classNames: {
-                toast: 'sonner-toast-custom',
-                title: 'sonner-toast-title',
-                description: 'sonner-toast-description',
-                closeButton: 'sonner-toast-close',
-              }
-            }}
-          />
-        </QueryProvider>
+        <NextIntlClientProvider messages={messages} locale={locale}>
+          <QueryProvider>
+            {children}
+            <Toaster
+              position="bottom-center"
+              closeButton
+              icons={{
+                success: (
+                  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-white text-primary">
+                    <Check size={18} strokeWidth={3} />
+                  </div>
+                ),
+              }}
+              toastOptions={{
+                className: 'sonner-toast-custom',
+                classNames: {
+                  toast: 'sonner-toast-custom',
+                  title: 'sonner-toast-title',
+                  description: 'sonner-toast-description',
+                  closeButton: 'sonner-toast-close',
+                }
+              }}
+            />
+          </QueryProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

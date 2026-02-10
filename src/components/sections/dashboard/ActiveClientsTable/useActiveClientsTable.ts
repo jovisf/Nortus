@@ -1,6 +1,9 @@
+'use client'
+
 import { useState, useMemo, useCallback } from 'react'
 import { useDebounce } from '@/hooks'
 import type { ActiveClient, DashboardFilters, ActiveClientFilters } from '@/types'
+import { useTranslations } from 'next-intl'
 
 interface UseActiveClientsTableProps {
     clients: ActiveClient[]
@@ -8,6 +11,9 @@ interface UseActiveClientsTableProps {
 }
 
 export function useActiveClientsTable({ clients, availableFilters }: UseActiveClientsTableProps) {
+    const tCommon = useTranslations('Common')
+    const tDash = useTranslations('Dashboard.table')
+
     const [searchInput, setSearchInput] = useState('')
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc')
     const [page, setPage] = useState(1)
@@ -58,16 +64,16 @@ export function useActiveClientsTable({ clients, availableFilters }: UseActiveCl
     ], [])
 
     const statusOptions = useMemo(() =>
-        createOptions(availableFilters.status, 'Todos os status'),
-        [availableFilters.status, createOptions])
+        createOptions(availableFilters.status, tCommon('all')),
+        [availableFilters.status, createOptions, tCommon])
 
     const typeOptions = useMemo(() =>
-        createOptions(availableFilters.secureType, 'Todos os tipos'),
-        [availableFilters.secureType, createOptions])
+        createOptions(availableFilters.secureType, tCommon('all')),
+        [availableFilters.secureType, createOptions, tCommon])
 
     const locationOptions = useMemo(() =>
-        createOptions(availableFilters.locations, 'Todos os locais'),
-        [availableFilters.locations, createOptions])
+        createOptions(availableFilters.locations, tCommon('all')),
+        [availableFilters.locations, createOptions, tCommon])
 
     return {
         searchInput,

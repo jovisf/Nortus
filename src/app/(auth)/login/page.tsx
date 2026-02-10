@@ -4,12 +4,18 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useLogin } from '@/hooks/auth';
 import { useRedirectIfAuthenticated } from '@/hooks/useProtectedRoute';
-import { loginSchema, type LoginFormData } from '@/lib/validations/auth';
+import { getLoginSchema, type LoginFormData } from '@/lib/validations/auth';
 import { EmailInput } from '@/components/auth/EmailInput';
 import { PasswordInput } from '@/components/auth/PasswordInput';
+import { useTranslations } from 'next-intl';
 
 export default function LoginPage() {
     useRedirectIfAuthenticated('/chat');
+
+    const tAuth = useTranslations('Auth.login');
+    const tErr = useTranslations('Errors');
+    const tCommon = useTranslations('Common');
+    const tValidations = useTranslations('Validations');
 
     const router = useRouter();
     const loginMutation = useLogin();
@@ -40,7 +46,7 @@ export default function LoginPage() {
         setErrors({});
         setGeneralError(null);
 
-        const validation = loginSchema.safeParse(formData);
+        const validation = getLoginSchema(tValidations).safeParse(formData);
 
         if (!validation.success) {
             const fieldErrors: Partial<Record<keyof LoginFormData, string>> = {};
@@ -57,8 +63,8 @@ export default function LoginPage() {
             router.push('/chat');
         } catch (error: any) {
             const errorMessage = error.response?.status === 401
-                ? 'E-mail ou senha incorretos'
-                : error.response?.data?.message || 'Erro ao fazer login. Tente novamente.';
+                ? tErr('unauthorized')
+                : error.response?.data?.message || tErr('serverError');
             setGeneralError(errorMessage);
         }
     };
@@ -67,7 +73,7 @@ export default function LoginPage() {
         <main className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
             <div className="w-full max-w-md">
                 <div className="bg-white rounded-lg shadow-md p-8">
-                    <h1 className="text-2xl font-bold text-center mb-6">Login</h1>
+                    <h1 className="text-2xl font-bold text-center mb-6">{tAuth('title')}</h1>
 
                     {generalError && (
                         <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
@@ -78,8 +84,8 @@ export default function LoginPage() {
                     <form onSubmit={handleSubmit} noValidate className="space-y-4">
                         <EmailInput
                             name="email"
-                            label="E-mail"
-                            placeholder="seu@email.com"
+                            label={tAuth('emailLabel')}
+                            placeholder={tAuth('emailPlaceholder')}
                             value={formData.email}
                             onChange={handleChange}
                             error={errors.email}
@@ -89,8 +95,8 @@ export default function LoginPage() {
 
                         <PasswordInput
                             name="password"
-                            label="Senha"
-                            placeholder="Digite sua senha"
+                            label={tAuth('passwordLabel')}
+                            placeholder={tAuth('passwordPlaceholder')}
                             value={formData.password}
                             onChange={handleChange}
                             error={errors.password}
@@ -104,14 +110,14 @@ export default function LoginPage() {
                                     type="checkbox"
                                     className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                                 />
-                                <span className="ml-2 text-sm text-gray-600">Lembrar-me</span>
+                                <span className="ml-2 text-sm text-gray-600">{tAuth('rememberMe')}</span>
                             </label>
 
                             <a
                                 href="/forgot-password"
                                 className="text-sm text-blue-600 hover:text-blue-700"
                             >
-                                Esqueceu a senha?
+                                {tAuth('forgotPassword')}
                             </a>
                         </div>
 
@@ -120,15 +126,15 @@ export default function LoginPage() {
                             disabled={loginMutation.isPending}
                             className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                         >
-                            {loginMutation.isPending ? 'Entrando...' : 'Entrar'}
+                            {loginMutation.isPending ? tAuth('signingIn') : tAuth('signIn')}
                         </button>
                     </form>
 
                     <div className="mt-6 text-center">
                         <p className="text-sm text-gray-600">
-                            Não tem uma conta?{' '}
+                            {tAuth('noAccount')}{' '}
                             <a href="/register" className="text-blue-600 hover:text-blue-700 font-medium">
-                                Cadastre-se
+                                {tAuth('signUp')}
                             </a>
                         </p>
                     </div>
