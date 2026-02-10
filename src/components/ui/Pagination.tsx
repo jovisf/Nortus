@@ -1,6 +1,7 @@
 'use client';
 
 import { ChevronLeft, ChevronRight, ChevronFirst, ChevronLast } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface PaginationProps {
     currentPage: number;
@@ -15,6 +16,8 @@ export function Pagination({
     totalPages,
     onPageChange
 }: PaginationProps) {
+    const t = useTranslations('Pagination');
+
     if (totalPages <= 1) return null;
 
     return (
@@ -24,7 +27,7 @@ export function Pagination({
                     onClick={() => onPageChange(1)}
                     disabled={currentPage === 1}
                     className="text-filter-text/40 hover:text-filter-text disabled:opacity-20 disabled:cursor-not-allowed transition-colors cursor-pointer"
-                    title="Primeira página"
+                    title={t('first')}
                 >
                     <ChevronFirst size={20} />
                 </button>
@@ -33,14 +36,14 @@ export function Pagination({
                     onClick={() => onPageChange(currentPage - 1)}
                     disabled={currentPage === 1}
                     className="text-filter-text/40 hover:text-filter-text disabled:opacity-20 disabled:cursor-not-allowed transition-colors cursor-pointer"
-                    title="Página anterior"
+                    title={t('previous')}
                 >
                     <ChevronLeft size={20} />
                 </button>
             </div>
 
             <span className="text-filter-text text-sm font-medium min-w-[60px] text-center">
-                {currentPage} de {totalPages}
+                {t('of', { current: currentPage, total: totalPages })}
             </span>
 
             <div className="flex items-center gap-6">
@@ -48,7 +51,7 @@ export function Pagination({
                     onClick={() => onPageChange(currentPage + 1)}
                     disabled={currentPage === totalPages}
                     className="text-filter-text/40 hover:text-filter-text disabled:opacity-20 disabled:cursor-not-allowed transition-colors cursor-pointer"
-                    title="Próxima página"
+                    title={t('next')}
                 >
                     <ChevronRight size={20} />
                 </button>
@@ -57,7 +60,7 @@ export function Pagination({
                     onClick={() => onPageChange(totalPages)}
                     disabled={currentPage === totalPages}
                     className="text-filter-text/40 hover:text-filter-text disabled:opacity-20 disabled:cursor-not-allowed transition-colors cursor-pointer"
-                    title="Última página"
+                    title={t('last')}
                 >
                     <ChevronLast size={20} />
                 </button>

@@ -2,6 +2,7 @@
 
 import { ReactNode } from 'react';
 import { useLayoutStore } from '@/store/useLayoutStore';
+import { useTranslations } from 'next-intl';
 
 interface HeaderProps {
     title?: string;
@@ -9,9 +10,23 @@ interface HeaderProps {
 }
 
 export function Header({ title: propTitle, actions: propActions }: HeaderProps) {
+    const t = useTranslations('Layout.header');
     const { headerTitle, headerActions } = useLayoutStore();
 
-    const title = propTitle ?? headerTitle;
+    const titleMap: Record<string, string> = {
+        'Dashboard': 'dashboard',
+        'Tickets': 'tickets',
+        'Chat': 'chat',
+        'Chat & Assistente Virtual': 'chat',
+        'Simulador de Planos': 'simulator',
+        'Simulador': 'simulator',
+        'Nortus': 'defaultTitle'
+    };
+
+    const rawTitle = propTitle ?? headerTitle;
+    const translationKey = titleMap[rawTitle];
+    const title = translationKey ? t(translationKey as any) : rawTitle;
+
     const actions = propActions ?? headerActions;
 
     return (

@@ -4,16 +4,18 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 
 const NAV_ITEMS = [
-    { icon: '/sidebar/dashboard.svg', href: '/dashboard', label: 'Dashboard' },
-    { icon: '/sidebar/tickets.svg', href: '/tickets', label: 'Tickets' },
-    { icon: '/sidebar/chat.svg', href: '/chat', label: 'Chat' },
-    { icon: '/sidebar/simulator.svg', href: '/simulator', label: 'Simulador' },
-];
+    { icon: '/sidebar/dashboard.svg', href: '/dashboard', key: 'dashboard' },
+    { icon: '/sidebar/tickets.svg', href: '/tickets', key: 'tickets' },
+    { icon: '/sidebar/chat.svg', href: '/chat', key: 'chat' },
+    { icon: '/sidebar/simulator.svg', href: '/simulator', key: 'simulator' },
+] as const;
 
 export function Sidebar() {
     const pathname = usePathname();
+    const t = useTranslations('Layout.sidebar');
 
     return (
         <aside
@@ -39,6 +41,7 @@ export function Sidebar() {
             <nav className="flex-1 flex flex-col items-center justify-center gap-[29px]">
                 {NAV_ITEMS.map((item) => {
                     const isActive = pathname.startsWith(item.href);
+                    const label = t(item.key as any);
 
                     return (
                         <Link
@@ -50,7 +53,7 @@ export function Sidebar() {
                                     ? "bg-primary text-white shadow-[0px_0px_20px_rgba(24,118,210,0.8)]"
                                     : "text-gray-400 hover:text-white hover:bg-white/10"
                             )}
-                            title={item.label}
+                            title={label}
                         >
                             <div className={cn(
                                 "relative w-6 h-6 transition-all duration-200",
@@ -58,7 +61,7 @@ export function Sidebar() {
                             )}>
                                 <Image
                                     src={item.icon}
-                                    alt={item.label}
+                                    alt={label}
                                     fill
                                     className="object-contain transition-all"
                                 />
