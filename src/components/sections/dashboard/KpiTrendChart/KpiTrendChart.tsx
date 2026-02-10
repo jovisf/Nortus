@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils'
 import type { KpiTrendChartProps } from './KpiTrendChart.types'
 import { useKpiChartOptions } from './hooks/useKpiChartOptions'
 import { KpiSelector } from './components/KpiSelector'
+import { ChartSkeleton } from '../shared/ChartSkeleton'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
@@ -12,12 +13,7 @@ export function KpiTrendChart({ kpisTrend, activeKpiTrend, onKpiChange, classNam
     const chartData = useKpiChartOptions({ kpisTrend, activeKpiTrend })
 
     if (!kpisTrend || !chartData) {
-        return (
-            <div className={cn('bg-card-bg rounded-[22px] p-6 border border-white/10', className)}>
-                <div className="h-4 bg-white/5 rounded w-1/3 mb-6 animate-pulse"></div>
-                <div className="h-64 bg-white/5 rounded animate-pulse"></div>
-            </div>
-        )
+        return <ChartSkeleton className={className} />
     }
 
     return (

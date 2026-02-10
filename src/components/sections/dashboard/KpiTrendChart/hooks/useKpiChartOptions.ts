@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import { formatCurrency } from '@/lib/utils'
+import { CHART_COMMON_OPTIONS, CHART_COLORS } from '@/constants/charts'
 import type { KpisTrend, KpiType } from '@/types'
 
 interface UseKpiChartOptionsProps {
@@ -11,115 +12,51 @@ export function useKpiChartOptions({ kpisTrend, activeKpiTrend }: UseKpiChartOpt
     return useMemo(() => {
         if (!kpisTrend) return null
 
-        let seriesData: number[] = []
-        let seriesName = ''
-
-        switch (activeKpiTrend) {
-            case 'arpu':
-                seriesData = kpisTrend.arpuTrend.data
-                seriesName = kpisTrend.arpuTrend.name
-                break
-            case 'conversion':
-                seriesData = kpisTrend.conversionTrend.data
-                seriesName = kpisTrend.conversionTrend.name
-                break
-            case 'churn':
-                seriesData = kpisTrend.churnTrend.data
-                seriesName = kpisTrend.churnTrend.name
-                break
-            case 'retention':
-                seriesData = kpisTrend.retentionTrend.data
-                seriesName = kpisTrend.retentionTrend.name
-                break
+        const trendMapping = {
+            arpu: kpisTrend.arpuTrend,
+            conversion: kpisTrend.conversionTrend,
+            churn: kpisTrend.churnTrend,
+            retention: kpisTrend.retentionTrend,
         }
+
+        const activeData = trendMapping[activeKpiTrend]
 
         return {
             series: [{
-                name: seriesName,
-                data: seriesData
+                name: activeData.name,
+                data: activeData.data
             }],
             options: {
+                ...CHART_COMMON_OPTIONS,
                 chart: {
+                    ...CHART_COMMON_OPTIONS.chart,
                     type: 'area' as const,
                     height: 350,
-                    toolbar: {
-                        show: false
-                    },
-                    zoom: {
-                        enabled: false
-                    },
                     animations: {
-                        enabled: true,
-                        easing: 'easeinout',
-                        speed: 800,
-                        animateGradually: {
-                            enabled: true,
-                            delay: 150
-                        },
-                        dynamicAnimation: {
-                            enabled: true,
-                            speed: 350
-                        }
+                        ...CHART_COMMON_OPTIONS.chart.animations,
+                        animateGradually: { enabled: true, delay: 150 },
+                        dynamicAnimation: { enabled: true, speed: 350 }
                     }
-                },
-                dataLabels: {
-                    enabled: false
                 },
                 stroke: {
                     curve: 'smooth' as const,
                     width: 2,
-                    colors: ['#43D2CB']
+                    colors: [CHART_COLORS.primary]
                 },
                 xaxis: {
+                    ...CHART_COMMON_OPTIONS.xaxis,
                     categories: kpisTrend.labels,
-                    axisBorder: {
-                        show: true,
-                        color: 'rgba(255, 255, 255, 0.25)'
-                    },
-                    axisTicks: {
-                        show: true,
-                        color: 'rgba(255, 255, 255, 0.25)'
-                    },
-                    labels: {
-                        style: {
-                            colors: '#FFFFFF',
-                            fontSize: '14px',
-                            fontFamily: 'Inter, sans-serif'
-                        }
-                    }
-                },
-                yaxis: {
-                    axisBorder: {
-                        show: true,
-                        color: 'rgba(255, 255, 255, 0.25)'
-                    },
-                    labels: {
-                        style: {
-                            colors: '#FFFFFF',
-                            fontSize: '14px',
-                            fontFamily: 'Inter, sans-serif'
-                        }
-                    }
                 },
                 grid: {
-                    borderColor: 'rgba(255, 255, 255, 0.25)',
-                    strokeDashArray: 5,
-                    xaxis: {
-                        lines: {
-                            show: false
-                        }
-                    },
-                    yaxis: {
-                        lines: {
-                            show: true
-                        }
-                    },
-                    padding: {
-                        top: 0,
-                        right: 0,
-                        bottom: 0,
-                        left: 10
-                    }
+                    ...CHART_COMMON_OPTIONS.grid,
+                    padding: { left: 10 }
+                },
+                annotations: {
+                    xaxis: kpisTrend.labels.slice(1, -1).map(label => ({
+                        x: label,
+                        borderColor: CHART_COLORS.gridBorder,
+                        strokeDashArray: 5,
+                    }))
                 },
                 fill: {
                     type: 'gradient',
@@ -129,36 +66,24 @@ export function useKpiChartOptions({ kpisTrend, activeKpiTrend }: UseKpiChartOpt
                         opacityTo: 0,
                         stops: [0, 100],
                         colorStops: [
-                            {
-                                offset: 0,
-                                color: '#43D2CB',
-                                opacity: 1
-                            },
-                            {
-                                offset: 100,
-                                color: '#43D2CB',
-                                opacity: 0
-                            }
+                            { offset: 0, color: CHART_COLORS.primary, opacity: 1 },
+                            { offset: 100, color: CHART_COLORS.primary, opacity: 0 }
                         ]
                     }
                 },
                 tooltip: {
-                    theme: 'dark',
+                    ...CHART_COMMON_OPTIONS.tooltip,
                     custom: function ({ series, seriesIndex, dataPointIndex }: any) {
-                        return (
-                            '<div class="bg-white/15 backdrop-blur-sm px-3 py-1 text-white border-0 rounded-lg text-sm font-medium shadow-none">' +
-                            '<span>' + formatCurrency(series[seriesIndex][dataPointIndex]) + '</span>' +
-                            '</div>'
-                        )
+                        return `<div class="bg-white/15 backdrop-blur-sm px-3 py-1 text-white border-0 rounded-lg text-sm font-medium shadow-none">
+                            <span>${formatCurrency(series[seriesIndex][dataPointIndex])}</span>
+                        </div>`
                     }
                 },
                 markers: {
                     size: 0,
-                    hover: {
-                        size: 5
-                    }
+                    hover: { size: 5 }
                 },
-                colors: ['#43D2CB']
+                colors: [CHART_COLORS.primary]
             }
         }
     }, [kpisTrend, activeKpiTrend])
