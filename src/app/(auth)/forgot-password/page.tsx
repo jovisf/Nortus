@@ -3,10 +3,15 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForgotPassword } from '@/hooks/auth';
-import { forgotPasswordSchema, type ForgotPasswordFormData } from '@/lib/validations/auth';
+import { getForgotPasswordSchema, type ForgotPasswordFormData } from '@/lib/validations/auth';
 import { EmailInput } from '@/components/auth/EmailInput';
+import { useTranslations } from 'next-intl';
 
 export default function ForgotPasswordPage() {
+    const tAuth = useTranslations('Auth.forgotPassword');
+    const tValidations = useTranslations('Validations');
+    const tErr = useTranslations('Errors');
+
     const router = useRouter();
     const forgotPasswordMutation = useForgotPassword();
 
@@ -16,7 +21,6 @@ export default function ForgotPasswordPage() {
 
     const [errors, setErrors] = useState<Partial<Record<keyof ForgotPasswordFormData, string>>>({});
     const [generalError, setGeneralError] = useState<string | null>(null);
-    const [isSuccess, setIsSuccess] = useState(false);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -36,7 +40,7 @@ export default function ForgotPasswordPage() {
         setErrors({});
         setGeneralError(null);
 
-        const validation = forgotPasswordSchema.safeParse(formData);
+        const validation = getForgotPasswordSchema(tValidations).safeParse(formData);
 
         if (!validation.success) {
             const fieldErrors: Partial<Record<keyof ForgotPasswordFormData, string>> = {};
@@ -50,10 +54,9 @@ export default function ForgotPasswordPage() {
 
         try {
             const response = await forgotPasswordMutation.mutateAsync(formData);
-            // On success, redirect to reset password page with the id
             router.push(`/reset-password?id=${response.id}`);
         } catch (error: any) {
-            const errorMessage = error.response?.data?.message || 'Erro ao processar solicitação. Tente novamente.';
+            const errorMessage = error.response?.data?.message || tErr('serverError');
             setGeneralError(errorMessage);
         }
     };
@@ -62,10 +65,10 @@ export default function ForgotPasswordPage() {
         <main className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
             <div className="w-full max-w-md">
                 <div className="bg-white rounded-lg shadow-md p-8">
-                    <h1 className="text-2xl font-bold text-center mb-6">Recuperar Senha</h1>
+                    <h1 className="text-2xl font-bold text-center mb-6">{tAuth('title')}</h1>
 
                     <p className="text-gray-600 text-center mb-8">
-                        Digite seu e-mail para receber as instruções de recuperação de senha.
+                        {tAuth('description')}
                     </p>
 
                     {generalError && (
@@ -77,8 +80,8 @@ export default function ForgotPasswordPage() {
                     <form onSubmit={handleSubmit} noValidate className="space-y-6">
                         <EmailInput
                             name="email"
-                            label="E-mail"
-                            placeholder="seu@email.com"
+                            label={tAuth('emailLabel')}
+                            placeholder={tAuth('emailPlaceholder')}
                             value={formData.email}
                             onChange={handleChange}
                             error={errors.email}
@@ -91,7 +94,7 @@ export default function ForgotPasswordPage() {
                             disabled={forgotPasswordMutation.isPending}
                             className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                         >
-                            {forgotPasswordMutation.isPending ? 'Enviando...' : 'Enviar instruções'}
+                            {forgotPasswordMutation.isPending ? tErr('loading') : tAuth('send')}
                         </button>
                     </form>
 
@@ -100,7 +103,7 @@ export default function ForgotPasswordPage() {
                             href="/login"
                             className="text-sm text-blue-600 hover:text-blue-700 font-medium"
                         >
-                            Voltar para o Login
+                            {tAuth('backToLogin')}
                         </a>
                     </div>
                 </div>
