@@ -4,8 +4,10 @@ import { toast } from 'sonner'
 import { chatService } from '@/services'
 import { useChatStore } from '@/store'
 import type { QuickActionType } from '@/types'
+import { useTranslations } from 'next-intl'
 
 export function useChat() {
+    const t = useTranslations('Toasts.chat')
     const {
         inputMessage,
         isTyping,
@@ -26,19 +28,19 @@ export function useChat() {
 
     const handleSendMessage = useCallback(() => {
         if (inputMessage.trim()) {
-            toast.success('Sistema em Manutenção', {
-                description: 'A API do chat não está disponível no momento. Tente novamente mais tarde.'
+            toast.success(t('maintenanceTitle'), {
+                description: t('maintenanceDescription')
             })
             // TODO: Reativar envio quando a API de chat estiver disponível
             // storeSendMessage()
         }
-    }, [inputMessage])
+    }, [inputMessage, t])
 
     const handleQuickAction = useCallback((action: QuickActionType) => {
         setSelectedAction(action)
 
-        toast.success('Ação Indisponível', {
-            description: 'Esta funcionalidade depende da API do chat, que está temporariamente offline.'
+        toast.success(t('unavailableActionTitle'), {
+            description: t('unavailableActionDescription')
         })
 
         switch (action) {
@@ -50,7 +52,7 @@ export function useChat() {
                 break
         }
 
-    }, [setSelectedAction])
+    }, [setSelectedAction, t])
 
 
     const handleInputChange = useCallback((value: string) => {
