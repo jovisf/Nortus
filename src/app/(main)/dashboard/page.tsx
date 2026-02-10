@@ -6,6 +6,7 @@ import { ConversionChart } from '@/components/sections/dashboard/ConversionChart
 import { ClientsMap } from '@/components/sections/dashboard/ClientsMap'
 import { ActiveClientsTable } from '@/components/sections/dashboard/ActiveClientsTable'
 import { useTranslations } from 'next-intl'
+import { PageSkeleton } from '@/components/shared'
 
 export default function DashboardPage() {
     useHeader('Dashboard')
@@ -23,6 +24,10 @@ export default function DashboardPage() {
         error,
         actions
     } = useDashboard()
+
+    if (isLoading) {
+        return <PageSkeleton />
+    }
 
     if (error) {
         return (
@@ -43,12 +48,14 @@ export default function DashboardPage() {
                         kpisTrend={kpisTrend}
                         activeKpiTrend={activeKpiTrend}
                         onKpiChange={actions.setActiveKpiTrend}
+                        className="h-full"
                     />
                 </div>
                 <div className="lg:col-span-1">
                     <ConversionChart
                         conversionData={kpisTrend?.conversionTrend || null}
                         labels={kpisTrend?.labels || []}
+                        className="h-full"
                     />
                 </div>
             </div>

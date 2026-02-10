@@ -2,13 +2,15 @@
 
 import { useState, useMemo, useCallback } from 'react';
 import { TicketStats, TicketList, TicketModal } from '@/components/sections/tickets';
-import { useHeader } from '@/hooks';
+import { useHeader, useTicketList } from '@/hooks';
+import { PageSkeleton } from '@/components/shared';
 import { Plus } from 'lucide-react';
 import type { Ticket } from '@/types';
 import { useTranslations } from 'next-intl';
 
 export default function TicketsPage() {
     const t = useTranslations('Tickets');
+    const { isLoading } = useTicketList();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [ticketToEdit, setTicketToEdit] = useState<Ticket | null>(null);
 
@@ -33,6 +35,10 @@ export default function TicketsPage() {
     ), [handleCreate, t]);
 
     useHeader('Tickets', headerActions);
+
+    if (isLoading) {
+        return <PageSkeleton type="tickets" />;
+    }
 
     return (
         <div className="page-container">
