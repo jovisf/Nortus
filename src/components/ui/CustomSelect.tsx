@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { ChevronDown } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface Option {
     label: string;
@@ -45,24 +46,32 @@ export function CustomSelect({ options, value, onChange, placeholder, className 
                 <ChevronDown size={16} className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
             </button>
 
-            {isOpen && (
-                <div className="absolute top-full left-0 w-full mt-2 bg-[#0B1125] border border-white/10 rounded-2xl shadow-2xl z-50 overflow-hidden py-1">
-                    {options.map((option) => (
-                        <button
-                            key={option.value}
-                            type="button"
-                            onClick={() => {
-                                onChange(option.value);
-                                setIsOpen(false);
-                            }}
-                            className={`w-full text-left px-5 py-2.5 text-sm transition-colors hover:bg-white/5 cursor-pointer ${value === option.value ? 'text-white font-medium bg-white/5' : 'text-filter-text/80 font-light'
-                                }`}
-                        >
-                            {option.label}
-                        </button>
-                    ))}
-                </div>
-            )}
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                        transition={{ duration: 0.2, ease: "easeOut" }}
+                        className="absolute top-full left-0 w-full mt-2 bg-[#0B1125] border border-white/10 rounded-2xl shadow-2xl z-50 overflow-hidden py-1 origin-top"
+                    >
+                        {options.map((option) => (
+                            <button
+                                key={option.value}
+                                type="button"
+                                onClick={() => {
+                                    onChange(option.value);
+                                    setIsOpen(false);
+                                }}
+                                className={`w-full text-left px-5 py-2.5 text-sm transition-colors hover:bg-white/5 cursor-pointer ${value === option.value ? 'text-white font-medium bg-white/5' : 'text-filter-text/80 font-light'
+                                    }`}
+                            >
+                                {option.label}
+                            </button>
+                        ))}
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 }

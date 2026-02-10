@@ -7,6 +7,7 @@ import { X } from 'lucide-react';
 import { TextInput, TextAreaInput, SelectInput } from '@/components/ui';
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface TicketModalProps {
     isOpen: boolean;
@@ -45,101 +46,114 @@ export function TicketModal({ isOpen, onClose, ticketToEdit }: TicketModalProps)
         baseHandleSubmit(e);
     };
 
-    if (!isOpen) return null;
-
     return (
-        <div
-            className="fixed inset-0 bg-black/80 flex items-center justify-center z-[999] backdrop-blur-sm"
-            onClick={onClose}
-        >
-            <div
-                className="bg-background border border-white/5 rounded-[40px] shadow-2xl w-full max-w-[620px] overflow-hidden relative p-10"
-                onClick={(e) => e.stopPropagation()}
-            >
-                {isBlocked && (
-                    <div className="absolute top-0 left-0 right-0 p-4 bg-danger/10 border-b border-danger/20 z-10 text-center">
-                        <p className="text-xs text-danger font-medium">
-                            {tErr('blocked', { seconds: timeLeft })}
-                        </p>
-                    </div>
-                )}
-
-                <button
+        <AnimatePresence>
+            {isOpen && (
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="fixed inset-0 bg-black/80 flex items-center justify-center z-[999] backdrop-blur-sm"
                     onClick={onClose}
-                    className="absolute top-8 right-8 w-11 h-11 flex items-center justify-center rounded-full border border-white text-white hover:bg-white/10 transition-all cursor-pointer"
                 >
-                    <X size={20} />
-                </button>
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                        transition={{
+                            type: "spring",
+                            stiffness: 300,
+                            damping: 25
+                        }}
+                        className="bg-background border border-white/5 rounded-[40px] shadow-2xl w-full max-w-[620px] overflow-hidden relative p-10"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        {isBlocked && (
+                            <div className="absolute top-0 left-0 right-0 p-4 bg-danger/10 border-b border-danger/20 z-10 text-center">
+                                <p className="text-xs text-danger font-medium">
+                                    {tErr('blocked', { seconds: timeLeft })}
+                                </p>
+                            </div>
+                        )}
 
-                <div className="mb-10">
-                    <h2 className="text-[28px] font-bold text-white mb-4">
-                        {ticketToEdit ? t('editTicket') : t('newTicket')}
-                    </h2>
-                    <p className="text-white/60 text-sm font-light">
-                        {ticketToEdit
-                            ? t('modal.editDescription')
-                            : t('modal.createDescription')
-                        }
-                    </p>
-                </div>
+                        <button
+                            onClick={onClose}
+                            className="absolute top-8 right-8 w-11 h-11 flex items-center justify-center rounded-full border border-white text-white hover:bg-white/10 transition-all cursor-pointer"
+                        >
+                            <X size={20} />
+                        </button>
 
-                <form onSubmit={handleSubmit} noValidate className="space-y-2">
-                    <TextInput
-                        name="client"
-                        label={t('modal.clientLabel')}
-                        value={formData.client}
-                        onChange={handleChange}
-                        error={errors.client}
-                        placeholder={t('modal.clientPlaceholder')}
-                        maxLength={100}
-                    />
+                        <div className="mb-10">
+                            <h2 className="text-[28px] font-bold text-white mb-4">
+                                {ticketToEdit ? t('editTicket') : t('newTicket')}
+                            </h2>
+                            <p className="text-white/60 text-sm font-light">
+                                {ticketToEdit
+                                    ? t('modal.editDescription')
+                                    : t('modal.createDescription')
+                                }
+                            </p>
+                        </div>
 
-                    <TextInput
-                        name="email"
-                        label={t('modal.emailLabel')}
-                        type="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        error={errors.email}
-                        placeholder={t('modal.emailPlaceholder')}
-                    />
+                        <form onSubmit={handleSubmit} noValidate className="space-y-2">
+                            <TextInput
+                                name="client"
+                                label={t('modal.clientLabel')}
+                                value={formData.client}
+                                onChange={handleChange}
+                                error={errors.client}
+                                placeholder={t('modal.clientPlaceholder')}
+                                maxLength={100}
+                            />
 
-                    <SelectInput
-                        name="priority"
-                        label={t('modal.priorityLabel')}
-                        value={formData.priority}
-                        onChange={handleChange}
-                        error={errors.priority}
-                        options={priorityOptions}
-                    />
+                            <TextInput
+                                name="email"
+                                label={t('modal.emailLabel')}
+                                type="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                error={errors.email}
+                                placeholder={t('modal.emailPlaceholder')}
+                            />
 
-                    <TextInput
-                        name="responsible"
-                        label={t('modal.responsibleLabel')}
-                        value={formData.responsible}
-                        onChange={handleChange}
-                        error={errors.responsible}
-                        placeholder={t('modal.responsiblePlaceholder')}
-                        maxLength={50}
-                    />
+                            <SelectInput
+                                name="priority"
+                                label={t('modal.priorityLabel')}
+                                value={formData.priority}
+                                onChange={handleChange}
+                                error={errors.priority}
+                                options={priorityOptions}
+                            />
 
-                    <TextAreaInput
-                        name="subject"
-                        label={t('modal.subjectLabel')}
-                        value={formData.subject}
-                        onChange={handleChange}
-                        error={errors.subject}
-                        placeholder={t('modal.subjectPlaceholder')}
-                        maxLength={200}
-                    />
+                            <TextInput
+                                name="responsible"
+                                label={t('modal.responsibleLabel')}
+                                value={formData.responsible}
+                                onChange={handleChange}
+                                error={errors.responsible}
+                                placeholder={t('modal.responsiblePlaceholder')}
+                                maxLength={50}
+                            />
 
-                    <ActionButtons
-                        onCancel={onClose}
-                        isPending={isPending}
-                        submitLabel={ticketToEdit ? tCommon('save') : tCommon('create')}
-                    />
-                </form>
-            </div>
-        </div>
+                            <TextAreaInput
+                                name="subject"
+                                label={t('modal.subjectLabel')}
+                                value={formData.subject}
+                                onChange={handleChange}
+                                error={errors.subject}
+                                placeholder={t('modal.subjectPlaceholder')}
+                                maxLength={200}
+                            />
+
+                            <ActionButtons
+                                onCancel={onClose}
+                                isPending={isPending}
+                                submitLabel={ticketToEdit ? tCommon('save') : tCommon('create')}
+                            />
+                        </form>
+                    </motion.div>
+                </motion.div>
+            )}
+        </AnimatePresence>
     );
 }
