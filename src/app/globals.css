@@ -38,6 +38,8 @@
   --priority-low: #E0F7FF;
   --status-inprogress: #D2B843;
   --status-open: #43D2CB;
+  --brand-cyan: #43D2CB;
+  --conversion-green: #00DC04;
   --filter-bg: #0B1125;
   --filter-text: #F6F8FC;
   --input-bg: rgba(255, 255, 255, 0.05);
@@ -64,7 +66,9 @@
   --color-priority-medium: var(--priority-medium);
   --color-priority-low: var(--priority-low);
   --color-status-inprogress: var(--status-inprogress);
-  --color-status-open: var(--status-open);
+  --color-status-open: var(--brand-cyan);
+  --color-brand-cyan: var(--brand-cyan);
+  --color-conversion-green: var(--conversion-green);
   --color-filter-bg: var(--filter-bg);
   --color-filter-text: var(--filter-text);
 
@@ -152,4 +156,8 @@ body {
 
 .sonner-toast-close:hover {
   opacity: 1 !important;
+}
+
+.page-container {
+  @apply px-10 max-w-[1600px] mx-auto py-5;
 }
