@@ -11,3 +11,11 @@ export function formatCurrency(value: number) {
         currency: 'BRL',
     }).format(value)
 }
+
+export function formatDate(date: string | Date) {
+    try {
+        return new Date(date).toLocaleDateString('pt-BR')
+    } catch (e) {
+        return String(date)
+    }
+}

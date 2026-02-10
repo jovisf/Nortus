@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { SearchInput, CustomSelect } from '@/components/ui';
 import type { TicketFilters } from '@/types';
 
@@ -20,20 +21,18 @@ export function TicketFiltersSection({
     onFilterChange,
     filterOptions
 }: TicketFiltersSectionProps) {
-    const statusOptions = [
-        { label: 'Todos os status', value: 'all' },
-        ...filterOptions.statuses.map(s => ({ label: s, value: s }))
-    ];
+    const { statusOptions, priorityOptions, responsibleOptions } = useMemo(() => {
+        const createOptions = (list: string[], allLabel: string) => [
+            { label: allLabel, value: 'all' },
+            ...list.map(item => ({ label: item, value: item }))
+        ];
 
-    const priorityOptions = [
-        { label: 'Todas as prioridades', value: 'all' },
-        ...filterOptions.priorities.map(p => ({ label: p, value: p }))
-    ];
-
-    const responsibleOptions = [
-        { label: 'Todos os responsáveis', value: 'all' },
-        ...filterOptions.responsibles.map(r => ({ label: r, value: r }))
-    ];
+        return {
+            statusOptions: createOptions(filterOptions.statuses, 'Todos os status'),
+            priorityOptions: createOptions(filterOptions.priorities, 'Todas as prioridades'),
+            responsibleOptions: createOptions(filterOptions.responsibles, 'Todos os responsáveis')
+        };
+    }, [filterOptions]);
 
     return (
         <div className="px-8 py-3 flex flex-col lg:flex-row items-center justify-between gap-4">

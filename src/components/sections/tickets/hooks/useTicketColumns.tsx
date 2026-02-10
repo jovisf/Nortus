@@ -2,21 +2,15 @@ import { useMemo } from 'react';
 import Image from 'next/image';
 import type { Ticket } from '@/types';
 import type { Column } from '@/components/ui';
+import { Badge } from '@/components/ui';
 import { getPriorityStyles, getStatusStyles } from '@/constants/tickets';
+import { formatDate } from '@/lib/utils';
 
 interface UseTicketColumnsProps {
     onEdit: (ticket: Ticket) => void;
 }
 
 export function useTicketColumns({ onEdit }: UseTicketColumnsProps) {
-    const formatDate = (dateString: string) => {
-        try {
-            return new Date(dateString).toLocaleDateString('pt-BR');
-        } catch (e) {
-            return dateString;
-        }
-    };
-
     const columns = useMemo<Column<Ticket>[]>(() => [
         {
             header: 'ID',
@@ -27,9 +21,9 @@ export function useTicketColumns({ onEdit }: UseTicketColumnsProps) {
             header: 'Prioridade',
             key: 'priority',
             render: (ticket) => (
-                <span className={`px-4 py-1.5 rounded-full text-xs font-bold ${getPriorityStyles(ticket.priority)}`}>
+                <Badge className={getPriorityStyles(ticket.priority)}>
                     {ticket.priority}
-                </span>
+                </Badge>
             ),
         },
         {
@@ -51,9 +45,9 @@ export function useTicketColumns({ onEdit }: UseTicketColumnsProps) {
             header: 'Status',
             key: 'status',
             render: (ticket) => (
-                <span className={`px-4 py-1.5 rounded-full text-xs font-bold ${getStatusStyles(ticket.status)}`}>
+                <Badge className={getStatusStyles(ticket.status)}>
                     {ticket.status}
-                </span>
+                </Badge>
             )
         },
         {

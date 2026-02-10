@@ -25,13 +25,19 @@ export function TicketModal({ isOpen, onClose, ticketToEdit }: TicketModalProps)
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[999] backdrop-blur-sm">
-            <div className="bg-[#0B1125] border border-white/5 rounded-[40px] shadow-2xl w-full max-w-[620px] overflow-hidden relative p-10">
+        <div
+            className="fixed inset-0 bg-black/80 flex items-center justify-center z-[999] backdrop-blur-sm"
+            onClick={onClose}
+        >
+            <div
+                className="bg-background border border-white/5 rounded-[40px] shadow-2xl w-full max-w-[620px] overflow-hidden relative p-10"
+                onClick={(e) => e.stopPropagation()}
+            >
                 <button
                     onClick={onClose}
                     className="absolute top-8 right-8 w-11 h-11 flex items-center justify-center rounded-full border border-white text-white hover:bg-white/10 transition-all cursor-pointer"
                 >
-                    <X size={20} color="white" />
+                    <X size={20} />
                 </button>
 
                 <div className="mb-10">
