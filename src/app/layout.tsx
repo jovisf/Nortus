@@ -16,6 +16,8 @@ export const metadata: Metadata = {
   keywords: ['nortus', 'gestão', 'tickets', 'atendimento'],
 };
 
+import { Check } from 'lucide-react';
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -26,7 +28,25 @@ export default function RootLayout({
       <body className={`${inter.variable} font-sans antialiased`}>
         <QueryProvider>
           {children}
-          <Toaster richColors position="top-right" />
+          <Toaster
+            position="bottom-center"
+            icons={{
+              success: (
+                <div className="flex items-center justify-center w-8 h-8 rounded-full bg-white text-primary">
+                  <Check size={18} strokeWidth={3} />
+                </div>
+              ),
+            }}
+            toastOptions={{
+              className: 'sonner-toast-custom',
+              classNames: {
+                toast: 'sonner-toast-custom',
+                title: 'sonner-toast-title',
+                description: 'sonner-toast-description',
+                closeButton: 'sonner-toast-close',
+              }
+            }}
+          />
         </QueryProvider>
       </body>
     </html>
