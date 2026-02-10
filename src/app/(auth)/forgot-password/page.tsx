@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForgotPassword } from '@/hooks/auth';
+import { useRateLimit } from '@/hooks';
 import { getForgotPasswordSchema, type ForgotPasswordFormData } from '@/lib/validations/auth';
 import { useTranslations } from 'next-intl';
 
@@ -14,6 +15,7 @@ export default function ForgotPasswordPage() {
 
     const router = useRouter();
     const forgotPasswordMutation = useForgotPassword();
+    const { isBlocked, timeLeft, incrementAttempts, resetRateLimit } = useRateLimit('forgot-password', 3, 120000); // Only 3 attempts for forgot password, 2 min cooldown
 
     const [formData, setFormData] = useState<ForgotPasswordFormData>({
         email: '',
@@ -40,6 +42,11 @@ export default function ForgotPasswordPage() {
         setErrors({});
         setGeneralError(null);
 
+        if (isBlocked) {
+            setGeneralError(tErr('blocked', { seconds: timeLeft }));
+            return;
+        }
+
         const validation = getForgotPasswordSchema(tValidations).safeParse(formData);
 
         if (!validation.success) {
@@ -54,8 +61,10 @@ export default function ForgotPasswordPage() {
 
         try {
             const response = await forgotPasswordMutation.mutateAsync(formData);
+            resetRateLimit();
             router.push(`/reset-password?id=${response.id}`);
         } catch (error: any) {
+            incrementAttempts();
             const errorMessage = error.response?.data?.message || tErr('serverError');
             setGeneralError(errorMessage);
         }

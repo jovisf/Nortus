@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useLogin } from '@/hooks/auth';
+import { useRateLimit } from '@/hooks';
 import { useRedirectIfAuthenticated } from '@/hooks/useProtectedRoute';
 import { getLoginSchema, type LoginFormData } from '@/lib/validations/auth';
 import { useTranslations } from 'next-intl';
@@ -20,6 +21,7 @@ export default function LoginPage() {
 
     const router = useRouter();
     const loginMutation = useLogin();
+    const { isBlocked, timeLeft, incrementAttempts, resetRateLimit } = useRateLimit('login', 5, 60000);
 
     const [formData, setFormData] = useState<LoginFormData>({
         email: '',
@@ -48,6 +50,11 @@ export default function LoginPage() {
         setErrors({});
         setGeneralError(null);
 
+        if (isBlocked) {
+            setGeneralError(tErr('blocked', { seconds: timeLeft }));
+            return;
+        }
+
         const validation = getLoginSchema(tValidations).safeParse(formData);
 
         if (!validation.success) {
@@ -62,8 +69,10 @@ export default function LoginPage() {
 
         try {
             await loginMutation.mutateAsync(formData);
+            resetRateLimit();
             router.push('/chat');
         } catch (error: any) {
+            incrementAttempts();
             const errorMessage = error.response?.status === 401
                 ? tErr('unauthorized')
                 : error.response?.data?.message || tErr('serverError');

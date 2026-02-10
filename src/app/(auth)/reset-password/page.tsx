@@ -3,6 +3,7 @@
 import { useState, Suspense, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useResetPassword } from '@/hooks/auth';
+import { useRateLimit } from '@/hooks';
 import { getResetPasswordSchema, type ResetPasswordFormData } from '@/lib/validations/auth';
 import { useTranslations } from 'next-intl';
 import { Eye, EyeOff } from 'lucide-react';
@@ -18,6 +19,7 @@ function ResetPasswordForm() {
     const searchParams = useSearchParams();
     const id = searchParams.get('id');
     const resetPasswordMutation = useResetPassword();
+    const { isBlocked, timeLeft, incrementAttempts, resetRateLimit } = useRateLimit('reset-password', 3, 120000);
 
     const [formData, setFormData] = useState<ResetPasswordFormData>({
         code: '',
@@ -59,6 +61,11 @@ function ResetPasswordForm() {
         setErrors({});
         setGeneralError(null);
 
+        if (isBlocked) {
+            setGeneralError(tErr('blocked', { seconds: timeLeft }));
+            return;
+        }
+
         const validation = getResetPasswordSchema(tValidations).safeParse(formData);
 
         if (!validation.success) {
@@ -79,8 +86,10 @@ function ResetPasswordForm() {
                 data: payload,
             });
 
+            resetRateLimit();
             router.push('/chat');
         } catch (error: any) {
+            incrementAttempts();
             const errorMessage = error.response?.data?.message || tErr('serverError');
             setGeneralError(errorMessage);
         }
