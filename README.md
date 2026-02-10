@@ -1,56 +1,64 @@
-# Nortus - Projeto Fênix
+# Nortus
 
 Sistema de gestão de atendimento e tickets desenvolvido em React/Next.js.
 
 ## 🚀 Tecnologias
 
-### Obrigatórias (conforme desafio)
-- **Next.js 16** - Framework React para SSR/SSG
+### Core & Framework
+- **Next.js 16** - Framework React (App Router)
+- **React 19** - Biblioteca de UI
 - **TypeScript** - Tipagem estática
-- **TailwindCSS 4** - Estilização utility-first
-- **Zustand** - Gerenciamento de estado
-- **Axios** - Cliente HTTP para consumo de API
-- **Zod** - Validação de schemas de formulários
-- **next-intl** - Internacionalização (pt-BR / en)
 
-### Complementares
-- **ApexCharts** - Gráficos para Dashboard de KPIs
-- **Sonner** - Toasts e feedbacks visuais
-- **js-cookie** - Gerenciamento de cookies para autenticação
-- **Prettier** - Formatação de código
+### Estilização & UI
+- **TailwindCSS 4** - Framework CSS utility-first
+- **Lucide React** - Biblioteca de ícones
+- **Framer Motion** - Animações e transições
+- **ApexCharts** - Gráficos interativos para Dashboard
+- **Sonner** - Notificações toast
+- **OpenLayers** - Mapas interativos
+
+### Gerenciamento de Estado & Data Fetching
+- **Zustand** - Gerenciamento de estado global
+- **TanStack Query (React Query)** - Gerenciamento de estado assíncrono e cache
+- **Axios** - Cliente HTTP
+
+### Formulários & Validação
+- **Zod** - Validação de schemas
+
+### Internacionalização
+- **next-intl** - Suporte a múltiplos idiomas (PT-BR / EN)
+
+### Utilitários
+- **js-cookie** - Gerenciamento de cookies
+- **clsx / tailwind-merge** - Utilitários para classes CSS conditionally
 
 ## 📁 Estrutura do Projeto
 
 ```
-src/
-├── app/                    # App Router (Next.js 13+)
-│   ├── (auth)/             # Grupo de rotas públicas
-│   │   └── login/          # Página de login
-│   ├── (main)/             # Grupo de rotas protegidas
-│   │   ├── dashboard/      # KPIs e gráficos
-│   │   ├── tickets/        # Gestão de tickets
-│   │   ├── chat/           # Chat com IA
-│   │   └── simulador/      # Simulador de planos
-│   ├── layout.tsx          # Layout raiz
-│   └── globals.css         # Estilos globais
-├── components/             # Componentes reutilizáveis
-│   ├── shared/             # Componentes compartilhados
-│   ├── skeletons/          # Loading skeletons
-│   └── ui/                 # Design system (buttons, inputs, etc.)
-├── hooks/                  # Custom React hooks
-├── lib/                    # Configurações e utilitários core
-│   ├── api.ts              # Instância Axios configurada
-│   └── validations/        # Schemas Zod
-├── messages/               # Arquivos de tradução i18n
-│   ├── en.json
-│   └── pt-BR.json
-├── services/               # Camada de serviços/API
-│   └── endpoints/          # Endpoints organizados por domínio
-├── store/                  # Stores Zustand
-│   └── authStore.ts        # Estado de autenticação
-├── types/                  # TypeScript types/interfaces
-├── utils/                  # Funções utilitárias
-└── middleware.ts           # Proteção de rotas
+.
+├── messages/               # Arquivos de tradução (i18n)
+├── public/                 # Arquivos estáticos
+├── src/
+│   ├── app/                # App Router (Next.js)
+│   │   ├── (auth)/         # Rotas públicas (Login, Recuperação de senha)
+│   │   ├── (main)/         # Rotas protegidas (Dashboard, Tickets, etc.)
+│   │   └── layout.tsx      # Layout raiz
+│   ├── components/         # Componentes da aplicação
+│   │   ├── auth/           # Componentes de autenticação
+│   │   ├── sections/       # Componentes de seções específicas (Dashboard, etc.)
+│   │   ├── shared/         # Componentes compartilhados
+│   │   ├── skeletons/      # Loading states
+│   │   └── ui/             # Design System e componentes base
+│   ├── constants/          # Constantes da aplicação
+│   ├── hooks/              # Custom Hooks (useAuth, useRateLimit, etc.)
+│   ├── i18n/               # Configuração de internacionalização
+│   ├── lib/                # Configurações de bibliotecas (Axios, Utils)
+│   ├── services/           # Camada de serviços e chamadas de API
+│   ├── store/              # Gerenciamento de estado global (Zustand)
+│   ├── types/              # Definições de tipos TypeScript
+│   ├── utils/              # Funções utilitárias auxiliares
+│   └── middleware.ts       # Middleware (Proteção de rotas e i18n)
+└── ...arquivos de configuração
 ```
 
 ## 🛠️ Instalação
@@ -77,15 +85,6 @@ npm run format:check
 npm run build
 ```
 
-## 🌐 API
-
-Base URL: `https://nortus-challenge.api.stage.loomi.com.br`
-
-Documentação: `https://nortus-challenge.api.stage.loomi.com.br/docs`
-
-## 🎨 Design
-
-Protótipo Figma: [Link do Figma](https://www.figma.com/design/868T0tcAW9DFNRErbwZFWh/DesafioNortus)
 
 ## 🔐 Autenticação
 
@@ -111,8 +110,8 @@ Protótipo Figma: [Link do Figma](https://www.figma.com/design/868T0tcAW9DFNRErb
 Este projeto foi desenvolvido com auxílio de ferramentas de IA para:
 - [Documentar ferramentas utilizadas]
 - [Documentar prompts relevantes]
+- [Documentar padrões de código]
 - [Documentar decisões baseadas em sugestões da IA]
 
 ---
 
-**Desenvolvido para o Desafio Técnico Nortus - Loomi**

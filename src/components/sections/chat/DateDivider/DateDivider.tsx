@@ -1,15 +1,15 @@
-'use client'
+'use client';
 
 interface DateDividerProps {
-    dateLabel: string
+  dateLabel: string;
 }
 
 export function DateDivider({ dateLabel }: DateDividerProps) {
-    return (
-        <div className="text-center">
-            <span className="text-[10px] text-text-secondary font-medium uppercase tracking-wider">
-                {dateLabel}
-            </span>
-        </div>
-    )
+  return (
+    <div className="text-center">
+      <span className="text-text-secondary text-[10px] font-medium tracking-wider uppercase">
+        {dateLabel}
+      </span>
+    </div>
+  );
 }

@@ -8,11 +8,11 @@ import { ticketsService } from '@/services';
  * Cache is only invalidated on mutations.
  */
 export function useAllTickets() {
-    return useQuery({
-        queryKey: ['tickets', 'all'],
-        queryFn: () => ticketsService.list(),
-        staleTime: Infinity,
-        refetchOnWindowFocus: false,
-        refetchOnMount: false,
-    });
+  return useQuery({
+    queryKey: ['tickets', 'all'],
+    queryFn: () => ticketsService.list(),
+    staleTime: Infinity,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+  });
 }

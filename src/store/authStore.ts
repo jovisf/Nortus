@@ -1,42 +1,41 @@
-import { create } from 'zustand'
-import { persist, createJSONStorage } from 'zustand/middleware'
-import type { User } from '@/types'
+import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
+import type { User } from '@/types';
 
 interface AuthState {
-    user: User | null
-    isAuthenticated: boolean
+  user: User | null;
+  isAuthenticated: boolean;
 }
 
 interface AuthActions {
-    setUser: (user: User) => void
-    clearUser: () => void
-    updateUser: (data: Partial<User>) => void
+  setUser: (user: User) => void;
+  clearUser: () => void;
+  updateUser: (data: Partial<User>) => void;
 }
 
-type AuthStore = AuthState & AuthActions
+type AuthStore = AuthState & AuthActions;
 
 export const useAuthStore = create<AuthStore>()(
-    persist(
-        (set) => ({
-            user: null,
-            isAuthenticated: false,
+  persist(
+    (set) => ({
+      user: null,
+      isAuthenticated: false,
 
-            setUser: (user) => set({ user, isAuthenticated: true }),
+      setUser: (user) => set({ user, isAuthenticated: true }),
 
-            clearUser: () => set({ user: null, isAuthenticated: false }),
+      clearUser: () => set({ user: null, isAuthenticated: false }),
 
-            updateUser: (data) =>
-                set((state) => ({
-                    user: state.user ? { ...state.user, ...data } : null,
-                })),
-        }),
-        {
-            name: 'auth-storage',
-            storage: createJSONStorage(() => localStorage),
-            partialize: (state) => ({
-                user: state.user,
-            }),
-        }
-    )
-)
-
+      updateUser: (data) =>
+        set((state) => ({
+          user: state.user ? { ...state.user, ...data } : null,
+        })),
+    }),
+    {
+      name: 'auth-storage',
+      storage: createJSONStorage(() => localStorage),
+      partialize: (state) => ({
+        user: state.user,
+      }),
+    }
+  )
+);

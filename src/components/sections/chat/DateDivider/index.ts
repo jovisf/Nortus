@@ -1,1 +1,1 @@
-export * from './DateDivider'
+export * from './DateDivider';

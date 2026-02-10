@@ -1,1 +1,1 @@
-export * from './AdditionalCoverages'
+export * from './AdditionalCoverages';

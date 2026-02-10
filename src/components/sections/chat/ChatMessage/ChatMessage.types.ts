@@ -1,5 +1,5 @@
-import type { ChatMessage as ChatMessageType } from '@/types'
+import type { ChatMessage as ChatMessageType } from '@/types';
 
 export interface ChatMessageProps {
-    message: ChatMessageType
+  message: ChatMessageType;
 }

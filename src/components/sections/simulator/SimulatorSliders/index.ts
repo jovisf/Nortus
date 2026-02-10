@@ -1,1 +1,1 @@
-export * from './SimulatorSliders'
+export * from './SimulatorSliders';

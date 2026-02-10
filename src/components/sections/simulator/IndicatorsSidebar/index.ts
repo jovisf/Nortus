@@ -1,1 +1,1 @@
-export * from './IndicatorsSidebar'
+export * from './IndicatorsSidebar';

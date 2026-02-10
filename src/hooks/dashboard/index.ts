@@ -1,2 +1,2 @@
-export { useDashboard } from './useDashboard'
-export { useLocations } from './useLocations'
+export { useDashboard } from './useDashboard';
+export { useLocations } from './useLocations';
