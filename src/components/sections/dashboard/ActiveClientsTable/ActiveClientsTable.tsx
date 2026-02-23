@@ -42,8 +42,16 @@ export function ActiveClientsTable({
       {
         header: (
           <div
+            role="button"
+            tabIndex={0}
             className="flex cursor-pointer items-center gap-2 transition-colors select-none hover:text-white"
             onClick={toggleSortOrder}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleSortOrder();
+              }
+            }}
           >
             {t('name')}
             {sortOrder === 'asc' ? (

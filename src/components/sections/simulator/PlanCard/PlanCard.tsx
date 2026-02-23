@@ -15,10 +15,11 @@ export function PlanCard({
   const t = useTranslations('Simulator');
 
   return (
-    <div
+    <button
+      type="button"
       onClick={onSelect}
       className={cn(
-        'relative h-full cursor-pointer rounded-2xl border-2 p-6 transition-all',
+        'relative h-full w-full cursor-pointer rounded-2xl border-2 p-6 text-left transition-all',
         'bg-card-bg border-border-ui hover:border-primary',
         isSelected ? 'border-primary ring-primary ring-1' : 'border-border-ui',
         className
@@ -40,6 +41,6 @@ export function PlanCard({
         </span>
         <span className="text-text-secondary text-sm">{t('perMonth')}</span>
       </div>
-    </div>
+    </button>
   );
 }

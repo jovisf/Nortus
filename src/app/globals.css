@@ -27,9 +27,11 @@
   /* Dashboard Colors */
   --chart-kpi-color: #2db3c8;
   --chart-conversion-color: #75dfff;
-  --chart-conversion-gradient: linear-gradient(90deg,
-      #75dfff 100%,
-      #75dfff 10%);
+  --chart-conversion-gradient: linear-gradient(
+    90deg,
+    #75dfff 100%,
+    #75dfff 10%
+  );
 
   /* UI Details */
   --border: #1e293b;
@@ -189,4 +191,16 @@ body {
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.2);
+}
+
+/* Accessibility: Respect user's motion preferences (WCAG 2.3.3) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
