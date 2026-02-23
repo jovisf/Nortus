@@ -2,6 +2,7 @@
 
 import { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 import { useResetPassword } from '@/hooks/auth';
 import { useRateLimit } from '@/hooks';
 import {
@@ -42,12 +43,12 @@ function ResetPasswordForm() {
     return (
       <div className="bg-danger/10 border-danger/20 rounded-xl border p-6 text-center">
         <p className="text-danger mb-4">{tErr('unexpected')}</p>
-        <a
+        <Link
           href="/login"
           className="text-primary hover:text-primary-hover font-medium underline"
         >
           {tAuthLogin('signIn')}
-        </a>
+        </Link>
       </div>
     );
   }
@@ -225,12 +226,12 @@ export default function ResetPasswordPage() {
       </Suspense>
 
       <div className="mt-8 text-center">
-        <a
+        <Link
           href="/login"
           className="text-primary hover:text-primary-hover text-sm font-medium transition-colors"
         >
           {tAuthLogin('backToLogin')}
-        </a>
+        </Link>
       </div>
     </>
   );

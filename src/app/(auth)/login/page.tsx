@@ -2,16 +2,18 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useLogin } from '@/hooks/auth';
 import { useRateLimit } from '@/hooks';
-import { useRedirectIfAuthenticated } from '@/hooks/useProtectedRoute';
 import { getLoginSchema, type LoginFormData } from '@/lib/validations/auth';
 import { useTranslations } from 'next-intl';
-import { Eye, EyeOff } from 'lucide-react';
+import { EmailInput } from '@/components/auth/EmailInput';
+import { PasswordInput } from '@/components/auth/PasswordInput';
+
+const inputClassName =
+  'bg-transparent border-white/20 group-focus-within:border-primary rounded-xl px-4 py-4 text-white placeholder-white/20 transition-all outline-none focus:ring-0';
 
 export default function LoginPage() {
-  useRedirectIfAuthenticated('/dashboard');
-
   const tAuth = useTranslations('Auth.login');
   const tErr = useTranslations('Errors');
   const tValidations = useTranslations('Validations');
@@ -26,7 +28,6 @@ export default function LoginPage() {
     password: '',
   });
 
-  const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState<
     Partial<Record<keyof LoginFormData, string>>
   >({});
@@ -34,7 +35,6 @@ export default function LoginPage() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    // Trim spaces if the field is email
     const updatedValue = name === 'email' ? value.trim() : value;
 
     setFormData((prev) => ({ ...prev, [name]: updatedValue }));
@@ -74,13 +74,13 @@ export default function LoginPage() {
       await loginMutation.mutateAsync(formData);
       resetRateLimit();
       router.push('/dashboard');
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
+    } catch (error: unknown) {
       incrementAttempts();
+      const apiError = error as { response?: { status?: number; data?: { message?: string } } };
       const errorMessage =
-        error.response?.status === 401
+        apiError.response?.status === 401
           ? tErr('invalidCredentials')
-          : error.response?.data?.message || tErr('serverError');
+          : apiError.response?.data?.message ?? tErr('serverError');
       setGeneralError(errorMessage);
     }
   };
@@ -99,27 +99,24 @@ export default function LoginPage() {
       )}
 
       <form onSubmit={handleSubmit} noValidate className="space-y-6">
-        {/* User/Email Input */}
+        {/* Email Input */}
         <div className="space-y-1.5">
           <div className="group relative">
             <label className="text-text-secondary group-focus-within:text-primary absolute -top-3 left-4 bg-[var(--app-bg)] px-2 text-xs font-medium transition-colors">
               {tAuth('emailLabel')}*
             </label>
-            <input
-              type="text"
+            <EmailInput
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className={`w-full border bg-transparent ${errors.email ? 'border-danger' : 'border-white/20'} group-focus-within:border-primary rounded-xl px-4 py-4 text-white placeholder-white/20 transition-all outline-none`}
+              error={errors.email}
               placeholder={tAuth('emailPlaceholder')}
+              className={inputClassName}
             />
           </div>
           <p className="text-text-secondary px-1 text-[11px]">
             {tAuth('userHint')}
           </p>
-          {errors.email && (
-            <p className="text-danger mt-1 text-xs">{errors.email}</p>
-          )}
         </div>
 
         {/* Password Input */}
@@ -128,27 +125,15 @@ export default function LoginPage() {
             <label className="text-text-secondary group-focus-within:text-primary absolute -top-3 left-4 bg-[var(--app-bg)] px-2 text-xs font-medium transition-colors">
               {tAuth('passwordLabel')}*
             </label>
-            <input
-              type={showPassword ? 'text' : 'password'}
+            <PasswordInput
               name="password"
               value={formData.password}
               onChange={handleChange}
-              className={`w-full border bg-transparent ${errors.password ? 'border-danger' : 'border-white/20'} group-focus-within:border-primary rounded-xl px-4 py-4 pr-12 text-white placeholder-white/20 transition-all outline-none`}
+              error={errors.password}
               placeholder={tAuth('passwordPlaceholder')}
+              className={inputClassName}
             />
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="text-text-secondary absolute top-1/2 right-4 -translate-y-1/2 transition-colors hover:text-white"
-            >
-              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-            </button>
           </div>
-          {errors.password && (
-            <p className="text-danger mt-1 text-right text-xs">
-              {errors.password}
-            </p>
-          )}
         </div>
 
         {/* Actions area */}
@@ -179,12 +164,12 @@ export default function LoginPage() {
             </span>
           </label>
 
-          <a
+          <Link
             href="/forgot-password"
             className="text-primary hover:text-primary-hover text-sm font-medium transition-colors"
           >
             {tAuth('forgotPassword')}
-          </a>
+          </Link>
         </div>
 
         {/* Submit Button */}

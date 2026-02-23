@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useForgotPassword } from '@/hooks/auth';
 import { useRateLimit } from '@/hooks';
 import {
@@ -124,12 +125,12 @@ export default function ForgotPasswordPage() {
       </form>
 
       <div className="mt-8 text-center">
-        <a
+        <Link
           href="/login"
           className="text-primary hover:text-primary-hover text-sm font-medium transition-colors"
         >
           {tAuth('backToLogin')}
-        </a>
+        </Link>
       </div>
     </>
   );

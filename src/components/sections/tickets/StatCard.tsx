@@ -17,7 +17,7 @@ export function StatCard({ title, value, icon }: StatCardProps) {
           {value}
         </span>
         <div className="relative h-9 w-9">
-          <Image src={icon} alt={title} fill className="object-contain" />
+          <Image src={icon} alt={title} fill sizes="36px" className="object-contain" />
         </div>
       </div>
     </div>

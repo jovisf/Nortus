@@ -35,6 +35,7 @@ export default function AuthLayout({
                 src="/logo.svg"
                 alt="Nortus Logo"
                 fill
+                sizes="160px"
                 className="object-contain object-left"
                 priority
               />
@@ -51,6 +52,7 @@ export default function AuthLayout({
               src="/login.svg"
               alt="Background Illustration"
               fill
+              sizes="55vw"
               className="object-cover"
               priority
               quality={100}

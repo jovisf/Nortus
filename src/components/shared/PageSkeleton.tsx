@@ -10,11 +10,9 @@ export function PageSkeleton({ type = 'dashboard' }: PageSkeletonProps) {
       <div className="page-container space-y-8">
         {/* Stats Row */}
         <div className="flex flex-row gap-5 overflow-x-auto pb-4">
-          {Array(4)
-            .fill(0)
-            .map((_, i) => (
+          {Array.from({ length: 4 }, (_, n) => (
               <Skeleton
-                key={i}
+                key={`ticket-stat-skeleton-${n}`}
                 className="h-32 min-w-[240px] flex-1 rounded-3xl"
               />
             ))}

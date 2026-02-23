@@ -71,6 +71,7 @@ export function LanguageSwitcher({
             src={currentLanguage.flag}
             alt={currentLanguage.label}
             fill
+            sizes="20px"
             className="object-cover"
           />
         </div>
@@ -107,6 +108,7 @@ export function LanguageSwitcher({
                     src={lang.flag}
                     alt={lang.label}
                     fill
+                    sizes="20px"
                     className="object-cover"
                   />
                 </div>
