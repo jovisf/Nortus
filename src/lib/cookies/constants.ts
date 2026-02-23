@@ -1,7 +1,6 @@
 export const COOKIE_NAMES = {
   AUTH_TOKEN: 'auth-token',
-  THEME: 'user-theme',
-  LOCALE: 'user-locale',
+  LOCALE: 'NEXT_LOCALE',
 } as const;
 
 export const COOKIE_CONFIG = {

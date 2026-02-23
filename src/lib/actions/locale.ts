@@ -1,15 +1,13 @@
 'use server';
 
 import { cookies } from 'next/headers';
+import { COOKIE_NAMES, COOKIE_CONFIG } from '@/lib/cookies/constants';
 
-/**
- * Sets the NEXT_LOCALE cookie to persist the user's language choice.
- */
 export async function setUserLocale(locale: string) {
   const cookieStore = await cookies();
-  cookieStore.set('NEXT_LOCALE', locale, {
-    path: '/',
-    maxAge: 60 * 60 * 24 * 365, // 1 year
-    sameSite: 'lax',
+  cookieStore.set(COOKIE_NAMES.LOCALE, locale, {
+    path: COOKIE_CONFIG.PATH,
+    maxAge: 60 * 60 * 24 * 365, 
+    sameSite: COOKIE_CONFIG.SAME_SITE,
   });
 }
