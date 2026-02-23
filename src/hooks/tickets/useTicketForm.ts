@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import { useCreateTicket, useUpdateTicket } from '@/hooks';
-import type { Ticket, TicketPriority, TicketStatus } from '@/types';
-import { ticketSchema, type TicketFormData } from '@/lib/validations/tickets';
+import type { Ticket, TicketPriority, TicketStatus, CreateTicketRequest } from '@/types';
+import { getTicketSchema, type TicketFormData } from '@/lib/validations/tickets';
 
 interface UseTicketFormProps {
   ticketToEdit?: Ticket | null;
@@ -14,6 +15,7 @@ export function useTicketForm({
   isOpen,
   onClose,
 }: UseTicketFormProps) {
+  const t = useTranslations('Validations');
   const { mutate: createTicket, isPending: isCreating } = useCreateTicket();
   const { mutate: updateTicket, isPending: isUpdating } = useUpdateTicket();
 
@@ -32,7 +34,6 @@ export function useTicketForm({
 
   useEffect(() => {
     if (ticketToEdit) {
-      // eslint-disable-next-line
       setFormData({
         client: ticketToEdit.client,
         email: ticketToEdit.email,
@@ -71,7 +72,7 @@ export function useTicketForm({
     e.preventDefault();
     setErrors({});
 
-    const validation = ticketSchema.safeParse(formData);
+    const validation = getTicketSchema(t).safeParse(formData);
 
     if (!validation.success) {
       const fieldErrors: Partial<Record<keyof TicketFormData, string>> = {};
@@ -83,27 +84,21 @@ export function useTicketForm({
       return;
     }
 
-    const submitData = {
-      ...formData,
+    const submitData: CreateTicketRequest = {
+      ...validation.data,
       status,
       ticketId:
-        ticketToEdit?.ticketId ||
-        `TK${Math.floor(Math.random() * 1000)
-          .toString()
-          .padStart(3, '0')}`,
+        ticketToEdit?.ticketId ??
+        `TK-${crypto.randomUUID().slice(0, 8).toUpperCase()}`,
     };
 
     if (ticketToEdit) {
       updateTicket(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        { id: ticketToEdit.id, data: submitData as any },
-        {
-          onSuccess: () => onClose(),
-        }
+        { id: ticketToEdit.id, data: submitData },
+        { onSuccess: () => onClose() }
       );
     } else {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      createTicket(submitData as any, {
+      createTicket(submitData, {
         onSuccess: () => onClose(),
       });
     }
