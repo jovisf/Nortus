@@ -48,9 +48,9 @@ export function TicketStats() {
 
   return (
     <div className="scrollbar-hide mb-4 flex w-full flex-row items-stretch gap-5 overflow-x-auto pb-4 md:pb-0">
-      {stats.map((stat, index) => (
+      {stats.map((stat) => (
         <StatCard
-          key={index}
+          key={stat.title}
           title={stat.title}
           value={stat.value}
           icon={stat.icon}

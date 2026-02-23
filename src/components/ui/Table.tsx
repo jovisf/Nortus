@@ -19,6 +19,7 @@ interface TableProps<T> {
   emptyMessage?: string;
   className?: string;
   onRowClick?: (item: T) => void;
+  rowKey?: (item: T, index: number) => string;
 }
 
 export function Table<T>({
@@ -28,6 +29,7 @@ export function Table<T>({
   emptyMessage,
   className,
   onRowClick,
+  rowKey,
 }: TableProps<T>) {
   const tCommon = useTranslations('Common');
   const displayEmptyMessage = emptyMessage || tCommon('noData');
@@ -52,7 +54,7 @@ export function Table<T>({
             ) : (
               data.map((item, index) => (
                 <TableRow
-                  key={index}
+                  key={rowKey ? rowKey(item, index) : `row-${index}`}
                   item={item}
                   columns={columns}
                   onRowClick={onRowClick}
