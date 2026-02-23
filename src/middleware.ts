@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 const publicRoutes = ['/login', '/forgot-password', '/reset-password'];
-const authRoutes = ['/login', '/forgot-password', '/reset-password'];
 const protectedRoutes = ['/dashboard', '/tickets', '/chat', '/simulator'];
 
 export function middleware(request: NextRequest) {
@@ -23,11 +22,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
-  if (
-    isPublicRoute &&
-    token &&
-    authRoutes.some((route) => pathname.startsWith(route))
-  ) {
+  if (isPublicRoute && token) {
     return NextResponse.redirect(new URL('/dashboard', request.url));
   }
 
