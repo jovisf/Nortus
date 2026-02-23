@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { ChevronDown, Search } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { LazyMotion, domAnimation, m, AnimatePresence } from 'framer-motion';
 
 interface Option {
   label: string;
@@ -93,53 +93,55 @@ export function SearchableSelect({
 
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -10, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -10, scale: 0.95 }}
-            transition={{ duration: 0.2, ease: 'easeOut' }}
-            className="absolute top-full left-0 z-50 mt-2 w-full origin-top overflow-hidden rounded-2xl border border-white/10 bg-[#0B1125] py-1 shadow-2xl"
-          >
-            <div className="border-b border-white/5 px-3 py-2">
-              <div className="flex items-center gap-2 rounded-lg bg-white/5 px-3 py-1.5">
-                <Search size={14} className="text-white/40" />
-                <input
-                  ref={searchInputRef}
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder={searchPlaceholder}
-                  className="w-full border-none bg-transparent text-sm text-white outline-none placeholder:text-white/30"
-                />
-              </div>
-            </div>
-            <div className="custom-scrollbar max-h-[200px] overflow-y-auto">
-              {filteredOptions.length > 0 ? (
-                filteredOptions.map((option) => (
-                  <button
-                    key={option.value}
-                    type="button"
-                    onClick={() => {
-                      onChange(option.value);
-                      setIsOpen(false);
-                      setSearchQuery('');
-                    }}
-                    className={`w-full cursor-pointer px-5 py-2.5 text-left text-sm transition-colors hover:bg-white/5 ${
-                      value === option.value
-                        ? 'bg-white/5 font-medium text-white'
-                        : 'text-filter-text/80 font-light'
-                    }`}
-                  >
-                    {option.label}
-                  </button>
-                ))
-              ) : (
-                <div className="px-5 py-3 text-center text-sm text-white/40">
-                  Nenhuma opção encontrada
+          <LazyMotion features={domAnimation}>
+            <m.div
+              initial={{ opacity: 0, y: -10, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -10, scale: 0.95 }}
+              transition={{ duration: 0.2, ease: 'easeOut' }}
+              className="absolute top-full left-0 z-50 mt-2 w-full origin-top overflow-hidden rounded-2xl border border-white/10 bg-[#0B1125] py-1 shadow-2xl"
+            >
+              <div className="border-b border-white/5 px-3 py-2">
+                <div className="flex items-center gap-2 rounded-lg bg-white/5 px-3 py-1.5">
+                  <Search size={14} className="text-white/40" />
+                  <input
+                    ref={searchInputRef}
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder={searchPlaceholder}
+                    className="w-full border-none bg-transparent text-sm text-white outline-none placeholder:text-white/30"
+                  />
                 </div>
-              )}
-            </div>
-          </motion.div>
+              </div>
+              <div className="custom-scrollbar max-h-[200px] overflow-y-auto">
+                {filteredOptions.length > 0 ? (
+                  filteredOptions.map((option) => (
+                    <button
+                      key={option.value}
+                      type="button"
+                      onClick={() => {
+                        onChange(option.value);
+                        setIsOpen(false);
+                        setSearchQuery('');
+                      }}
+                      className={`w-full cursor-pointer px-5 py-2.5 text-left text-sm transition-colors hover:bg-white/5 ${
+                        value === option.value
+                          ? 'bg-white/5 font-medium text-white'
+                          : 'text-filter-text/80 font-light'
+                      }`}
+                    >
+                      {option.label}
+                    </button>
+                  ))
+                ) : (
+                  <div className="px-5 py-3 text-center text-sm text-white/40">
+                    Nenhuma opção encontrada
+                  </div>
+                )}
+              </div>
+            </m.div>
+          </LazyMotion>
         )}
       </AnimatePresence>
     </div>
